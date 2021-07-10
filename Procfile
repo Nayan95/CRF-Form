@@ -1,1 +1,1 @@
-web. gunicorn CRF.wsgi
+web: gunicorn CRF.wsgi
