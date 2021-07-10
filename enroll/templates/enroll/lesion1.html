@@ -1,0 +1,200 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="container mt-3">
+  	<h1 class="text-center alert alert-primary">LESION DETAILS
+		<br> PCI INDEX PROCEDURE LESION 1 <br>
+	</h1>
+    <h4>Initial Angiographic Assessment (significant lesion)</h4>
+  </div>
+  <div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+          <tbody>
+          {% for ques in questions1 %}
+          <tr>
+            <td width="80%">{{ ques.q_text }}</td>
+            <td width="20%">
+              {{ date_form.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in questions2a %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ cass_form.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          <tr>
+            <th>If lesion covers more than one CASS site, please specify CASS site 2, 3</th>
+          </tr>
+
+          {% for ques in questions2b %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ cass_form.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in questions3 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ prepci_form.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in questions4 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="thrombus[]"  onchange="if (this.value=='Yes') {this.form['thrombus'].style.visibility='visible'} else {this.form['thrombus'].style.visibility='hidden';} ">
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+              
+            </select>
+            </td>
+           </tr>
+          {% endfor %}
+          {% for ques in questions5 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="thrombus[]" id="thrombus" style="visibility: hidden;">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in questions6 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ length_form.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in questions7 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ length_form.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in questions8 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ length_form.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+           {% for ques in questions9 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+               <select name="med[]" onchange="if (this.value=='Yes'){this.form['Yes'].style.visibility='visible'}else {this.form['Yes'].style.visibility='hidden'};">
+                <option value="No" name="med[]">No</option>
+                <option value="Yes" name= "med[]">Yes</option>
+              </select>
+                <select  id="Yes" name="med[]" style="visibility:hidden;">
+                <option value="0.0.1 " name="med[]">0.0.1 </option>
+                <option value="0.1.0" name= "med[]">0.1.0</option>
+                <option value="1.0.0" name="med[]">1.0.0 </option>
+                <option value="0.1.1" name= "med[]">0.1.1</option>
+                <option value="1.0.1 " name="med[]">1.0.1 </option>
+                <option value="1.1.0" name= "med[]">1.1.0</option>
+                <option value="1.1.1" name= "med[]">1.1.1</option>
+              </select>
+            </td>
+           </tr>
+          {% endfor %}
+
+
+          <tr>
+              <th class="alert alert-info">Target Lesion Stent Dispositions</th>
+            <th class="alert alert-info"></th>
+          </tr>
+           {% for ques in questions11 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ stent_usedform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+           {% for ques in questions12 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ yesno_form.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+
+          {% for ques in questions13 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="yesno1[]"  onchange="if (this.value=='Yes') {this.form['device'].style.visibility='visible'} else {this.form['device'].style.visibility='hidden';} ">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+              <br><br>
+                <input type="text" id="device" name="yesno1[]" placeholder="Name of the device"  style="visibility:hidden;">
+              </select>
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in question15 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="yesno2[]"  onchange="if (this.value=='Yes') {this.form['technique'].style.visibility='visible'} else {this.form['device'].style.visibility='hidden';} ">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+              <br><br>
+                <input type="text" id="technique" name="yesno2[]" placeholder="Name of the technique"  style="visibility:hidden;">
+              </select>
+            </td>
+           </tr>
+          {% endfor %}
+
+          </tbody>
+            </table>
+            <p>CASS Site codes
+(1)Prox RCA, (2) Mid RCA, (3) Dist RCA, (4)R-PDA, (5) R-PAV, (6) 1st RPL, (7) 2nd RPL, (8)3rd RPL,
+(9) INF septal, (10) AC marg, (11) LMCA(12) Prox LAD, (13) Mid LAD, (14) Dist LAD, (15)1st diag,
+(16) 2nd diag, (17) 1st septal, (18) ProxCX, (19) Dist CX, (20) 1st OB marg, (21) 2nd OBmarg, (22)
+3rd OB marg, (23) L-AV, (24) 1st LPL(25) 2nd LPL, (26) 3rd LPL, (27) L-PDA, (28)Ramus, (29) 3rd
+diag, (-98) Unknown – Graf</p>
+
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

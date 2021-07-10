@@ -1,0 +1,73 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">PREVIOUS PCI <span><h3>(Percutaneous Coronary Intervention)</h3></span></h1>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+                <tbody>
+          {% for ques in yesno_ques %}
+          <tr>
+            <td width="70%">{{ ques.q_text }}</td>
+            <td width="30%">
+              {{ yesnoform.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in date_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ dateform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+           {% for ques in number_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ numberform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+          {% for ques in text_ques %}
+          <tr>
+            <td width="70%">{{ ques.q_text }}</td>
+            <td width="30%">
+              <input type="checkbox" name="procedure[]" value="Drug eluting stent (DES)" /> Drug eluting stent (DES)<br>
+              <input type="checkbox" name="procedure[]" value="Drug eluting balloon (DEB)" /> Drug eluting balloon (DEB)<br>
+              <input type="checkbox" name="procedure[]" value="Bare metal stent (BMS)" /> Bare metal stent (BMS)<br>
+              <input type="checkbox" name="procedure[]" value="Bioresorbable scaffold (BRS)" /> Bioresorbable scaffold (BRS)<br>
+              <input type="checkbox" name="procedure[]" value="Balloon angioplasty" /> Balloon angioplasty<br>
+              <input type="checkbox" name="procedure[]" value="Thrombectomy" /> Thrombectomy<br>
+              <input type="checkbox" name="procedure[]" value="Rotablator™" /> Rotablator™<br>
+              <input type="checkbox" name="procedure[]" value="Cutting balloon" /> Cutting balloon<br>
+              <input type="checkbox" name="procedure[]" value="Other" onchange="if (this.value=='Other'){this.form['Tick'].style.visibility='visible'} else {this.form['Tick'].style.visibility='hidden'};" /> Other<br>
+              <input type="text" placeholder="Specify" id="Tick" name="procedure[]" style="visibility:hidden;"/>
+
+            </td>
+          </tr>
+          {% endfor %}
+
+          </tbody>
+      </table>
+      <p style="border-top: solid; border-width: 1px; border-color: #ede7f6; margin-top: 5px;"><strong>CASS Site codes</strong></p>
+      <p>(1)Prox RCA, (2) Mid RCA, (3) Dist RCA, (4)R-PDA, (5) R-PAV, (6) 1st RPL, (7) 2nd RPL, (8)3rd RPL,
+        (9) INF septal, (10) AC marg, (11) LMCA(12) Prox LAD, (13) Mid LAD, (14) Dist LAD, (15)1st diag,
+        (16) 2nd diag, (17) 1st septal, (18) ProxCX, (19) Dist CX, (20) 1st OB marg, (21) 2nd OBmarg, (22)
+        3rd OB marg, (23) L-AV, (24) 1st LPL(25) 2nd LPL, (26) 3rd LPL, (27) L-PDA, (28)Ramus, (29) 3rd
+        diag, (-98) Unknown – Graft</p>
+      
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

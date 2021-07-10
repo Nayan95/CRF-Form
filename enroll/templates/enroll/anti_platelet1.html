@@ -1,0 +1,71 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+
+<script>
+  function showHide1(){
+    a = document.getElementById('anti').value 
+    if (a == 'Yes'){
+      document.getElementById('platelet').style.visibility = 'visible'
+    }else{
+      document.getElementById('platelet').style.visibility = 'hidden'
+    }
+  }
+
+  function showHide2(){
+    a = document.getElementById('yesno').value 
+    if (a == 'Yes'){
+      document.getElementById('dose').style.visibility = 'visible'
+    }else{
+      document.getElementById('dose').style.visibility = 'hidden'
+    }
+  }
+</script>
+
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">ANTI-PLATELET THERAPY DETAILS</h1>
+  </div>
+  <div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+      <table class="table table-hover">
+        {% for ques in question1 %}
+        <tr>
+          <td>{{ ques.q_text }}</td>
+          <td>
+            <select name="yn1[]" id="anti" onchange="showHide1()">
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          </td>
+        </tr>
+        {% endfor %}
+       <tr id="platelet" style="visibility: hidden;">
+         <td>Tick all that apply:</td>
+         <td>
+            <input type="checkbox" name="yn1[]" id="one" value="Ticagrelor"><label for="one">Ticagrelor</label>
+            <input type="checkbox" name="yn1[]" id="one" value="Prasugrel"><label for="two">Prasugrel</label>
+            <input type="checkbox" name="yn1[]" id="three" value="Clopidogrel"><label for="three">Clopidogrel</label>
+         </td>
+       </tr>
+
+       <tr>
+         <td>Was there any change in dose?</td>
+         <td><select name="yn2[]" id="yesno" onchange="showHide2()">
+           <option value="No">No</option>
+           <option value="Yes">Yes</option>
+         </select></td>
+       </tr>
+       <tr id="dose" style="visibility: hidden;">
+         <td>If yes, dose</td>
+         <td><input type="text" name="yn2[]" placeholder="Dose"></td>
+       </tr>
+      </table>
+     
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+  </div>
+</div>
+{% endblock %}

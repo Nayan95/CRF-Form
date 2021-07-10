@@ -1,0 +1,44 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">LABORATORY TESTS</h1>
+  </div>
+  <div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+      
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Lab Parameter</th>
+            <th scope="col">Result</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Lab Code</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ques in labpara_ques %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ lab_resultform.ans_text }}
+            </td>
+            <td>
+              {{lab_unitform.ans_text}}
+            </td>
+            <td>
+              {{lab_codeform.ans_text}}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+  </div>
+</div>
+{% endblock %}

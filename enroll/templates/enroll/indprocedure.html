@@ -1,0 +1,180 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">INDEX PROCEDURE DETAILS</h1>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+        <tbody>
+
+          {% for ques in fund_ques %}
+          <tr>
+            <td width="80%">{{ ques.q_text }}</td>
+            <td width="20%">{{ fundform.ans_text }}</td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in date_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ dateform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+            {% for ques in time_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ timeform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          <tr>
+            <th class="alert alert-info">Guide Catheters</th>
+            <th class="alert alert-info"></th>
+          </tr>
+
+          {% for ques in guide_ques %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <input type="checkbox" name="guide[]" value="F" /> F<br>
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in score_ques %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>{{ numberform.ans_text }}</td>
+          </tr>
+          {% endfor %}
+
+          <tr>
+            <th class="alert alert-info">Vessels</th>
+            <th class="alert alert-info"></th>
+          </tr>
+
+          {% for ques in LMCA_ques %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="lmca[]" onchange="if (this.value=='Yes'){this.form['y/n'].style.visibility='visible'}else {this.form['y/n'].style.visibility='hidden'};">
+                <option value="No" name="lmca[]">No</option>
+                <option value="Yes" name= "lmca[]">Yes</option>
+              </select>
+              <input type="number" id="y/n" name="lmca[]" placeholder="% Stenosis" style="visibility:hidden;">
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in vessel_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ vesselform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in stage_ques %}
+           <tr>
+            <td>{{ ques.q_text }}<br><i>If Yes, please provide the details in staged Procedure.(Next Form)</i></td>
+            <td>
+              {{ yesnoform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in vascular_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ vascularform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in yesno_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ yesnoform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <table class="table table-hover">
+        <p>Please provide the details of anti-platelet therapy during procedure.</p>
+          <thead>
+            <tr>
+              <th width="40%"></th>
+              <th width="30%">Loading dose</th>
+              <th width="30%">Maintenance dose</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <input type="checkbox" name="therapy[]" value=" Aspirin" /> Aspirin
+            </td>
+            <td>
+              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            </td>
+            <td>
+              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" name="therapy[]" value=" Clopidogrel" /> Clopidogrel
+            </td>
+            <td>
+              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            </td>
+            <td>
+              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" name="therapy[]" value=" Ticagrelor" /> Ticagrelor
+            </td>
+            <td>
+              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            </td>
+            <td>
+              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" name="therapy[]" value=" Prasugrel" /> Prasugrel
+            </td>
+            <td>
+              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            </td>
+            <td>
+              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

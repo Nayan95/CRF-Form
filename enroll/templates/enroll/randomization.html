@@ -1,0 +1,47 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">PRE-PROCEDURE MEDICATION LOG
+<br></h1>
+       <h3>*Randomization must occur within 78 hours after obtaining the ICF</h3>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+          <tbody>
+          {% for ques in questions1 %}
+          <tr>
+            <td width="70%">{{ ques.q_text }}</td>
+            <td width="30%">
+              {{ form1.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+          {% for ques in questions2 %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ form2.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+        {% for ques in questions3 %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ form3.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+                 </tbody>
+      </table>
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

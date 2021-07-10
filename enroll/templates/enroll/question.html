@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static 'enroll/css/bootstrap.css' %}">
+	<title>CRF Form</title>
+
+
+	<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: black;">
+		<a class="navbar-brand" href="/create/">Home</a>
+
+		<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+			aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
+
+		<div class="collapse navbar-collapse" id="collapsibleNavId">
+			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">≤14 Days to ≤24 Days To PCI</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/dates/">Patient Details</a>
+						<a class="dropdown-item" href="/patient_demo/">Pateint Demographics & Vital Signs</a>
+						<a class="dropdown-item" href="/diahis/">Medical and Cardiac History & Angina Status</a>
+						<a class="dropdown-item" href="/previous/">Previous PCI</a>
+						<a class="dropdown-item" href="/labtest/">Laboratory Tests</a>
+						<a class="dropdown-item" href="/lipidprof/">Lipid Profile</a>
+						<a class="dropdown-item" href="/cardiac/">Pre-Procedure Cardiac Enzymes</a>
+						<a class="dropdown-item" href="/lead1/">LEAD ECG</a>
+						<a class="dropdown-item" href="/preprocedure/">PRE-PROCEDURE MEDICATION LOG</a>
+					</div>
+				</li>
+			
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">PCI-Index Procedure</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/indprocedure/">INDEX PROCEDURE DETAILS</a>
+						<a class="dropdown-item" href="/staged/">STAGED PROCEDURE</a>
+						<a class="dropdown-item" href="/ffr/">FFR/ iFR/details</a>
+						<a class="dropdown-item" href="/lesion1/">PCI INDEX PROCEDURE LESION 1</a>
+						<a class="dropdown-item" href="/stent1/">STUDY STENT INFORMATION-1</a>
+						<a class="dropdown-item" href="/lesion2/">TARGET LESION 2</a>
+						<a class="dropdown-item" href="/stent2/">STUDY STENT INFORMATION-2</a>
+						<a class="dropdown-item" href="/lesion3/">TARGET LESION 3</a>
+						<a class="dropdown-item" href="/stent3/">STUDY STENT INFORMATION-3</a>
+						<a class="dropdown-item" href="/cardiac1/">POST-PROCEDURE CARDIAC ENZYMES</a>
+						<a class="dropdown-item" href="/conco1/">CONCOMITANT MEDICATION ASSESSMENT</a>
+						<a class="dropdown-item" href="/adverse1/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+					</div>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">DISCHARGE</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/echo/">Details before Discharge </a>
+						<a class="dropdown-item" href="/vital/">VITAL SIGNS</a>
+						<a class="dropdown-item" href="/lead2/">LEAD ECG</a>
+						<a class="dropdown-item" href="/cardiac2/">POST-PROCEDURE CARDIAC ENZYMES</a>
+						<a class="dropdown-item" href="/platelet/">POST PROCEDURE ANTI-PLATELET THERAPY DETAILS</a>
+						<a class="dropdown-item" href="/conco2/">CONCOMITANT MEDICATION ASSESSMENT</a>
+						<a class="dropdown-item" href="/adverse2/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">1Month</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/onemonth/">1-Month (±7days)</a>
+						<a class="dropdown-item" href="/assessment/">ANGINA ASSESSMENT</a>
+						<a class="dropdown-item" href="/lead3/">LEAD ECG</a>
+						<a class="dropdown-item" href="/platelet2/">ANTI-PLATELET THERAPY DETAILS</a>
+						<a class="dropdown-item" href="/conco3/">CONCOMITANT MEDICATION ASSESSMENT</a>
+						<a class="dropdown-item" href="/adverse3/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+					</div>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">6 Months</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/6month/">6 Months (±30days)</a>
+						<a class="dropdown-item" href="/assessment2/">ANGINA ASSESSMENT</a>
+						<a class="dropdown-item" href="/lead4/">LEAD ECG</a>
+						<a class="dropdown-item" href="/labtest2/">LABORATORY TESTS</a>
+						<a class="dropdown-item" href="/platelet3/">ANTI-PLATELET THERAPY DETAILS</a>
+						<a class="dropdown-item" href="/conco4/">CONCOMITANT MEDICATION ASSESSMENT</a>
+						<a class="dropdown-item" href="/adverse4/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+					</div>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">12 Months</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/12month/">12 Months (±30days)</a>
+						<a class="dropdown-item" href="/assessment3/">ANGINA ASSESSMENT</a>
+						<a class="dropdown-item" href="/lvef_details/">LEFT VENTRICULAR EJECTION (LVEF) DETAILS</a>
+						<a class="dropdown-item" href="/lead5/">LEAD ECG</a>
+						<a class="dropdown-item" href="/labtest3/">LABORATORY TESTS</a>
+						<a class="dropdown-item" href="/platelet4/">ANTI-PLATELET THERAPY DETAILS</a>
+						<a class="dropdown-item" href="/conco5/">CONCOMITANT MEDICATION ASSESSMENT</a>
+						<a class="dropdown-item" href="/adverse5/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+					</div>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">24 Months</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/24month/">24 Months (±30 days)</a>
+						<a class="dropdown-item" href="/assessment4/">ANGINA ASSESSMENT</a>
+						<a class="dropdown-item" href="/lead6/">LEAD ECG</a>
+						<a class="dropdown-item" href="/platelet5/">ANTI-PLATELET THERAPY DETAILS</a>
+						<a class="dropdown-item" href="/conco6/">CONCOMITANT MEDICATION ASSESSMENT</a>
+						<a class="dropdown-item" href="/adverse6/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+					</div>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">36 Months</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/36month/">36 Months (±30 days)</a>
+						<a class="dropdown-item" href="/assessment5/">ANGINA ASSESSMENT</a>
+						<a class="dropdown-item" href="/adverse7/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+					</div>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">48 Months</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/48month/">48 Months (±30 days)</a>
+						<a class="dropdown-item" href="/assessment6/">ANGINA ASSESSMENT</a>
+						<a class="dropdown-item" href="/adverse8/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+					</div>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">60 Months</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownId">
+						<a class="dropdown-item" href="/60month/">60 Months (±30 days)</a>
+						<a class="dropdown-item" href="/assessment7/">ANGINA ASSESSMENT</a>
+						<a class="dropdown-item" href="/adverse9/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+						<a class="dropdown-item" href="/endstudy/">END OF STUDY</a>
+					</div>
+				</li>
+
+			</ul>
+		
+		</div>
+
+	</nav>
+</head>
+<body>
+
+	<div class="container mt-5">
+		{% block content %}
+		{% endblock %}
+	</div>
+	<script src="{%static 'enroll/js/jquery-3.6.0.js'%}"></script>
+	<script src="{%static 'enroll/js/popper.js'%}"></script>
+	<script src="{%static 'enroll/js/bootstrap.bundle.min.js'%}"></script>
+
+
+</body>
+
+</html>

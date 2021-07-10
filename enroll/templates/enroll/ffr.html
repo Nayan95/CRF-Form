@@ -1,0 +1,105 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">FFR/ iFR/details (not mandatory)
+<br></h1>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+          <tbody>
+          {% for ques in yesno_ques %}
+          <tr>
+            <td width="90%">{{ ques.q_text }}</td>
+            <td width="10%">
+              <select name="y/n[]" onchange="if (this.value=='Yes') {this.form['ifyes'].style.visibility = 'visible'} else {this.form['ifyes'].style.visibility = 'hidden'}; ">
+                <option value="No" name='y/n[]'>No</option>
+                <option value="Yes" name='y/n[]'>Yes</option>
+              </select>
+              <select name="y/n[]" id="ifyes" style="visibility:hidden;">
+                <option value="FFR">FFR</option>
+                <option value="IFR">IFR</option>
+                <option value="RFR">RFR</option>
+              </select>
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in date_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ date_form.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in site_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ ffr_choiceform2.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in value_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ ffr_valueform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          
+          {% for ques in prepci_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="yn1[]" onchange="if (this.value=='No') {this.form['opt'].style.visibility = 'hidden'} else {this.form['opt'].style.visibility = 'visible'}; ">
+                <option name="yn1[]" value="No" >No</option>
+                <option name="yn1[]" value="IVUS">IVUS</option>
+                <option name="yn1[]" value="OCT" >OCT</option>
+              
+              </select>
+
+              <select name="yn1[]" id="opt" style="visibility:hidden;" onchange="if (this.value=='Calcium') {this.form['arc'].style.visibility='visible', this.form['len'].style.visibility='visible', this.form['dep'].style.visibility='visible'} else {this.form['arc'].style.visibility='hidden', this.form['len'].style.visibility='hidden', this.form['dep'].style.visibility='hidden'}; ">
+
+                <option name="yn1[]" value="For pre-procedure evaluation of native disease in the lesion (stenosis>=50%)">For pre-procedure evaluation of native disease in the lesion (stenosis>=50%)</option>
+
+                <option name="yn1[]" value="For assessment of complications during lesion (stenosis>=50%) preparation
+              ">For assessment of complications during lesion (stenosis>=50%) preparation</option>
+
+                <option name="yn1[]" value="Calcium"> Calcium </option>
+              </select>
+
+              <input type="number" id="arc" name="yn1[]" placeholder="Arc" style="visibility:hidden;">
+              <input type="number" id="len" step=".01" name="yn1[]" placeholder="Length" style="visibility:hidden;">
+              <input type="number" id="dep" step=".01" name="yn1[]" placeholder="Depth " style="visibility:hidden;">
+
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in select_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ select_form.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

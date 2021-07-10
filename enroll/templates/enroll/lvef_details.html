@@ -1,0 +1,69 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+
+<script>
+  function showHide1(){
+     
+    a = document.getElementById('yesno').value
+    if (a == 'No'){
+      document.getElementById('measure').style.visibility = 'hidden'
+      document.getElementById('date').style.visibility = 'hidden'
+    }else{
+      document.getElementById('measure').style.visibility = 'visible'
+      document.getElementById('date').style.visibility = 'visible'
+    }
+  }
+</script>
+
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">LEFT VENTRICULAR EJECTION (LVEF) DETAILS
+      <br></h1>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+          <tbody>
+          
+          
+          <tr id="opt1">
+            <td>Left Ventricular Ejection Fraction (LVEF) measured</td>
+            <td>
+             <select name="yn1[]" id="yesno" onclick="showHide1()">
+               <option value="No">No</option>
+               <option value="Yes">Yes</option>
+             </select>
+            </td>
+          </tr>
+          
+
+          
+          <tr id="measure" style="visibility: hidden;">
+            <td>If Yes, LVEF measurement</td>
+            <td>
+              <input type="number" name="yn1[]"> %
+            </td>
+          </tr>
+      
+
+          
+          <tr id="date" style="visibility: hidden;">
+            <td>Date of LVEF measurement</td>
+            <td>
+              <input type="date" name="yn1[]">
+            </td>
+          </tr>
+      
+
+        </tbody>
+      </table>
+      
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

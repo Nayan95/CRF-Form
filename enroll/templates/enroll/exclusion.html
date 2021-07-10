@@ -1,0 +1,35 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+
+<div class="row">
+   <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">ELIGIBILITY <br> Exclusion Criteria</h1>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Does all of the Exclusion criteria, as specified by the protocol, been met for this patient/subject</th>
+            <th scope="col">Yes/No</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ques in questions %}
+          <tr>
+            <td width="90%">{{ ques.q_text }}</td>
+            <td width="10%">
+              {{ form.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+
+<script>
+  function showHide1(){
+     
+    if (document.getElementById('asses').checked){
+      document.getElementById('status').style.visibility = 'hidden'
+    }else{
+      document.getElementById('status').style.visibility = 'visible'
+    }
+  }
+
+  function showHide2(){
+    a = document.getElementById('angina').value 
+    if (a == 'Stable Angina'){
+      document.getElementById('opt').style.visibility = 'visible'
+    }else{
+      document.getElementById('opt').style.visibility = 'hidden'
+    }
+  }
+</script>
+
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">ANGINA ASSESSMENT<br></h1>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+          <tbody>
+          
+          {% for ques in question1 %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <input type="checkbox" name="ang[]" id="asses" value="NA" onchange="showHide1()"> NA
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in question2 %}
+          <tr id="status" style="visibility: visible;">
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="ang[]" id="angina" onchange="showHide2()">
+                <option name="ang[]" value="Unknown" /> Unknown</option>
+                <option name="ang[]" value="Stable Angina" /> Stable Angina</option>
+                <option name="ang[]" value="Unstable Angina" /> Unstable Angina</option>
+                <option name="ang[]" value="No angina" /> No angina</option>
+              </select>
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in question3 %}
+          <tr id="opt" style="visibility: hidden;">
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="ang[]">
+                <option name="ang[]" value="Grade I" /> Grade I</option>
+                <option name="ang[]" value="Grade II" /> Grade II</option>
+                <option name="ang[]" value="Grade III" /> Grade III</option>
+                <option name="ang[]" value="Grade IV" /> Grade IV</option>
+                <option name="ang[]" value="Unknown" /> Unknown</option>
+              </select>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

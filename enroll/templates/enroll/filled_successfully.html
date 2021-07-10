@@ -1,0 +1,22 @@
+{% extends 'enroll/patient_success.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <h4 class="text-center alert alert-info">Form Filled Successfully</h4>
+            <p class="text-center alert-info">Please note <strong>Patient ID</strong> for future reference</p>
+            <div>
+                <strong>Name :</strong> {{ patients.f_name }} {{ patients.l_name }}<br>
+                <strong>Age :</strong> {{ patients.age }}<br>
+                <strong>Patient ID :</strong> {{ patients.p_id }}<br>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <button class="btn btn-success" style="float: right" type="submit">Add new Patient</button>
+            </form>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+{% endblock %}

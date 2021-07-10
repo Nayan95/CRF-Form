@@ -1,0 +1,112 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">PRE-PROCEDURE MEDICATION LOG
+<br></h1>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+        <tbody>
+          {% for ques in asprin_ques %}
+            <tr>
+              <td>{{ ques.q_text }}</td>
+              <td>{{ yesnoform.ans_text }}</td>
+            </tr>
+          {% endfor %}
+        
+          {% for ques in tick_ques1 %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" name="asprin[]" value=" Aspirin" /> Aspirin
+            </td>
+            <td>
+              <input type="number" id="mg" name="asprin[]" class="w-25"><span> mg</span><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" name="asprin[]" value=" Clopidogrel" /> Clopidogrel
+            </td>
+            <td>
+              <input type="number" id="mg" name="asprin[]" class="w-25"><span> mg</span><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" name="asprin[]" value=" Ticagrelor" /> Ticagrelor
+            </td>
+            <td>
+              <input type="number" id="mg" name="asprin[]" class="w-25"><span> mg</span><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" name="asprin[]" value=" Prasugrel" /> Prasugrel
+            </td>
+            <td>
+              <input type="number" id="mg" name="asprin[]" class="w-25"><span> mg</span><br>
+            </td>
+          </tr>
+          {% endfor %}
+          
+          {% for ques in dia_ques %}
+            <tr>
+              <td>{{ ques.q_text }}</td>
+              <td>{{ yesnoform.ans_text }}</td>
+            </tr>
+          {% endfor %}
+          {% for ques in tick_ques2 %}
+            <tr>
+              <td>{{ ques.q_text }}</td>
+            <td>
+              <input type="checkbox" name="pre2[]" value="ACE inhibitor" />  ACE inhibitor<br>
+              <input type="checkbox" name="pre2[]" value="AT-II antagonist" /> AT-II antagonist<br>
+              <input type="checkbox" name="pre2[]" value="Beta blocker" /> Beta blocker<br>
+              <input type="checkbox" name="pre2[]" value="Calcium Channel blockers" />Calcium Channel blockers<br>
+              <input type="checkbox" name="pre2[]" value="Antiarrhythmic" /> Antiarrhythmic<br>
+              <input type="checkbox" name="pre2[]" value="Nitrates" /> Nitrates<br>
+              <input type="checkbox" name="pre2[]" value="GLP-1 receptor agonist (liraglutide, dulaglutide)" /> GLP-1 receptor agonist (liraglutide, dulaglutide)<br>
+              <input type="checkbox" name="pre2[]" value="SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)" />SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)<br>
+              <input type="checkbox" name="pre2[]" value="DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)" /> DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)<br>
+              <input type="checkbox" name="pre2[]" value="Metformin" />Metformin<br>
+              <input type="checkbox" name="pre2[]" value="Sulfonylureas" />Sulfonylureas<br>
+
+              <input type="checkbox" name="pre2[]" value="Statins" onchange="if(this.checked){this.form['drop'].style.visibility='visible', this.form['val'].style.visibility='visible'} else {this.form['drop'].style.visibility='hidden', this.form['val'].style.visibility='hidden'};"/>Statins
+
+              <select name="pre2[]" id='drop' style="visibility:hidden">
+                <option value=" Atorvastatin" name="pre2[]"> Atorvastatin</option>
+                <option value=" Rosuvastatin" name= "pre2[]"> Rosuvastatin</option>
+                <option value=" Pitavastatin" name="pre2[]"> Pitavastatin</option>
+                <option value=" Simvastatin" name="pre2[]"> Simvastatin</option>
+              </select>
+
+              <input type="number" id='val' name="pre2[]" class="w-25" placeholder="2-80mg" style="visibility:hidden"><br>
+              
+              <input type="checkbox" name="pre2[]" value="Ezetimibe" />Ezetimibe<br>
+              <input type="checkbox" name="pre2[]" value="Omega-3 fatty acids" /> Omega-3 fatty acids<br>
+              <input type="checkbox" name="pre2[]" value="PCSK-9 monoclonal antibody (mab)* (Evolocumab)" />PCSK-9 monoclonal antibody (mab)* (Evolocumab)<br>
+              <input type="checkbox" name="pre2[]" value="Fibrate" /> Fibrate<br>
+              <input type="checkbox" name="pre2[]" value="Other lipid lowering drugs" />Other lipid lowering drugs<br>
+              <input type="checkbox" name="pre2[]" value="Warfarin/Coumadin" />Warfarin/Coumadin<br>
+              <input type="checkbox" name="pre2[]" value="Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)" />Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)<br>
+            </td>
+           </tr>
+          {% endfor %}
+
+
+          </tbody>
+      </table>
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

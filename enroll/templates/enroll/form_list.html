@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static 'enroll/css/bootstrap.css' %}">
+</head>
+
+<style>
+	
+	@media (min-width: 1100px) {
+  		.col-lg {
+   	 	padding: 1%;
+  		}
+  		.col-lg {
+    	width: 33.33%;
+  		}
+	}
+
+	/********** Medium devices only **********/
+	@media (max-width: 1099px) {
+	  	.col-md {
+	    padding: 1%;
+	  }
+	  .col-md {
+	    width: auto;
+	  }
+	}
+</style>
+<body>
+
+	<table class="table table-hover">
+        <thead>
+          <tr class="alert alert-warning">
+            <th class="text-center col-lg col-md">Site ID</th>
+            <th class="text-center col-lg col-md">Patient ID</th>
+            <th class="text-center col-lg col-md">Patient Initials</th> 
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center" style="border: solid 1px; border-color: #ede7f6;">---</td>
+            <td class="text-center" style="border: solid 1px; border-color: #ede7f6;">{{ patient.p_id }}</td>
+            <td class="text-center" style="border: solid 1px; border-color: #ede7f6;">{{ patient.f_name }} {{ patients.l_name }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="float: left; margin-left: 10px; color: red;">Select a form given below ↓</p>
+      <a  href="/patient/{{patient.p_id}}" class="btn btn-primary" style="float: right;">Edit Patient Data</a><br><br>
+
+	<div class="row">
+  		<div class="col-lg col-md">
+			<h5 class="text-center alert alert-secondary">≤14 Days to ≤24 Days To PCI</h5>
+			<a class="dropdown-item" href="/dates/">Patient Details</a>
+			<a class="dropdown-item" href="/patient_demo/">Pateint Demographics & Vital Signs</a>
+			<a class="dropdown-item" href="/diahis/">Medical and Cardiac History & Angina Status</a>
+			<a class="dropdown-item" href="/previous/">Previous PCI</a>
+			<a class="dropdown-item" href="/labtest/">Laboratory Tests</a>
+			<a class="dropdown-item" href="/lipidprof/">Lipid Profile</a>
+			<a class="dropdown-item" href="/cardiac/">Pre-Procedure Cardiac Enzymes</a>
+			<a class="dropdown-item" href="/lead1/">LEAD ECG</a>
+			<a class="dropdown-item" href="/preprocedure/">PRE-PROCEDURE MEDICATION LOG</a>
+		</div>
+		
+		<div class="col-lg col-md">
+			<h5 class="text-center alert alert-secondary">PCI</h5>
+			<a class="dropdown-item" href="/indprocedure/">INDEX PROCEDURE DETAILS</a>
+			<a class="dropdown-item" href="/staged/">STAGED PROCEDURE</a>
+			<a class="dropdown-item" href="/ffr/">FFR/ iFR/details</a>
+			<a class="dropdown-item" href="/lesion1/">PCI INDEX PROCEDURE LESION 1</a>
+			<a class="dropdown-item" href="/stent1/">STUDY STENT INFORMATION-1</a>
+			<a class="dropdown-item" href="/lesion2/">TARGET LESION 2</a>
+			<a class="dropdown-item" href="/stent2/">STUDY STENT INFORMATION-2</a>
+			<a class="dropdown-item" href="/lesion3/">TARGET LESION 3</a>
+			<a class="dropdown-item" href="/stent3/">STUDY STENT INFORMATION-3</a>
+			<a class="dropdown-item" href="/cardiac1/">POST-PROCEDURE CARDIAC ENZYMES</a>
+			<a class="dropdown-item" href="/conco1/">CONCOMITANT MEDICATION ASSESSMENT</a>
+			<a class="dropdown-item" href="/adverse1/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+		</div>
+
+		<div class="col-lg col-md">
+			<h5 class="text-center alert alert-secondary">DISCHARGE</h5>
+			<a class="dropdown-item" href="/echo/">Details before Discharge </a>
+			<a class="dropdown-item" href="/vital/">VITAL SIGNS</a>
+			<a class="dropdown-item" href="/lead2/">LEAD ECG</a>
+			<a class="dropdown-item" href="/cardiac2/">POST-PROCEDURE CARDIAC ENZYMES</a>
+			<a class="dropdown-item" href="/platelet/">POST PROCEDURE ANTI-PLATELET THERAPY DETAILS</a>
+			<a class="dropdown-item" href="/conco2/">CONCOMITANT MEDICATION ASSESSMENT</a>
+			<a class="dropdown-item" href="/adverse2/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+		</div>
+				
+		<div class="col-lg col-md">
+			<h5 class="text-center alert alert-secondary">1 Month</h5>
+			<a class="dropdown-item" href="/onemonth/">1-Month (±7days)</a>
+			<a class="dropdown-item" href="/assessment/">ANGINA ASSESSMENT</a>
+			<a class="dropdown-item" href="/lead3/">LEAD ECG</a>
+			<a class="dropdown-item" href="/platelet2/">ANTI-PLATELET THERAPY DETAILS</a>
+			<a class="dropdown-item" href="/conco3/">CONCOMITANT MEDICATION ASSESSMENT</a>
+			<a class="dropdown-item" href="/adverse3/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+		</div>
+				
+		<div class="col-lg col-md">
+			<h5 class="text-center alert alert-secondary">6 Months</h5>
+			<a class="dropdown-item" href="/6month/">6 Months (±30days)</a>
+			<a class="dropdown-item" href="/assessment2/">ANGINA ASSESSMENT</a>
+			<a class="dropdown-item" href="/lead4/">LEAD ECG</a>
+			<a class="dropdown-item" href="/labtest2/">LABORATORY TESTS</a>
+			<a class="dropdown-item" href="/platelet3/">ANTI-PLATELET THERAPY DETAILS</a>
+			<a class="dropdown-item" href="/conco4/">CONCOMITANT MEDICATION ASSESSMENT</a>
+			<a class="dropdown-item" href="/adverse4/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+		</div>			
+				
+		<div class="col-lg col-md">
+			<h5 class="text-center alert alert-secondary">12 Months</h5>
+			<a class="dropdown-item" href="/12month/">12 Months (±30days)</a>
+			<a class="dropdown-item" href="/assessment3/">ANGINA ASSESSMENT</a>
+			<a class="dropdown-item" href="/lvef_details/">LEFT VENTRICULAR EJECTION (LVEF) DETAILS</a>
+			<a class="dropdown-item" href="/lead5/">LEAD ECG</a>
+			<a class="dropdown-item" href="/labtest3/">LABORATORY TESTS</a>
+			<a class="dropdown-item" href="/platelet4/">ANTI-PLATELET THERAPY DETAILS</a>
+			<a class="dropdown-item" href="/conco5/">CONCOMITANT MEDICATION ASSESSMENT</a>
+			<a class="dropdown-item" href="/adverse5/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+		</div>
+		
+		<div class="col-lg col-md">
+			<h5 class="text-center alert alert-secondary">24 Months</h5>
+			<a class="dropdown-item" href="/24month/">24 Months (±30 days)</a>
+			<a class="dropdown-item" href="/assessment4/">ANGINA ASSESSMENT</a>
+			<a class="dropdown-item" href="/lead6/">LEAD ECG</a>
+			<a class="dropdown-item" href="/platelet5/">ANTI-PLATELET THERAPY DETAILS</a>
+			<a class="dropdown-item" href="/conco6/">CONCOMITANT MEDICATION ASSESSMENT</a>
+			<a class="dropdown-item" href="/adverse6/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+		</div>
+					
+		<div class="col-lg col-md">
+			<h5 class="text-center alert alert-secondary">36 Months</h5>
+			<a class="dropdown-item" href="/36month/">36 Months (±30 days)</a>
+			<a class="dropdown-item" href="/assessment5/">ANGINA ASSESSMENT</a>
+			<a class="dropdown-item" href="/adverse7/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+		</div>
+						
+		<div class="col-lg col-md">
+			<h5 class="text-center alert alert-secondary">48 Months</h5>
+			<a class="dropdown-item" href="/48month/">48 Months (±30 days)</a>
+			<a class="dropdown-item" href="/assessment6/">ANGINA ASSESSMENT</a>
+			<a class="dropdown-item" href="/adverse8/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+		</div>
+			
+		<div style="width: auto;">
+			<h5 class="text-center alert alert-secondary">60 Months</h5>
+			<a class="dropdown-item" href="/60month/">60 Months (±30 days)</a>
+			<a class="dropdown-item" href="/assessment7/">ANGINA ASSESSMENT</a>
+			<a class="dropdown-item" href="/adverse9/">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS</a>
+			<a class="dropdown-item" href="/endstudy/">END OF STUDY</a>
+		</div>
+	
+	</div>
+
+	<div class="container mt-5">
+		{% block content %}
+		{% endblock %}
+	</div>
+	<script src="{%static 'enroll/js/jquery-3.6.0.js'%}"></script>
+	<script src="{%static 'enroll/js/popper.js'%}"></script>
+	<script src="{%static 'enroll/js/bootstrap.bundle.min.js'%}"></script>
+
+
+</body>
+
+</html>

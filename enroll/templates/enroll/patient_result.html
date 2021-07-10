@@ -1,0 +1,53 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+
+<div class="row">
+   <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">Patient Details </h1>
+  </div>
+	<div class="col-sm-12">
+			<table class="table table-hover">
+        <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for patient in patients %}
+          <tr>
+              <td>{{ patient.p_id }}</td>
+              <td>{{ patient.f_name }}</td>
+              <td>{{ patient.l_name }}</td>
+              <td>{{ patient.age }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+	</div>
+    <div class="col-sm-12">
+			<table class="table table-hover">
+        <thead>
+          <tr>
+              <th scope="col">Question</th>
+              <th scope="col">Answer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in results %}
+          <tr>
+              <td>{{ result.q_id }}</td>
+              <td>{{ result.ans_text }}</td>
+          {% endfor %}
+        </tbody>
+      </table>
+      <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" name="exit" value="Exit" style="float: right;">
+      </form>
+	</div>
+</div>
+{% endblock %}

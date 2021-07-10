@@ -1,0 +1,37 @@
+{% extends 'enroll/patient_reg.html' %}
+
+{% block content %}
+
+{% include 'enroll/includes/messages.html' %}
+
+{% if user.is_authenticated %}
+<center>
+    <h4>Welcome, <em>{{user.first_name}}</em></h4>
+</center>
+<div class="row">
+    <div class="col-sm-3"></div>
+
+    <div class="col-sm-6 " style=" padding: 5%;">
+        <h4 class="text-center alert alert-info">New Patient</h4>
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class="btn btn-secondary" type="submit" name="create">Create</button>
+            <a href="/patient_list/" class="btn btn-primary" style="float: right;">List of Patients</a>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-10"></div>
+    <div class="col-sm-2">
+        <a href="/accounts/logout" class="btn btn-danger" style="float: right;">Logout</a>
+    </div>
+</div>
+
+{% else %}
+<center><h2><strong> Please Login </strong> </h3> </center>
+{% endif %}
+
+
+{% endblock %}

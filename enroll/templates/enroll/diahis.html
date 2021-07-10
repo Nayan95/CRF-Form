@@ -1,0 +1,223 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">MEDICAL AND CARDIAC HISTORY<br></h1>
+    <h4>Medical and cardiac history need to be assessed prior to procedure</h3>
+  </div>
+  <div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+      <table class="table table-hover">
+        <tr>
+          <th class="alert alert-info"> Diabetes History </th>
+          <th class="alert alert-info"></th>
+        </tr>
+        <tbody>
+          {% for ques in diabetes_ques %}
+          <tr>
+            <td width="80%">{{ ques.q_text }}</td>
+            <td width="20%">
+              <select name="ans[]"
+                onchange="if (this.value=='Yes'){this.form['Yes'].style.visibility='visible'}else {this.form['Yes'].style.visibility='hidden'};">
+                <option value="No" name="ans[]">No</option>
+                <option value="Yes" name="ans[]">Yes</option>
+                <option value="UNK" name="ans[]">UNK</option>
+              </select>
+              <input type="text" placeholder="If Yes, Duration" id="Yes" name="ans[]" style="visibility:hidden" />
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in type_ques %}
+          <tr>
+            <td width="80%">{{ ques.q_text }}</td>
+            <td width="20%">
+              <select name="diab[]" onchange="if (this.value == 'Type 1' || this.value == 'Type 2'){this.form['None'].style.visibility='visible'}else {this.form['None'].style.visibility='hidden'};">
+                <option value="None" name="diab[]">None</option>
+                <option value="Type 1" name="diab[]">Type 1</option>
+                <option value="Type 2" name="diab[]">Type 2</option>
+              </select>
+              <select id="None" name="diab[]" style="visibility:hidden;">
+                <option value="Insulin requiring" name="diab[]">Insulin requiring</option>
+                <option value="Non-insulin requiring" name="diab[]">Non-Insulin requiring</option>
+              </select>
+            </td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <th class="alert alert-info">Risk Factors for CAD</th>
+            <td class="alert alert-info">Yes/No/UNK</td>
+          </tr>
+          {% for ques in yesnounkques1 %}
+          <tr>
+            <td width="80%">{{ ques.q_text }}</td>
+            <td width="20%">
+              {{ diabetesform.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+
+          <tr>
+            <th class="alert alert-info">Medical History</th>
+            <td class="alert alert-info">Yes/No/UNK</td>
+          </tr>
+          
+          {% for ques in yesnounkques2 %}
+          <tr>
+            <td width="80%">{{ ques.q_text }}</td>
+            <td width="20%">
+              {{ diabetesform.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in yesnounk_ques3 %}
+          <tr>
+            <td width="80%">{{ ques.q_text }}</td>
+            <td width="20%">
+              <select name="dis[]"
+                onchange="if (this.value=='Yes'){this.form['diseases'].style.visibility='visible'}else {this.form['diseases'].style.visibility='hidden'};">
+                <option value="No" name="dis[]">No</option>
+                <option value="Yes" name="dis[]">Yes</option>
+                <option value="UNK" name="dis[]">UNK</option>
+              </select>
+              <input type="text" placeholder="Specify the diseases in detail" id="diseases" name="dis[]"
+                style="visibility:hidden;" />
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in yesnounk_ques4 %}
+          <tr>
+            <td width="90%">{{ ques.q_text }}</td>
+            <td width="10%">
+              {{ diabetesform.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in number_ques %}
+          <tr>
+            <td width="90%">{{ ques.q_text }}</td>
+            <td width="10%">
+              {{ durationform.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+          {% for ques in date_ques %}
+          <tr>
+            <td width="90%">{{ ques.q_text }}</td>
+            <td width="10%">
+              {{ dateform.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+
+          <tr>
+            <th class="alert alert-info">Angina Status</th>
+            <th class="alert alert-info"></th>
+          </tr>
+          {% for ques in if_ques %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="Dia1[]"
+                onchange="
+
+              if (this.value=='ST Elevation MI (STEMI)'){this.form['stemi'].style.visibility='visible',this.form['stemi1'].style.visibility='visible',this.form['stemi2'].style.visibility='visible',this.form['unstable angina'].style.visibility='hidden',this.form['stable angina'].style.visibility='hidden',this.form['Silent Ischemia'].style.visibility='hidden',this.form['angina equivalent'].style.visibility='hidden'}
+
+              else if (this.value=='Unstable Angina'){this.form['unstable angina'].style.visibility='visible',this.form['stemi'].style.visibility='hidden',this.form['stemi1'].style.visibility='hidden',this.form['stemi2'].style.visibility='hidden',this.form['stable angina'].style.visibility='hidden',this.form['Silent Ischemia'].style.visibility='hidden',this.form['angina equivalent'].style.visibility='hidden'}
+
+              else if (this.value=='Stable Angina'){this.form['stable angina'].style.visibility='visible',this.form['stemi'].style.visibility='hidden',this.form['stemi1'].style.visibility='hidden',this.form['stemi2'].style.visibility='hidden',this.form['unstable angina'].style.visibility='hidden',this.form['Silent Ischemia'].style.visibility='hidden',this.form['angina equivalent'].style.visibility='hidden'}
+
+              else if (this.value=='Silent Ischemia'){this.form['Silent Ischemia'].style.visibility='visible',this.form['stemi'].style.visibility='hidden',this.form['stemi1'].style.visibility='hidden',this.form['stemi2'].style.visibility='hidden',this.form['unstable angina'].style.visibility='hidden',this.form['stable angina'].style.visibility='hidden',this.form['angina equivalent'].style.visibility='hidden'}
+
+              else if (this.value=='Angina Equivalent'){this.form['angina equivalent'].style.visibility='visible',this.form['stemi'].style.visibility='hidden',this.form['stemi1'].style.visibility='hidden',this.form['stemi2'].style.visibility='hidden',this.form['unstable angina'].style.visibility='hidden',this.form['stable angina'].style.visibility='hidden',this.form['Silent Ischemia'].style.visibility='hidden'}
+
+              else {this.form['stemi'].style.visibility='hidden',this.form['stemi1'].style.visibility='hidden',this.form['stemi2'].style.visibility='hidden',this.form['unstable angina'].style.visibility='hidden',this.form['stable angina'].style.visibility='hidden',this.form['Silent Ischemia'].style.visibility='hidden',this.form['angina equivalent'].style.visibility='hidden'};">
+
+                <option name="Dia1[]" value="None" /> None </option>
+                <option name="Dia1[]" value="ST Elevation MI (STEMI)" /> ST Elevation MI (STEMI) </option>
+                <option name="Dia1[]" value="Non-ST Elevation MI (NSTEMI)" /> Non-ST Elevation MI (NSTEMI)</option>
+                <option name="Dia1[]" value="Unstable Angina" /> Unstable Angina</option>
+                <option name="Dia1[]" value="Stable Angina" /> Stable Angina</option>
+                <option name="Dia1[]" value="Silent Ischemia" /> Post ACS Angina (30 days to 3 months)</option>
+                <option name="Dia1[]" value="Angina Equivalent" /> Angina Equivalent</option>
+              </select>
+
+              <select id="stemi" name="Dia1[]" style="visibility:hidden;">
+                <option name="Dia1[]" value="Anterior" /> Anterior</option>
+                <option name="Dia1[]" value="Inferior" /> Inferior</option>
+                <option name="Dia1[]" value="Lateral" /> Lateral</option>
+              </select>
+              <input type="number" placeholder="Window Period (in hours)" id="stemi1" name="Dia1[]" style="visibility:hidden" />
+              <select id="stemi2" name="Dia1[]" style="visibility:hidden;">
+                <option name="Dia1[]" value="1" />1</option>
+                <option name="Dia1[]" value="2" /> 2</option>
+                <option name="Dia1[]" value="3" /> 3</option>
+                <option name="Dia1[]" value="4" /> 4</option>
+              </select>
+
+              <select id="unstable angina" name="Dia1[]" style="visibility:hidden;">
+                <option name="Dia1[]" value="IA" /> IA </option>
+                <option name="Dia1[]" value="IB" /> IB </option>
+                <option name="Dia1[]" value="IC" /> IC </option>
+                <option name="Dia1[]" value="IIA" /> IIA </option>
+                <option name="Dia1[]" value="IIB" /> IIB </option>
+                <option name="Dia1[]" value="IIC" /> IIC</option>
+                <option name="Dia1[]" value="IIIA" /> IIIA</option>
+                <option name="Dia1[]" value="IIIB" /> IIIB</option>
+                <option name="Dia1[]" value="IIIC" /> IIIC</option>
+                <option name="Dia1[]" value="Unknown" /> Unknown</option>
+              </select>
+
+              <select id="stable angina" name="Dia1[]" style="visibility:hidden;">
+                <option name="Dia1[]" value="Grade I" /> Grade I</option>
+                <option name="Dia1[]" value="Grade II" /> Grade II</option>
+                <option name="Dia1[]" value="Grade III" /> Grade III</option>
+                <option name="Dia1[]" value="Grade IV" /> Grade IV</option>
+                <option name="Dia1[]" value="Unknown" /> Unknown</option>
+              </select>
+
+              <select id="Silent Ischemia" name="Dia1[]" style="visibility:hidden;">
+                <option name="Dia1[]" value="Exercise test" /> Exercise test</option>
+                <option name="Dia1[]" value="Thallium scintigraphy or other tracer " /> Thallium scintigraphy or other
+                tracer </option>
+                <option name="Dia1[]" value="Stress ECHO (Dobutamine, adenosine)" /> Stress ECHO (Dobutamine, adenosine)
+                </option>
+                <option name="Dia1[]" value="PET" /> PET</option>
+                <option name="Dia1[]" value="CT" /> CT</option>
+                <option name="Dia1[]" value="FFRCT" /> FFRCT</option>
+                <option name="Dia1[]" value="FFR" /> FFR</option>
+                <option name="Dia1[]" value="IFR" /> IFR</option>
+                <option name="Dia1[]" value="CFR" /> CFR</option>
+                <option name="Dia1[]" value="Other" /> Other</option>
+              </select>
+
+              <select id="angina equivalent" name="Dia1[]" style="visibility:hidden;">
+                <option name="Dia1[]" value="Dyspnea" /> Dyspnea</option>
+                <option name="Dia1[]" value="Arrhythmia" /> Arrhythmia</option>
+                <option name="Dia1[]" value="Syncope/ Pre syncope" /> Syncope/ Pre syncope</option>
+              </select>
+            </td>
+          </tr>
+          {% endfor %}
+          {% for ques in nyha_ques %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ NYHAform.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+  </div>
+</div>
+
+{% endblock %}

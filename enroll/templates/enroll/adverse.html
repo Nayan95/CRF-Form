@@ -1,0 +1,57 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS
+
+<br></h1>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+          <tbody>
+
+            {% for ques in questions1 %}
+           <tr>
+            <td>{{ ques.q_text }}<br><i style="font-size: 12px">If yes, fill the Adverse Event Log</i></td>
+            <td>
+           {{ yesnoform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+            {% for ques in questions2 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{yesnoform.ans_text}}
+            </td>
+          </tr>
+          {% endfor %}
+          {% for ques in questions3 %}
+          <tr>
+            <td>{{ ques.q_text }}<br><i>(Tick all that apply)</i></td>
+            <td>
+              <input type="checkbox" value="Death " name="ser[]"> Death <br>
+              <input type="checkbox" value="MI" name= "ser[]"> MI <br>
+              <input type="checkbox" value="Stent Thrombosis" name="ser[]"> Stent Thrombosis <br>
+              <input type="checkbox" value="Revascularization (PCI or CABG)" name= "ser[]">Revascularization (PCI or CABG)<br>
+              <input type="checkbox" value="HF Hospitalization " name="ser[]"> HF Hospitalization <br>
+              <input type="checkbox" value="Bleeding " name="ser[]"> Bleeding <br>
+              <input type="checkbox" value="Stroke " name="ser[]"> Stroke <br>
+              <input type="checkbox" value="Others" name="ser[]" onchange="if(this.checked){this.form['detail'].style.visibility='visible'} else {this.form['detail'].style.visibility='hidden'};"> Others
+              <input type="text" name="ser[]" id="detail" placeholder="Specify..." style="visibility:hidden">
+            </td>
+           </tr>
+          {% endfor %}
+
+          </tbody>
+      </table>
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

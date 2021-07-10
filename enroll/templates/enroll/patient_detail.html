@@ -1,0 +1,17 @@
+{% extends 'enroll/patient_reg.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4 class="text-center alert alert-primary">Get Patient Details</h4>
+        <p>Enter Patient ID to get its details.</p>
+        <form method="POST">
+            {% csrf_token %}
+            {{patient_id.as_p}}
+            <input type="submit" class="btn btn-success" value="Submit">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

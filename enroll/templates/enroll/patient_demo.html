@@ -1,0 +1,84 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+      <h3 class="text-center alert alert-primary">PATIENT DEMOGRAPHICS</h3>
+      <table class="table table-hover">
+        <tbody>
+            
+          {% for ques in dob_ques %}
+          <tr>
+            <td width="60%">{{ques.q_text}}</td>
+            <td width="40%">{{dateform.ans_text}}</td>
+          </tr>
+          {%endfor%}
+
+          {% for ques in age_ques %}
+          <tr>
+            <td>{{ques.q_text}}</td>
+            <td>{{ageform.ans_text}}</td>
+          </tr>
+          {%endfor%}
+
+          {% for ques in sex_ques %}
+          <tr>
+            <td>{{ques.q_text}}</td>
+            <td>{{sexform.ans_text}}</td>
+          </tr>
+          {%endfor%}
+
+          {% for ques in address_ques %}
+          <tr>
+            <td>{{ques.q_text}}</td>
+            <td>{{addressform.ans_text}}</td>
+          </tr>
+          {%endfor%}
+
+          {% for ques in phone_ques %}
+          <tr>
+            <td>{{ques.q_text}}</td>
+            <td>{{phoneform.ans_text}}</td>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+
+      <h3 class="text-center alert alert-primary">Vital Signs</h3>
+      <table class="table table-hover">
+        <tbody>
+          {% for ques in hrques %}
+          <tr>
+            <td width="60%">{{ ques.q_text }}</td>
+            <td width="40%">{{ hrform.ans_text }}</td>
+          </tr>
+          {% endfor %}
+          {% for ques in bpques %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <p><input type="number" name="bp[]" class="w-25">/<input type="number" name="bp[]" class="w-25"></p>
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in whbques %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ whbform.ans_text }}
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+  </div>
+</div>
+{% endblock %}

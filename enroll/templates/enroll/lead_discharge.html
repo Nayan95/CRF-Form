@@ -1,0 +1,73 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">LEAD ECG (POST PROCEDURE)<br></h1>
+  </div>
+	<div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+			<table class="table table-hover">
+          <tbody>
+          {% for ques in yesno_ques1 %}
+          <tr>
+            <td width="70%">{{ ques.q_text }}</td>
+            <td width="30%">
+              <select name="dt[]" onchange="if (this.value=='Yes'){this.form['date'].style.visibility='visible'}else {this.form['date'].style.visibility='hidden'};">
+                <option value="No" name="dt[]">No</option>
+                <option value="Yes" name= "dt[]">Yes</option>
+              </select>
+              <input type="date" id="date" name="dt[]" style="visibility:hidden;">
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% for ques in yesno_ques2 %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              <select name="ST[]" onchange="if (this.value=='Yes'){this.form['st1'].style.visibility='visible', this.form['inp1'].style.visibility='visible',this.form['st2'].style.visibility='visible', this.form['inp2'].style.visibility='visible'}else {this.form['st1'].style.visibility='hidden', this.form['inp1'].style.visibility='hidden',this.form['st2'].style.visibility='hidden', this.form['inp2'].style.visibility='hidden'};">
+                <option value="No" name="ST[]">No</option>
+                <option value="Yes" name= "ST[]">Yes</option>
+              </select><br>
+              <select id="st1" name="ST[]" style="visibility:hidden;">
+                <option name="ST[]" value=" ST elevation"> ST elevation</option>
+              </select>
+              <input type="number" id="inp1" name="ST[]" placeholder="mm" class="w-25" style="visibility:hidden;">
+              <select id="st2" name="ST[]" style="visibility:hidden;">
+                <option name="ST[]" value=" ST depression"> ST depression</option>
+              </select>
+              <input type="number" id="inp2" name="ST[]" placeholder="mm" class="w-25" style="visibility:hidden;">
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in arrhythmia_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ arrhythmiaform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+          {% for ques in atrioventricular_ques %}
+           <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ atrioventricularblockform.ans_text }}
+            </td>
+           </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      <p><i>*ECG should be done within ≤24 hours pre-procedure</i></p>
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+	</div>
+</div>
+
+{% endblock %}

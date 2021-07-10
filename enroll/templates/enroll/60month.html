@@ -1,0 +1,51 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+
+<script>
+  function showHide1(){
+    a = document.getElementById('anti').value 
+    if (a == 'Yes'){
+      document.getElementById('1month').style.visibility = 'visible'
+    }else{
+      document.getElementById('1month').style.visibility = 'hidden'
+    }
+  }
+</script>
+
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">60 Months (±30 days)</h1>
+  </div>
+  <div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+      <table class="table table-hover">
+        
+        <h5 class="alert alert-info">Follow Up</h5>
+        
+        {% for ques in question1 %}
+        <tr>
+          <td>{{ ques.q_text }}</td>
+          <td>
+            <select name="yn1[]" id="anti" onchange="showHide1()">
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          </td>
+        </tr>
+        {% endfor %}
+       <tr id="1month" style="visibility: hidden;">
+         <td>Assessment Date</td>
+         <td>
+            <input type="date" name="yn1[]">
+         </td>
+        </tr>
+      </table>
+     
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'enroll/question.html' %}
+
+{% block content %}
+
+<div class="row">
+  <div class="container mt-3">
+    <h1 class="text-center alert alert-primary">PRE-PROCEDURE CARDIAC ENZYMES</h1>
+  </div>
+  <div class="col-sm-12">
+    <form method="POST">
+      {% csrf_token %}
+      <table class="table table-hover">
+        {% for ques in date_ques %}
+        <tr>
+          <td>{{ ques.q_text }}</td>
+          <td>
+            {{ date_form.ans_text }}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <table class="table table-hover">
+        <thead>
+          <tr class="alert alert-secondary">
+            <th scope="col">Lab Parameter</th>
+            <th scope="col">Done/Not Done</th>
+            <th scope="col">Result</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Lab Code</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for ques in cardiac_ques %}
+          <tr>
+            <td>{{ ques.q_text }}</td>
+            <td>
+              {{ done_form.ans_text }}
+            </td>
+            <td>
+              {{cardiac_resultform.ans_text}}
+            </td>
+            <td>
+              {{cardiac_unitform.ans_text}}
+            </td>
+            <td>
+              {{cardiac_codeform.ans_text}}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p> <strong>*</strong> RESULT OF CARDIAC ENZYME WHETHER QUALITATIVE OR QUANTITATIVE WILL BE SPECIFIED IN RESULT SECTION.</p>
+      <p> <strong>*</strong> Troponin/CK/ CKMB to be done at 8-hrs post procedure. In case of cardiac enzymes
+        elevation<br> (CK > 2 times ULN or CKMB > 3 times ULN or cTn/hs-cTn > 35 ULN) at least 2 samples (within a preferred interval of 6 hours) should be obtained prior to discharge</p>
+      
+      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
+      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+    </form>
+  </div>
+</div>
+{% endblock %}
