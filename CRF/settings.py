@@ -141,21 +141,21 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-#STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-#LOGGING = {
-#    "version": 1,
-#    "disable_existing_loggers": False,
-#    "handlers": {"console": {"class": "logging.StreamHandler"}},
-#    "loggers": {
-#        "": {"handlers": ["console"], "level": "INFO"},
-#        "django": {"handlers": ["console"], "level": "INFO"},
-#    },
-#}
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
-#django_heroku.settings(locals(), logging=False)
-django_heroku.settings(locals())
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {
+        "": {"handlers": ["console"], "level": "INFO"},
+        "django": {"handlers": ["console"], "level": "INFO"},
+    },
+}
+
+django_heroku.settings(locals(), logging=False)
+#django_heroku.settings(locals())
