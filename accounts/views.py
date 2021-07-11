@@ -19,7 +19,8 @@ def login(request):
       messages.warning(request,'Invalid Credentials')
       return redirect('/accounts/login')
 
-  return render(request,'enroll/login.html')
+  else:
+    return render(request,'enroll/login.html')
 
 def logout(request):
   auth.logout(request)
