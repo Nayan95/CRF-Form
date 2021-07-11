@@ -1,0 +1,3478 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.3
+-- Dumped by pg_dump version 13.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO postgres;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO postgres;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO postgres;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(150) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.auth_user OWNER TO postgres;
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_groups OWNER TO postgres;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_user_groups_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_user_permissions OWNER TO postgres;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO postgres;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO postgres;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO postgres;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO postgres;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO postgres;
+
+--
+-- Name: enroll_patient; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.enroll_patient (
+    p_id integer NOT NULL,
+    f_name character varying(20) NOT NULL,
+    l_name character varying(20) NOT NULL,
+    age integer NOT NULL
+);
+
+
+ALTER TABLE public.enroll_patient OWNER TO postgres;
+
+--
+-- Name: enroll_patient_p_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.enroll_patient_p_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.enroll_patient_p_id_seq OWNER TO postgres;
+
+--
+-- Name: enroll_patient_p_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.enroll_patient_p_id_seq OWNED BY public.enroll_patient.p_id;
+
+
+--
+-- Name: enroll_question; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.enroll_question (
+    q_id integer NOT NULL,
+    q_text character varying(500) NOT NULL
+);
+
+
+ALTER TABLE public.enroll_question OWNER TO postgres;
+
+--
+-- Name: enroll_result; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.enroll_result (
+    id integer NOT NULL,
+    ans_text character varying(200) NOT NULL,
+    p_id_id integer,
+    q_id_id integer NOT NULL
+);
+
+
+ALTER TABLE public.enroll_result OWNER TO postgres;
+
+--
+-- Name: enroll_result_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.enroll_result_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.enroll_result_id_seq OWNER TO postgres;
+
+--
+-- Name: enroll_result_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.enroll_result_id_seq OWNED BY public.enroll_result.id;
+
+
+--
+-- Name: enroll_user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.enroll_user (
+    username character varying(20) NOT NULL,
+    password character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.enroll_user OWNER TO postgres;
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: enroll_patient p_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.enroll_patient ALTER COLUMN p_id SET DEFAULT nextval('public.enroll_patient_p_id_seq'::regclass);
+
+
+--
+-- Name: enroll_result id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.enroll_result ALTER COLUMN id SET DEFAULT nextval('public.enroll_result_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add user	4	add_user
+14	Can change user	4	change_user
+15	Can delete user	4	delete_user
+16	Can view user	4	view_user
+17	Can add content type	5	add_contenttype
+18	Can change content type	5	change_contenttype
+19	Can delete content type	5	delete_contenttype
+20	Can view content type	5	view_contenttype
+21	Can add session	6	add_session
+22	Can change session	6	change_session
+23	Can delete session	6	delete_session
+24	Can view session	6	view_session
+25	Can add patient	7	add_patient
+26	Can change patient	7	change_patient
+27	Can delete patient	7	delete_patient
+28	Can view patient	7	view_patient
+29	Can add question	8	add_question
+30	Can change question	8	change_question
+31	Can delete question	8	delete_question
+32	Can view question	8	view_question
+33	Can add result	9	add_result
+34	Can change result	9	change_result
+35	Can delete result	9	delete_result
+36	Can view result	9	view_result
+37	Can add user	10	add_user
+38	Can change user	10	change_user
+39	Can delete user	10	delete_user
+40	Can view user	10	view_user
+\.
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+6	pbkdf2_sha256$260000$X5AcPGEtt2cmwoTTUHZT6v$tspxcYuYG5lp89G35K9f5d4ePBUlYChTVSHvbmIW9n0=	2021-07-02 12:59:30.246+05:30	t	root	Saksham	Tandon	saksham12356@gmail.com	t	t	2021-06-06 12:43:57+05:30
+7	pbkdf2_sha256$216000$PvweR9xfwPMq$p66vK4Ti1Ejefokz8FdxKcQRrxCY8eL4HS+IxvAdJ/s=	\N	f	igmc0172	IGMC	User		f	t	2021-07-07 22:03:09+05:30
+8	pbkdf2_sha256$216000$1hZQfeoRauFn$CQNWUT9bDvmVVFwvG1+dIIfmTAWse5TZOg/2zHcvE18=	2021-07-07 22:05:55.765929+05:30	f	universal	User			f	t	2021-07-07 22:03:33+05:30
+1	pbkdf2_sha256$216000$vmO2HO7Fwtkj$TKqfPFBHwFXd+ZmOv6LzR66acgTRcf2MBZ/D2lDgS3Y=	2021-07-10 13:14:01.894536+05:30	t	dell	Nayan	Aggarwal		t	t	2021-03-21 21:42:04+05:30
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2021-03-22 21:45:01.683+05:30	1	Nayan	1	[{"added": {}}]	7	1
+2	2021-03-22 21:45:13.805+05:30	2	Saksham	1	[{"added": {}}]	7	1
+3	2021-03-22 21:45:22.236+05:30	3	Kritika	1	[{"added": {}}]	7	1
+4	2021-03-22 22:09:55.155+05:30	1	Age ≥ 18 years.	1	[{"added": {}}]	8	1
+5	2021-03-22 22:10:00.716+05:30	2	Patient with diabetes mellitus (Type 1 or Type 2)	1	[{"added": {}}]	8	1
+6	2021-03-22 22:58:45.892+05:30	1	Yes	1	[{"added": {}}]	9	1
+7	2021-03-22 22:58:52.244+05:30	2	No	1	[{"added": {}}]	9	1
+8	2021-03-22 22:58:58.947+05:30	3	Yes	1	[{"added": {}}]	9	1
+9	2021-03-22 23:51:30.64+05:30	5	sfc	3		7	1
+10	2021-03-22 23:51:30.981+05:30	0	sfc	3		7	1
+11	2021-03-22 23:56:42.184+05:30	9758	Amit	3		7	1
+12	2021-03-22 23:56:42.347+05:30	6642	Aman	3		7	1
+13	2021-03-22 23:56:42.565+05:30	7	Amit	3		7	1
+14	2021-03-22 23:56:42.68+05:30	6	Amit	3		7	1
+15	2021-03-23 12:21:26.167+05:30	5	yes	3		9	1
+16	2021-03-23 12:21:26.356+05:30	4	yes	3		9	1
+17	2021-03-23 12:21:26.645+05:30	3	Yes	3		9	1
+18	2021-03-23 13:47:37.696+05:30	8	No	3		9	1
+19	2021-03-23 13:47:37.89+05:30	7	Yes	3		9	1
+20	2021-03-23 13:47:38.027+05:30	6	yes	3		9	1
+21	2021-03-23 14:42:25.838+05:30	10	No	3		9	1
+22	2021-03-23 14:42:26.006+05:30	9	No	3		9	1
+23	2021-03-23 20:31:27.206+05:30	12	No	3		9	1
+24	2021-03-23 20:31:27.361+05:30	11	Yes	3		9	1
+25	2021-03-23 23:24:11.247+05:30	14	No	3		9	1
+26	2021-03-23 23:24:11.436+05:30	13	Yes	3		9	1
+27	2021-03-23 23:24:11.614+05:30	2	No	3		9	1
+28	2021-03-23 23:24:11.776+05:30	1	Yes	3		9	1
+29	2021-03-23 23:24:21.824+05:30	3	Kritika	3		7	1
+30	2021-03-23 23:24:21.975+05:30	2	Saksham	3		7	1
+31	2021-03-23 23:24:22.152+05:30	1	Nayan	3		7	1
+32	2021-03-23 23:30:41.275+05:30	2	Saksham	3		7	1
+33	2021-03-23 23:30:41.424+05:30	1	Nayan	3		7	1
+34	2021-03-23 23:55:20.257+05:30	2	Nayan	3		7	1
+35	2021-03-23 23:55:20.471+05:30	1	Nayan	3		7	1
+36	2021-03-23 23:58:35.331+05:30	1	Nayan	3		7	1
+37	2021-03-24 00:00:51.152+05:30	2	Nayan	3		7	1
+38	2021-03-24 00:19:21.974+05:30	1	Nayan	3		7	1
+39	2021-03-24 00:20:09.615+05:30	2	Nayan	3		7	1
+40	2021-03-24 00:20:54.029+05:30	1	N	3		7	1
+41	2021-03-24 00:23:10.599+05:30	1	Nayan	3		7	1
+42	2021-03-24 00:25:45.404+05:30	1	Nayan	3		7	1
+43	2021-03-24 00:29:00.428+05:30	1	Nayan	3		7	1
+44	2021-03-24 00:30:29.91+05:30	1	Nayan	3		7	1
+45	2021-03-24 10:05:48.726+05:30	2	Kritika	3		7	1
+46	2021-03-24 10:05:48.888+05:30	1	Saksham	3		7	1
+47	2021-03-24 10:05:49.077+05:30	0	Nayan	3		7	1
+48	2021-03-24 10:06:51.817+05:30	3	Saksham	3		7	1
+49	2021-03-24 10:06:51.99+05:30	2	Saksham	3		7	1
+50	2021-03-24 10:10:42.007+05:30	3	Angiographically confirmed multivessel CAD [critical (≥ 70%) lesions in at least  two major epicardial vessels and in at least two separate coronary artery  territories (LAD, LCX, RCA)]. The populatio	1	[{"added": {}}]	8	1
+51	2021-03-24 10:10:56.918+05:30	4	Angiographic characteristics amenable to PCI as decided by the heart team	1	[{"added": {}}]	8	1
+52	2021-03-24 10:11:08.992+05:30	5	Indication for revascularization based upon symptoms of angina/angina  equivalents and/or objective evidence of myocardial ischemia	1	[{"added": {}}]	8	1
+53	2021-03-24 10:11:21.035+05:30	6	Willing to comply with all follow-up required study visits	1	[{"added": {}}]	8	1
+54	2021-03-24 10:11:37.708+05:30	7	Signed informed consent	1	[{"added": {}}]	8	1
+55	2021-03-24 10:11:50.643+05:30	2	Saksham	3		7	1
+56	2021-03-24 10:11:50.819+05:30	1	Nayan	3		7	1
+57	2021-03-25 00:25:51.774+05:30	7	Nayan	3		7	1
+58	2021-03-25 00:25:51.939+05:30	6	Saksham	3		7	1
+59	2021-03-25 00:25:52.17+05:30	5	Nayan	3		7	1
+60	2021-03-25 00:25:52.47+05:30	4	Nayan	3		7	1
+61	2021-03-25 13:13:56.638+05:30	7	User	3		7	1
+62	2021-03-25 13:13:56.792+05:30	6	user	3		7	1
+63	2021-03-25 13:13:56.931+05:30	5	Pranjal	3		7	1
+64	2021-03-25 21:50:05.335+05:30	6	Keshav	3		7	1
+65	2021-03-25 21:50:05.496+05:30	5	Saksham	3		7	1
+66	2021-03-25 21:50:05.651+05:30	4	Saksham	3		7	1
+67	2021-03-25 21:51:25.516+05:30	4	Saksham	3		7	1
+68	2021-03-25 21:54:11.891+05:30	4	Saksham	3		7	1
+69	2021-03-25 22:00:47.466+05:30	6	Tisha	3		7	1
+70	2021-03-25 22:00:47.628+05:30	5	Saksham	3		7	1
+71	2021-03-25 22:00:47.75+05:30	4	Saksham	3		7	1
+72	2021-03-26 12:02:25.681+05:30	8	Severe congestive heart failure (class III or IV according to NYHA, or pulmonary edema) at the time of enrollment.	1	[{"added": {}}]	8	1
+73	2021-03-26 12:02:36.991+05:30	9	Prior CABG surgery.	1	[{"added": {}}]	8	1
+74	2021-03-26 12:02:46.694+05:30	10	Prior PCI with stent implantation within 6 months.	1	[{"added": {}}]	8	1
+75	2021-03-26 22:09:13.657+05:30	10	Ajay	3		7	1
+76	2021-03-26 22:09:13.843+05:30	9	Aman	3		7	1
+77	2021-03-26 22:09:14.095+05:30	8	Aman	3		7	1
+78	2021-03-26 22:09:14.297+05:30	7	Nayan	3		7	1
+79	2021-03-26 22:09:14.433+05:30	6	Nayan	3		7	1
+80	2021-03-26 22:09:14.623+05:30	5	Pranjal	3		7	1
+270	2021-03-30 19:25:38.58+05:30	80	Troponin T	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+271	2021-03-30 19:26:12.266+05:30	90	Troponin T	3		8	1
+272	2021-03-30 19:26:26.93+05:30	81	Was 12-Lead ECG performed	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+273	2021-03-30 19:27:52.282+05:30	91	Was 12-Lead ECG performed	3		8	1
+274	2021-03-30 20:24:15.546+05:30	22	If Yes, Duration ( In Years )  :	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+275	2021-03-30 20:24:51.4+05:30	22	If Yes, Duration ( In Years ). If No, 0 :	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+276	2021-03-30 20:29:51.422+05:30	7	sd	3		7	1
+277	2021-03-30 20:29:51.541+05:30	6	Saksham	3		7	1
+278	2021-03-30 20:29:51.773+05:30	5	Aman	3		7	1
+279	2021-03-30 20:29:51.951+05:30	4	Nayan	3		7	1
+280	2021-03-30 20:29:52.106+05:30	3	Kritika	3		7	1
+281	2021-03-30 20:29:52.228+05:30	2	Nayan	3		7	1
+282	2021-03-30 20:29:52.328+05:30	1	Ram	3		7	1
+283	2021-03-30 20:33:35.538+05:30	1	Pranjal	3		7	1
+284	2021-03-31 19:51:46.942+05:30	22	If Yes, Duration ( In Years ):	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+285	2021-03-31 19:52:20.669+05:30	33	If yes, Paroxysmal or Permanent	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+286	2021-03-31 20:11:37.389+05:30	2	Pranjal	3		7	1
+287	2021-03-31 20:11:37.492+05:30	1	Pranjal	3		7	1
+288	2021-03-31 20:15:19.321+05:30	1	Pranjal	3		7	1
+289	2021-03-31 20:20:20.347+05:30	1	Pranjal	3		7	1
+290	2021-03-31 20:23:37.31+05:30	1	Saksham	3		7	1
+291	2021-03-31 21:31:59.833+05:30	4	Kritika	3		7	1
+292	2021-03-31 21:32:00.097+05:30	3	Aman	3		7	1
+293	2021-03-31 21:32:00.289+05:30	2	Nayan	3		7	1
+294	2021-03-31 21:32:00.492+05:30	1	Saksham	3		7	1
+295	2021-04-01 20:35:20.527+05:30	34	History of Congestive Heart failure.(If Yes, subject must not be NHYA class III or IV)	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+296	2021-04-01 20:35:58.411+05:30	35	If Yes, subject must not be NHYA class III or IV	3		8	1
+297	2021-04-01 20:36:23.926+05:30	35	Renal insufficiency (serum creatinine > 2.5mg/dL, or creatinine clearance ≤ 30 mL/min)	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+298	2021-04-01 20:36:39.72+05:30	36	Renal insufficiency (serum creatinine > 2.5mg/dL, or creatinine clearance ≤ 30 mL/min)	3		8	1
+299	2021-04-01 20:37:29.706+05:30	36	History of previous stroke (If Yes, subject must have had stroke more than 6 months back in order to be enrolled).	2	[{"changed": {"fields": ["Q id", "Q text"]}}]	8	1
+300	2021-04-01 20:37:55.229+05:30	38	If Yes, subject must have had stroke more than 6 months back in order to be enrolled.	3		8	1
+301	2021-04-01 20:37:55.349+05:30	37	History of previous stroke	3		8	1
+302	2021-04-01 20:38:35.076+05:30	37	Known Chronic Obstructive Pulmonary Disease (COPD) (Chronic lung disease: long-term use of bronchodilators or steroids for lung disease)	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+303	2021-04-01 20:39:01.778+05:30	38	Major Bleeding (intracranial, gastrointestinal or uro-genital which requires Hospitalization)	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+304	2021-04-01 20:52:04.83+05:30	40	Major Bleeding (intracranial, gastrointestinal or uro-genital which requires Hospitalization)	3		8	1
+305	2021-04-01 20:52:04.94+05:30	39	Known Chronic Obstructive Pulmonary Disease (COPD) (Chronic lung disease: long-term use of bronchodilators or steroids for lung disease)	3		8	1
+306	2021-04-01 20:52:36.347+05:30	39	History of Liver Cirrhosis	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+307	2021-04-01 20:54:00.094+05:30	41	History of Liver Cirrhosis	3		8	1
+308	2021-04-01 20:54:23.155+05:30	40	Other relevant concomitant diseases	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+309	2021-04-01 20:54:29.626+05:30	42	Other relevant concomitant diseases	3		8	1
+310	2021-04-01 20:54:45.829+05:30	41	If Yes, specify the diseases in details	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+311	2021-04-01 20:54:56.299+05:30	43	If Yes, specify the diseases in details	3		8	1
+312	2021-04-01 20:55:12.126+05:30	42	Left Ventricular Ejection Fraction (LVEF)	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+313	2021-04-01 20:55:22.916+05:30	44	Left Ventricular Ejection Fraction (LVEF)	3		8	1
+314	2021-04-01 20:55:33.776+05:30	43	LVEF measurement	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+315	2021-04-01 20:55:43.028+05:30	45	LVEF measurement	3		8	1
+316	2021-04-01 20:56:41.711+05:30	44	Date of LVEF measurement (The date of LVEF within 30 days prior to PCI is acceptable) (If LVEF measurement is < 30%, subject is not eligible for the study).	2	[{"changed": {"fields": ["Q id", "Q text"]}}]	8	1
+317	2021-04-01 20:56:46.527+05:30	46	Date of LVEF measurement	3		8	1
+318	2021-04-01 20:56:58.071+05:30	48	If LVEF measurement is < 30%, subject is not eligible for the study	3		8	1
+319	2021-04-01 20:56:58.167+05:30	47	The date of LVEF within 30 days prior to PCI is acceptable	3		8	1
+320	2021-04-01 21:36:50.318+05:30	151	Are there any overlapping Stents?	3		8	1
+321	2021-04-01 21:36:50.449+05:30	150	Number of other (non-study) stents used (enter 0 if none)	3		8	1
+322	2021-04-01 21:36:50.626+05:30	149	Number of Xience stents used (enter 0 if none)	3		8	1
+323	2021-04-01 21:36:50.815+05:30	148	Number of Supraflex stents used  (enter 0 if none)	3		8	1
+324	2021-04-01 21:36:50.95+05:30	147	If Yes, MEDINA classification	3		8	1
+325	2021-04-01 21:36:51.088+05:30	146	Is this a bifurcation lesion	3		8	1
+326	2021-04-01 21:36:51.17+05:30	145	Minimal Lumen Diameter	3		8	1
+327	2021-04-01 21:36:51.314+05:30	144	Reference vessel diameter (visual estimate)	3		8	1
+328	2021-04-01 21:36:51.566+05:30	143	Lesion length (visual estimate)	3		8	1
+329	2021-04-01 21:36:51.932+05:30	142	CASS Site 3	3		8	1
+330	2021-04-01 21:36:52.173+05:30	141	CASS Site 2	3		8	1
+331	2021-04-01 21:36:52.318+05:30	140	CASS Site 1	3		8	1
+332	2021-04-01 21:36:52.434+05:30	139	Date of Target lesion 1 treated	3		8	1
+333	2021-04-01 21:36:52.556+05:30	138	For assessment of complications during lesion (stenosis>=50%) preparation	3		8	1
+334	2021-04-01 21:36:52.678+05:30	137	For pre-procedure evaluation of native disease in the lesion (stenosis>=50%)	3		8	1
+335	2021-04-01 21:36:52.801+05:30	136	If yes, please select one of the following:	3		8	1
+336	2021-04-01 21:36:52.989+05:30	135	Has IVUS/OCT been used pre-PCI	3		8	1
+337	2021-04-01 21:36:53.167+05:30	134	FFR/ IFR Value	3		8	1
+338	2021-04-01 21:36:53.266+05:30	133	FFR/IFR site:	3		8	1
+339	2021-04-01 21:36:53.388+05:30	132	Date:	3		8	1
+340	2021-04-01 21:36:53.521+05:30	131	If Yes,	3		8	1
+341	2021-04-01 21:36:53.643+05:30	130	Was FFR/iFR done	3		8	1
+342	2021-04-01 21:36:53.81+05:30	129	If yes, please specify	3		8	1
+343	2021-04-01 21:36:53.976+05:30	128	Due to other reason*	3		8	1
+344	2021-04-01 21:36:54.173+05:30	127	Due to procedural complication or patient instability*	3		8	1
+345	2021-04-01 21:36:54.305+05:30	126	Due to operator discretion*	3		8	1
+346	2021-04-01 21:36:54.521+05:30	125	Due to patient fatigue*	3		8	1
+347	2021-04-01 21:36:54.664+05:30	124	Due to reached limits of radiation*	3		8	1
+348	2021-04-01 21:36:54.874+05:30	62	Haemoglobin	3		8	1
+349	2021-04-01 21:36:55.137+05:30	61	Date of Sample collection*	3		8	1
+350	2021-04-01 21:36:55.414+05:30	60	Procedure Performed (Check all that apply)	3		8	1
+351	2021-04-01 21:36:55.608+05:30	59	CASS Site3	3		8	1
+352	2021-04-01 21:36:55.862+05:30	58	CASS Site 2	3		8	1
+353	2021-04-01 21:36:56.092+05:30	57	CASS Site	3		8	1
+354	2021-04-01 21:36:56.206+05:30	56	DATE OF PCI	3		8	1
+355	2021-04-01 21:36:56.319+05:30	55	Did subject had prior stent implantation more than 6 months before	3		8	1
+356	2021-04-01 21:36:56.463+05:30	54	NYHA Class	3		8	1
+357	2021-04-01 21:36:56.651+05:30	53	If angina equivalent, please specify	3		8	1
+358	2021-04-01 21:36:56.769+05:30	52	Silent Ischemia documented by	3		8	1
+359	2021-04-01 21:36:56.905+05:30	51	If stable angina, please indicate Canadian Cardiovascular Society class (CCS)	3		8	1
+360	2021-04-01 21:36:57.05+05:30	50	If unstable angina, please indicate Braunwald classification	3		8	1
+361	2021-04-01 21:36:57.205+05:30	49	Coronary Artery Disease presentation	3		8	1
+362	2021-04-01 21:37:53.286+05:30	123	Due to reached limits of contrast use*	3		8	1
+363	2021-04-01 21:37:53.374+05:30	122	Due to unanticipated case complexity*	3		8	1
+764	2021-04-14 13:01:09.964+05:30	6	Kritika	3		7	1
+364	2021-04-01 21:37:53.474+05:30	121	Staging was planned prior to index procedure due to obvious case complexity*	3		8	1
+365	2021-04-01 21:37:53.651+05:30	120	Due to Reimbursement (financial reason)	3		8	1
+366	2021-04-01 21:37:53.739+05:30	119	Planned date*	3		8	1
+367	2021-04-01 21:37:53.834+05:30	118	Was a staged procedure planned?	3		8	1
+368	2021-04-01 21:37:53.93+05:30	117	Please provide the details of anti-platelet therapy during procedure	3		8	1
+369	2021-04-01 21:37:54.062+05:30	116	Vascular access site(s)	3		8	1
+370	2021-04-01 21:37:54.162+05:30	115	Any staged procedure planned. If Yes, please provide the details in staged Procedure	3		8	1
+371	2021-04-01 21:37:54.25+05:30	114	Number of target vessels planned during Index procedure	3		8	1
+372	2021-04-01 21:37:54.383+05:30	113	Number of target vessels diseased	3		8	1
+373	2021-04-01 21:37:54.515+05:30	112	SYNTAX Score	3		8	1
+374	2021-04-01 21:37:54.605+05:30	111	Size of largest guide catheter	3		8	1
+375	2021-04-01 21:37:54.715+05:30	110	Procedure end time  Time last guide catheter removed (post final angiography)	3		8	1
+376	2021-04-01 21:37:54.815+05:30	109	Procedure start time . (It is to be calculated from the sheath insertion time)	3		8	1
+377	2021-04-01 21:37:54.927+05:30	108	Procedure start date	3		8	1
+378	2021-04-01 21:37:55.038+05:30	107	Date:	3		8	1
+379	2021-04-01 21:37:55.156+05:30	106	Investigator’s Signature:	3		8	1
+380	2021-04-01 21:37:55.271+05:30	105	Name of Investigator:	3		8	1
+381	2021-04-01 21:37:55.388+05:30	104	Randomization number Category	3		8	1
+382	2021-04-01 21:37:55.471+05:30	103	Patient randomized to which arm	3		8	1
+383	2021-04-01 21:37:55.571+05:30	102	If Yes, please check all that apply	3		8	1
+384	2021-04-01 21:37:55.707+05:30	101	Were cardiac and diabetes medications taken prior to enrollment?	3		8	1
+385	2021-04-01 21:37:55.903+05:30	100	If Yes, please tick below:	3		8	1
+386	2021-04-01 21:37:56.003+05:30	99	Was subject on previously prescribed regimen of aspirin/ antiplatelet.	3		8	1
+387	2021-04-01 21:37:56.125+05:30	98	If yes	3		8	1
+388	2021-04-01 21:37:56.224+05:30	97	Conduction abnormality	3		8	1
+389	2021-04-01 21:37:56.336+05:30	96	If yes,	3		8	1
+390	2021-04-01 21:37:56.447+05:30	95	ST Deviation	3		8	1
+391	2021-04-01 21:37:56.611+05:30	94	If Abnormal, please provide details	3		8	1
+392	2021-04-01 21:37:56.791+05:30	93	ECG Result:	3		8	1
+393	2021-04-01 21:37:57.009+05:30	92	If yes, ECG Date	3		8	1
+394	2021-04-01 21:37:57.201+05:30	81	Was 12-Lead ECG performed	3		8	1
+395	2021-04-01 21:37:57.382+05:30	80	Troponin T	3		8	1
+396	2021-04-01 21:37:57.534+05:30	79	Troponin I	3		8	1
+397	2021-04-01 21:37:57.657+05:30	78	CK-MB	3		8	1
+398	2021-04-01 21:37:57.801+05:30	77	CK Total	3		8	1
+399	2021-04-01 21:37:57.945+05:30	76	Date of Sample Collection	3		8	1
+400	2021-04-01 21:37:58.047+05:30	75	HDL	3		8	1
+401	2021-04-01 21:37:58.2+05:30	74	LDL	3		8	1
+402	2021-04-01 21:37:58.322+05:30	73	Triglycerides	3		8	1
+403	2021-04-01 21:37:58.451+05:30	72	Total Cholesterol	3		8	1
+404	2021-04-01 21:37:58.577+05:30	71	Date of Sample collection	3		8	1
+405	2021-04-01 21:37:58.699+05:30	70	Chloride	3		8	1
+406	2021-04-01 21:37:58.788+05:30	69	Potassium	3		8	1
+407	2021-04-01 21:37:58.965+05:30	68	Sodium	3		8	1
+408	2021-04-01 21:37:59.076+05:30	67	HbA1c	3		8	1
+409	2021-04-01 21:37:59.321+05:30	66	eGFR	3		8	1
+410	2021-04-01 21:37:59.675+05:30	65	Serum Creatinine	3		8	1
+411	2021-04-01 21:37:59.776+05:30	64	Platelet Count	3		8	1
+412	2021-04-01 21:37:59.927+05:30	63	WBC Count	3		8	1
+413	2021-04-01 22:15:34.369+05:30	43	LVEF measurement (in %)	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+414	2021-04-01 22:15:57.925+05:30	3	Saksham	3		7	1
+415	2021-04-01 22:15:58.093+05:30	2	Pranjal	3		7	1
+416	2021-04-01 22:15:58.359+05:30	1	Nayan	3		7	1
+417	2021-04-01 22:18:22.272+05:30	1	Nayan	3		7	1
+418	2021-04-01 22:27:40.067+05:30	2	Saksham	3		7	1
+419	2021-04-01 22:27:40.335+05:30	1	Nayan	3		7	1
+420	2021-04-01 22:32:43.908+05:30	2	Saksham	3		7	1
+421	2021-04-01 22:32:44.046+05:30	1	Nayan	3		7	1
+434	2021-04-03 19:02:42.948+05:30	9	Kritika	3		7	1
+435	2021-04-03 19:02:43.051+05:30	8	Kritika	3		7	1
+436	2021-04-03 19:02:43.173+05:30	7	Joey	3		7	1
+437	2021-04-03 19:02:43.356+05:30	6	Joey	3		7	1
+438	2021-04-03 19:02:43.461+05:30	5	Chandler	3		7	1
+439	2021-04-03 19:02:43.573+05:30	4	Rachel	3		7	1
+440	2021-04-03 19:02:43.672+05:30	3	Chandler	3		7	1
+441	2021-04-03 19:02:43.772+05:30	2	Phoebe	3		7	1
+442	2021-04-03 19:02:44.331+05:30	1	Monika	3		7	1
+443	2021-04-03 19:17:04.332+05:30	2	Kritika	3		7	1
+444	2021-04-03 19:17:04.434+05:30	1	Nayan	3		7	1
+445	2021-04-03 19:18:19.723+05:30	1	Nayan	3		7	1
+446	2021-04-03 19:31:02.943+05:30	2	Saksham	3		7	1
+447	2021-04-03 19:31:03.085+05:30	1	Nayan	3		7	1
+448	2021-04-03 19:35:56.848+05:30	2	Saksham	3		7	1
+449	2021-04-03 19:35:56.944+05:30	1	Kritika	3		7	1
+450	2021-04-04 13:44:48.639+05:30	57	Date of Sample collection*	1	[{"added": {}}]	8	1
+451	2021-04-04 13:44:59.403+05:30	58	Haemoglobin	1	[{"added": {}}]	8	1
+452	2021-04-04 13:45:10.372+05:30	59	WBC Count	1	[{"added": {}}]	8	1
+453	2021-04-04 13:45:19.391+05:30	60	Platelet Count	1	[{"added": {}}]	8	1
+454	2021-04-04 13:45:31.727+05:30	61	Serum Creatinine	1	[{"added": {}}]	8	1
+455	2021-04-04 13:45:42.301+05:30	62	eGFR	1	[{"added": {}}]	8	1
+456	2021-04-04 13:45:53.137+05:30	63	HbA1c	1	[{"added": {}}]	8	1
+457	2021-04-04 13:46:06.217+05:30	64	Sodium	1	[{"added": {}}]	8	1
+458	2021-04-04 13:46:16.199+05:30	65	Potassium	1	[{"added": {}}]	8	1
+459	2021-04-04 13:46:25.898+05:30	66	Chloride	1	[{"added": {}}]	8	1
+460	2021-04-04 14:20:05.245+05:30	6	Aman	3		7	1
+461	2021-04-04 14:20:05.324+05:30	5	Pranjal	3		7	1
+462	2021-04-04 14:20:05.472+05:30	4	Kritika	3		7	1
+463	2021-04-04 14:20:05.567+05:30	3	Kritika	3		7	1
+464	2021-04-04 14:20:05.668+05:30	2	Saksham	3		7	1
+465	2021-04-04 14:20:05.766+05:30	1	Nayan	3		7	1
+466	2021-04-04 15:06:35.953+05:30	3	Kritika	3		7	1
+467	2021-04-04 15:06:36.048+05:30	2	Nayan	3		7	1
+468	2021-04-04 15:06:36.218+05:30	1	Nayan	3		7	1
+576	2021-04-06 21:39:55.712+05:30	1	Nayan	3		7	1
+577	2021-04-06 21:56:21.69+05:30	94	Date of Sample collection	1	[{"added": {}}]	8	1
+578	2021-04-06 21:56:42.606+05:30	95	Total Cholesterol	1	[{"added": {}}]	8	1
+579	2021-04-06 21:56:53.145+05:30	96	Total Cholesterol Result	1	[{"added": {}}]	8	1
+580	2021-04-06 21:57:00.596+05:30	97	Total Cholesterol Unit	1	[{"added": {}}]	8	1
+765	2021-04-14 13:01:10.085+05:30	5	Kritika	3		7	1
+581	2021-04-06 21:57:09.054+05:30	98	Total Cholesterol Code	1	[{"added": {}}]	8	1
+582	2021-04-06 21:57:23.587+05:30	99	Triglycerides	1	[{"added": {}}]	8	1
+583	2021-04-06 21:57:29.851+05:30	100	Triglycerides Result	1	[{"added": {}}]	8	1
+584	2021-04-06 21:57:37.241+05:30	101	Triglycerides Unit	1	[{"added": {}}]	8	1
+585	2021-04-06 21:57:47.181+05:30	102	Triglycerides Code	1	[{"added": {}}]	8	1
+586	2021-04-06 21:58:04.402+05:30	103	LDL	1	[{"added": {}}]	8	1
+587	2021-04-06 21:58:14.518+05:30	104	LDL Result	1	[{"added": {}}]	8	1
+588	2021-04-06 21:58:20.574+05:30	105	LDL Unit	1	[{"added": {}}]	8	1
+589	2021-04-06 21:58:27.286+05:30	106	LDL Code	1	[{"added": {}}]	8	1
+590	2021-04-06 21:58:38.8+05:30	107	HDL	1	[{"added": {}}]	8	1
+591	2021-04-06 21:58:48.831+05:30	108	HDL Result	1	[{"added": {}}]	8	1
+592	2021-04-06 21:58:57.251+05:30	109	HDL Unit	1	[{"added": {}}]	8	1
+593	2021-04-06 21:59:03.642+05:30	110	HDL Code	1	[{"added": {}}]	8	1
+594	2021-04-06 22:03:02.413+05:30	2	Saksham	3		7	1
+595	2021-04-06 22:03:02.8+05:30	1	Nayan	3		7	1
+596	2021-04-06 22:08:18.01+05:30	111	Date of Sample Collection	1	[{"added": {}}]	8	1
+597	2021-04-06 22:08:43.182+05:30	112	CK Total	1	[{"added": {}}]	8	1
+598	2021-04-06 22:09:17.884+05:30	113	CK Total Not Done	1	[{"added": {}}]	8	1
+599	2021-04-06 22:09:31.241+05:30	114	CK Total Result	1	[{"added": {}}]	8	1
+600	2021-04-06 22:09:39.257+05:30	115	CK Total Unit	1	[{"added": {}}]	8	1
+601	2021-04-06 22:09:46.895+05:30	116	CK Total Code	1	[{"added": {}}]	8	1
+602	2021-04-06 22:10:02.249+05:30	117	CK-MB	1	[{"added": {}}]	8	1
+603	2021-04-06 22:10:12.604+05:30	118	CK-MB Not Done	1	[{"added": {}}]	8	1
+604	2021-04-06 22:10:18.97+05:30	119	CK-MB Result	1	[{"added": {}}]	8	1
+605	2021-04-06 22:10:27.272+05:30	120	CK-MB Unit	1	[{"added": {}}]	8	1
+606	2021-04-06 22:10:34.123+05:30	121	CK-MB Code	1	[{"added": {}}]	8	1
+607	2021-04-06 22:11:06.594+05:30	122	Troponin I	1	[{"added": {}}]	8	1
+608	2021-04-06 22:11:17.203+05:30	123	Troponin I Not Done	1	[{"added": {}}]	8	1
+609	2021-04-06 22:11:25.637+05:30	124	Troponin I Result	1	[{"added": {}}]	8	1
+610	2021-04-06 22:11:32.033+05:30	125	Troponin I Unit	1	[{"added": {}}]	8	1
+611	2021-04-06 22:11:39.262+05:30	126	Troponin I Code	1	[{"added": {}}]	8	1
+612	2021-04-06 22:11:51.947+05:30	127	Troponin T	1	[{"added": {}}]	8	1
+613	2021-04-06 22:12:03.321+05:30	128	Troponin T Not Done	1	[{"added": {}}]	8	1
+614	2021-04-06 22:12:13.954+05:30	129	Troponin T Result	1	[{"added": {}}]	8	1
+615	2021-04-06 22:12:20.509+05:30	130	Troponin T Unit	1	[{"added": {}}]	8	1
+616	2021-04-06 22:12:28.424+05:30	131	Troponin T Code	1	[{"added": {}}]	8	1
+654	2021-04-08 22:17:49.357+05:30	3	Nayan	3		7	1
+655	2021-04-08 22:17:49.455+05:30	2	Kritika	3		7	1
+656	2021-04-08 22:17:49.605+05:30	1	Nayan	3		7	1
+657	2021-04-08 22:20:35.335+05:30	1	Nayan	3		7	1
+658	2021-04-08 23:52:28.727+05:30	3	Nayan	3		7	1
+659	2021-04-08 23:52:28.824+05:30	2	Saksham	3		7	1
+660	2021-04-08 23:52:28.999+05:30	1	Nayan	3		7	1
+672	2021-04-11 23:04:16.626+05:30	151	Procedure End Time (Time last guide catheter removed (post final angiography))	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+673	2021-04-11 23:10:07.175+05:30	18	Saksham	3		7	1
+674	2021-04-11 23:10:07.273+05:30	17	Saksham	3		7	1
+675	2021-04-11 23:10:07.664+05:30	16	Nayan	3		7	1
+676	2021-04-11 23:10:07.774+05:30	15	Nayan	3		7	1
+677	2021-04-11 23:10:07.874+05:30	14	Nayan	3		7	1
+678	2021-04-11 23:10:07.952+05:30	13	Nayan	3		7	1
+679	2021-04-11 23:10:08.073+05:30	12	Tisha	3		7	1
+680	2021-04-11 23:10:08.195+05:30	11	Tisha	3		7	1
+681	2021-04-11 23:10:08.347+05:30	10	Tisha	3		7	1
+682	2021-04-11 23:10:08.441+05:30	9	Nayan	3		7	1
+683	2021-04-11 23:10:08.539+05:30	8	Saksham	3		7	1
+684	2021-04-11 23:10:08.652+05:30	7	Tisha	3		7	1
+685	2021-04-11 23:10:08.805+05:30	6	Nayan	3		7	1
+686	2021-04-11 23:10:08.961+05:30	5	Nayan	3		7	1
+687	2021-04-11 23:10:09.294+05:30	4	Nayan	3		7	1
+688	2021-04-11 23:10:09.405+05:30	3	Kritika	3		7	1
+689	2021-04-11 23:10:09.604+05:30	2	Saksham	3		7	1
+690	2021-04-11 23:10:09.682+05:30	1	Nayan	3		7	1
+710	2021-04-12 20:46:59.907+05:30	10	Tisha	3		7	1
+711	2021-04-12 20:47:00.18+05:30	9	Nayan	3		7	1
+712	2021-04-12 20:47:00.473+05:30	8	Jaypee University of	3		7	1
+713	2021-04-12 20:47:01.034+05:30	7	Tisha	3		7	1
+714	2021-04-12 20:47:01.322+05:30	6	Nayan	3		7	1
+715	2021-04-12 20:47:01.866+05:30	5	Tisha	3		7	1
+716	2021-04-12 20:47:02.227+05:30	4	Nayan	3		7	1
+717	2021-04-12 20:47:02.672+05:30	3	Nayan	3		7	1
+718	2021-04-12 20:47:03.59+05:30	2	Nayan	3		7	1
+719	2021-04-12 20:47:04.056+05:30	1	Kritika	3		7	1
+720	2021-04-12 22:08:54.863+05:30	6	Nayan	3		7	1
+721	2021-04-12 22:08:54.965+05:30	5	Nayan	3		7	1
+722	2021-04-12 22:08:55.132+05:30	4	Tisha	3		7	1
+723	2021-04-12 22:08:55.265+05:30	3	Nayan	3		7	1
+724	2021-04-12 22:08:55.364+05:30	2	Tisha	3		7	1
+725	2021-04-12 22:08:55.531+05:30	1	Nayan	3		7	1
+739	2021-04-14 12:43:39.814+05:30	182	Stent Type	1	[{"added": {}}]	8	1
+740	2021-04-14 12:43:54.842+05:30	183	Supraflex Diameter	1	[{"added": {}}]	8	1
+741	2021-04-14 12:44:07.763+05:30	184	Supraflex Length	1	[{"added": {}}]	8	1
+742	2021-04-14 12:44:17.553+05:30	185	Xience Diameter	1	[{"added": {}}]	8	1
+743	2021-04-14 12:44:29.319+05:30	186	Xience Length	1	[{"added": {}}]	8	1
+744	2021-04-14 12:44:39.618+05:30	187	Other Stent Diameter	1	[{"added": {}}]	8	1
+745	2021-04-14 12:44:52.987+05:30	188	Other Stent Length	1	[{"added": {}}]	8	1
+746	2021-04-14 13:01:07.482+05:30	24	Tisha	3		7	1
+747	2021-04-14 13:01:07.599+05:30	23	Tisha	3		7	1
+748	2021-04-14 13:01:07.732+05:30	22	Nayan	3		7	1
+749	2021-04-14 13:01:07.834+05:30	21	Nayan	3		7	1
+750	2021-04-14 13:01:08.124+05:30	20	Tisha	3		7	1
+751	2021-04-14 13:01:08.287+05:30	19	Nayan	3		7	1
+752	2021-04-14 13:01:08.388+05:30	18	Joey	3		7	1
+753	2021-04-14 13:01:08.519+05:30	17	Kritika	3		7	1
+754	2021-04-14 13:01:08.62+05:30	16	Kritika	3		7	1
+755	2021-04-14 13:01:08.708+05:30	15	Kritika	3		7	1
+756	2021-04-14 13:01:08.819+05:30	14	Kritika	3		7	1
+757	2021-04-14 13:01:08.953+05:30	13	Kritika	3		7	1
+758	2021-04-14 13:01:09.065+05:30	12	Joey	3		7	1
+759	2021-04-14 13:01:09.24+05:30	11	Kritika	3		7	1
+760	2021-04-14 13:01:09.485+05:30	10	Joey	3		7	1
+761	2021-04-14 13:01:09.63+05:30	9	Nayan	3		7	1
+762	2021-04-14 13:01:09.751+05:30	8	Joey	3		7	1
+763	2021-04-14 13:01:09.851+05:30	7	Kritika	3		7	1
+766	2021-04-14 13:01:10.208+05:30	4	Tisha	3		7	1
+767	2021-04-14 13:01:10.363+05:30	3	Nayan	3		7	1
+768	2021-04-14 13:01:10.485+05:30	2	Tisha	3		7	1
+769	2021-04-14 13:01:10.585+05:30	1	Nayan	3		7	1
+796	2021-04-21 13:40:31.332+05:30	198	Was FFR/iFR used post stent deployment?	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+797	2021-04-21 13:40:39.396+05:30	197	Was FFR/iFR used post stent deployment?	3		8	1
+798	2021-04-21 13:40:44.923+05:30	197	Was IVUS used to post stent deployment?	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+799	2021-04-21 13:40:50.062+05:30	196	Was IVUS used to post stent deployment?	3		8	1
+800	2021-04-21 13:40:57.589+05:30	196	Post-Dilatation with high pressure balloon	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+801	2021-04-21 13:42:10.273+05:30	195	If Yes, check all that apply	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+802	2021-04-23 11:15:49.005+05:30	15	Joey	3		7	1
+803	2021-04-23 11:15:49.056+05:30	14	Joey	3		7	1
+804	2021-04-23 11:15:49.094+05:30	13	Nayan	3		7	1
+805	2021-04-23 11:15:49.134+05:30	12	Parth	3		7	1
+806	2021-04-23 11:15:49.172+05:30	11	Joey	3		7	1
+807	2021-04-23 11:15:49.208+05:30	10	Chandler	3		7	1
+808	2021-04-23 11:15:49.25+05:30	9	Kritika	3		7	1
+809	2021-04-23 11:15:49.293+05:30	8	Kritika	3		7	1
+810	2021-04-23 11:15:49.336+05:30	7	Kritika	3		7	1
+811	2021-04-23 11:15:49.379+05:30	6	Kritika	3		7	1
+812	2021-04-23 11:15:49.436+05:30	5	Saksham	3		7	1
+813	2021-04-23 11:15:49.49+05:30	4	Nayan	3		7	1
+814	2021-04-23 11:15:49.563+05:30	3	Nayan	3		7	1
+815	2021-04-23 11:15:49.604+05:30	2	Saksham	3		7	1
+816	2021-04-23 11:15:49.675+05:30	1	Saksham	3		7	1
+817	2021-04-23 18:04:49.984+05:30	199	Any new complaints experienced by the patient since last visit  If yes, fill the Adverse Event Log	1	[{"added": {}}]	8	1
+818	2021-04-23 18:05:07.954+05:30	200	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	1
+819	2021-04-23 18:05:25.531+05:30	201	If Yes, please specify	1	[{"added": {}}]	8	1
+820	2021-04-23 18:45:48.769+05:30	14	Saksham	3		7	1
+821	2021-04-23 18:45:49.723+05:30	13	Saksham	3		7	1
+822	2021-04-23 18:45:49.766+05:30	12	Chandler	3		7	1
+823	2021-04-23 18:45:49.879+05:30	11	Joey	3		7	1
+824	2021-04-23 18:45:49.925+05:30	10	Saksham	3		7	1
+825	2021-04-23 18:45:49.966+05:30	9	Kritika	3		7	1
+826	2021-04-23 18:45:50.001+05:30	8	Joey	3		7	1
+827	2021-04-23 18:45:50.042+05:30	7	Kritika	3		7	1
+828	2021-04-23 18:45:50.079+05:30	6	Kritika	3		7	1
+829	2021-04-23 18:45:50.12+05:30	5	Nayan	3		7	1
+830	2021-04-23 18:45:50.16+05:30	4	Aanya	3		7	1
+831	2021-04-23 18:45:50.202+05:30	3	Joey	3		7	1
+832	2021-04-23 18:45:50.245+05:30	2	Kritika	3		7	1
+833	2021-04-23 18:45:50.303+05:30	1	Kritika	3		7	1
+840	2021-04-24 23:01:00.617+05:30	12963	Stroke	3		9	1
+841	2021-04-24 23:01:00.926+05:30	12962	Yes	3		9	1
+842	2021-04-24 23:01:01.164+05:30	12961	No	3		9	1
+843	2021-04-24 23:01:01.46+05:30	12960	No	3		9	1
+844	2021-04-24 23:01:01.902+05:30	12959	No	3		9	1
+845	2021-04-24 23:01:02.422+05:30	12958	No	3		9	1
+846	2021-04-24 23:01:02.75+05:30	12957	No	3		9	1
+847	2021-04-24 23:01:03.134+05:30	12956	No	3		9	1
+848	2021-04-24 23:05:14.429+05:30	13	Nayan	3		7	1
+849	2021-04-24 23:05:14.569+05:30	12	Nayan	3		7	1
+850	2021-04-24 23:05:14.696+05:30	11	Nayan	3		7	1
+851	2021-04-24 23:05:14.802+05:30	10	Nayan	3		7	1
+852	2021-04-24 23:05:14.937+05:30	9	Tisha	3		7	1
+853	2021-04-24 23:05:15.079+05:30	8	Nayan	3		7	1
+854	2021-04-24 23:05:15.246+05:30	7	Nayan	3		7	1
+855	2021-04-24 23:05:15.395+05:30	6	Ne	3		7	1
+856	2021-04-24 23:05:15.611+05:30	5	L	3		7	1
+857	2021-04-24 23:05:15.767+05:30	4	M	3		7	1
+858	2021-04-24 23:05:15.928+05:30	3	elena	3		7	1
+859	2021-04-24 23:05:16.056+05:30	2	Ram	3		7	1
+860	2021-04-24 23:05:16.189+05:30	1	Saksham	3		7	1
+888	2021-04-25 11:18:53.183+05:30	6	Nayan	3		7	1
+889	2021-04-25 11:18:53.354+05:30	5	d	3		7	1
+890	2021-04-25 11:18:53.48+05:30	4	G	3		7	1
+891	2021-04-25 11:18:53.614+05:30	3	d	3		7	1
+892	2021-04-25 11:18:53.802+05:30	2	Nayan	3		7	1
+893	2021-04-25 11:18:53.97+05:30	1	Saksham	3		7	1
+894	2021-04-25 11:41:21.843+05:30	1	Nayan	3		7	1
+895	2021-04-25 21:09:42.794+05:30	169	Date of Target lesion 1 treated	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+896	2021-04-25 21:10:03.542+05:30	208	Weight:	3		8	1
+897	2021-04-25 21:10:03.625+05:30	207	BP Diastolic	3		8	1
+898	2021-04-25 21:10:03.698+05:30	206	BP Systolic	3		8	1
+899	2021-04-25 21:10:04.12+05:30	205	Heart Rate :	3		8	1
+900	2021-04-25 21:10:51.446+05:30	205	Date of Target lesion 2 treated	2	[{"changed": {"fields": ["Q id", "Q text"]}}]	8	1
+901	2021-04-25 22:03:23.302+05:30	206	CASS Site 1	1	[{"added": {}}]	8	1
+902	2021-04-25 22:03:51.393+05:30	207	CASS Site 2	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+903	2021-04-25 22:04:12.35+05:30	208	CASS Site 3	1	[{"added": {}}]	8	1
+904	2021-04-25 22:04:24.723+05:30	209	Lesion length (visual estimate)	1	[{"added": {}}]	8	1
+905	2021-04-25 22:04:48.664+05:30	210	Reference vessel diameter (visual estimate)	1	[{"added": {}}]	8	1
+906	2021-04-25 22:05:01.712+05:30	211	Minimal Lumen Diameter	1	[{"added": {}}]	8	1
+907	2021-04-25 22:05:15.168+05:30	212	Is this a bifurcation lesion	1	[{"added": {}}]	8	1
+908	2021-04-25 22:05:33.937+05:30	213	If Yes, MEDINA classification	1	[{"added": {}}]	8	1
+909	2021-04-25 22:06:07.371+05:30	214	Number of Supraflex stents used (enter 0 if none)	1	[{"added": {}}]	8	1
+910	2021-04-25 22:06:25.936+05:30	215	Number of Xience stents used (Enter 0 if none)	1	[{"added": {}}]	8	1
+911	2021-04-25 22:06:41.878+05:30	216	Number of other (non-study) stents used (Enter 0 if none)	1	[{"added": {}}]	8	1
+912	2021-04-25 22:06:51.977+05:30	217	Are there any overlapping Stents?	1	[{"added": {}}]	8	1
+913	2021-04-25 22:07:43.048+05:30	218	Stent Type	1	[{"added": {}}]	8	1
+914	2021-04-25 22:07:54.023+05:30	219	Supraflex Diameter	1	[{"added": {}}]	8	1
+915	2021-04-25 22:08:04.016+05:30	220	Supraflex Length	1	[{"added": {}}]	8	1
+916	2021-04-25 22:08:13.127+05:30	221	Xience Diameter	1	[{"added": {}}]	8	1
+917	2021-04-25 22:08:23.633+05:30	222	Xience Length	1	[{"added": {}}]	8	1
+918	2021-04-25 22:08:36.646+05:30	223	Other Stent Diameter	1	[{"added": {}}]	8	1
+919	2021-04-25 22:09:26.916+05:30	224	Other Stent Length	1	[{"added": {}}]	8	1
+920	2021-04-25 22:09:38.625+05:30	225	Maximum deployment pressure	1	[{"added": {}}]	8	1
+921	2021-04-25 22:09:48.784+05:30	226	TIMI flow	1	[{"added": {}}]	8	1
+922	2021-04-25 22:10:01.035+05:30	227	Device success	1	[{"added": {}}]	8	1
+923	2021-04-25 22:10:11.099+05:30	228	Lesion success	1	[{"added": {}}]	8	1
+924	2021-04-25 22:10:22.19+05:30	229	Procedure Success	1	[{"added": {}}]	8	1
+925	2021-04-25 22:10:35.811+05:30	230	Did the patient experience any procedural complication	1	[{"added": {}}]	8	1
+926	2021-04-25 22:10:49.914+05:30	231	If Yes, check all that apply	1	[{"added": {}}]	8	1
+927	2021-04-25 22:11:17.322+05:30	232	Post-Dilatation with high pressure balloon	1	[{"added": {}}]	8	1
+928	2021-04-25 22:11:25.838+05:30	233	Was IVUS used to post stent deployment?	1	[{"added": {}}]	8	1
+929	2021-04-25 22:11:36.367+05:30	234	Was FFR/iFR used post stent deployment?	1	[{"added": {}}]	8	1
+930	2021-04-25 22:11:54.178+05:30	235	Date of Target lesion 3 treated	1	[{"added": {}}]	8	1
+931	2021-04-25 22:12:04.632+05:30	236	CASS Site 1	1	[{"added": {}}]	8	1
+932	2021-04-25 22:12:20.482+05:30	237	CASS Site 2	1	[{"added": {}}]	8	1
+933	2021-04-25 22:12:29.729+05:30	238	CASS Site 3	1	[{"added": {}}]	8	1
+934	2021-04-25 22:12:39.19+05:30	239	Lesion length (visual estimate)	1	[{"added": {}}]	8	1
+935	2021-04-25 22:12:48.299+05:30	240	Reference vessel diameter (visual estimate)	1	[{"added": {}}]	8	1
+936	2021-04-25 22:12:58.385+05:30	241	Minimal Lumen Diameter	1	[{"added": {}}]	8	1
+937	2021-04-25 22:13:08.925+05:30	242	Is this a bifurcation lesion	1	[{"added": {}}]	8	1
+938	2021-04-25 22:13:17.986+05:30	243	If Yes, MEDINA classification	1	[{"added": {}}]	8	1
+939	2021-04-25 22:13:32.56+05:30	244	Number of Supraflex stents used (Enter 0 if none)	1	[{"added": {}}]	8	1
+940	2021-04-25 22:13:46.381+05:30	245	Number of Xience stents used (Enter 0 if none)	1	[{"added": {}}]	8	1
+941	2021-04-25 22:14:01.221+05:30	246	Number of other (non-study) stents used (Enter 0 if none)	1	[{"added": {}}]	8	1
+942	2021-04-25 22:14:17.541+05:30	247	Are there any overlapping Stents?	1	[{"added": {}}]	8	1
+943	2021-04-25 22:14:28.435+05:30	248	Stent Type	1	[{"added": {}}]	8	1
+944	2021-04-25 22:14:38.841+05:30	249	Supraflex Diameter	1	[{"added": {}}]	8	1
+945	2021-04-25 22:15:00.652+05:30	250	Supraflex Length	1	[{"added": {}}]	8	1
+946	2021-04-25 22:15:10.314+05:30	251	Xience Diameter	1	[{"added": {}}]	8	1
+947	2021-04-25 22:15:26.678+05:30	252	Xience Length	1	[{"added": {}}]	8	1
+948	2021-04-25 22:15:37.251+05:30	253	Other Stent Diameter	1	[{"added": {}}]	8	1
+949	2021-04-25 22:15:47.419+05:30	254	Other Stent Length	1	[{"added": {}}]	8	1
+950	2021-04-25 22:16:00.052+05:30	255	Maximum deployment pressure	1	[{"added": {}}]	8	1
+951	2021-04-25 22:16:08.471+05:30	256	TIMI flow	1	[{"added": {}}]	8	1
+952	2021-04-25 22:16:17.218+05:30	257	Device success	1	[{"added": {}}]	8	1
+953	2021-04-25 22:16:26.087+05:30	258	Lesion success	1	[{"added": {}}]	8	1
+954	2021-04-25 22:16:37.216+05:30	259	Procedure Success	1	[{"added": {}}]	8	1
+955	2021-04-25 22:16:46.603+05:30	260	Did the patient experience any procedural complication	1	[{"added": {}}]	8	1
+956	2021-04-25 22:16:56.352+05:30	261	If Yes, check all that apply	1	[{"added": {}}]	8	1
+957	2021-04-25 22:17:07.734+05:30	262	Post-Dilatation with high pressure balloon	1	[{"added": {}}]	8	1
+958	2021-04-25 22:17:16.981+05:30	263	Was IVUS used to post stent deployment?	1	[{"added": {}}]	8	1
+959	2021-04-25 22:17:25.58+05:30	264	Was FFR/iFR used post stent deployment?	1	[{"added": {}}]	8	1
+960	2021-04-25 22:18:01.308+05:30	265	Date of Sample Collection	1	[{"added": {}}]	8	1
+961	2021-04-25 22:18:32.747+05:30	266	CK Total	1	[{"added": {}}]	8	1
+962	2021-04-25 22:19:46.845+05:30	267	CK Total	1	[{"added": {}}]	8	1
+963	2021-04-25 22:19:59.491+05:30	268	CK Total Result	1	[{"added": {}}]	8	1
+964	2021-04-25 22:20:10.963+05:30	269	CK Total Unit	1	[{"added": {}}]	8	1
+965	2021-04-25 22:20:20.704+05:30	270	CK Total Code	1	[{"added": {}}]	8	1
+966	2021-04-25 22:20:34.75+05:30	271	CK-MB	1	[{"added": {}}]	8	1
+967	2021-04-25 22:20:42.837+05:30	272	CK-MB Not Done	1	[{"added": {}}]	8	1
+968	2021-04-25 22:20:50.605+05:30	273	CK-MB Not Done	1	[{"added": {}}]	8	1
+969	2021-04-25 22:21:03.876+05:30	274	CK-MB Unit	1	[{"added": {}}]	8	1
+970	2021-04-25 22:21:16.954+05:30	275	CK-MB Code	1	[{"added": {}}]	8	1
+971	2021-04-25 22:21:44.324+05:30	276	Troponin I	1	[{"added": {}}]	8	1
+972	2021-04-25 22:21:50.671+05:30	277	Troponin I Not Done	1	[{"added": {}}]	8	1
+973	2021-04-25 22:21:57.312+05:30	278	Troponin I Result	1	[{"added": {}}]	8	1
+974	2021-04-25 22:22:04.237+05:30	279	Troponin I Unit	1	[{"added": {}}]	8	1
+975	2021-04-25 22:22:10.335+05:30	280	Troponin I Code	1	[{"added": {}}]	8	1
+976	2021-04-25 22:22:34.421+05:30	281	Troponin T	1	[{"added": {}}]	8	1
+977	2021-04-25 22:22:40.488+05:30	282	Troponin T Not Done	1	[{"added": {}}]	8	1
+978	2021-04-25 22:22:47.966+05:30	283	Troponin T Result	1	[{"added": {}}]	8	1
+979	2021-04-25 22:22:58.475+05:30	284	Troponin T Unit	1	[{"added": {}}]	8	1
+980	2021-04-25 22:23:07.071+05:30	285	Troponin T Code	1	[{"added": {}}]	8	1
+981	2021-04-25 22:23:24.9+05:30	286	Were there any change in cardiac and diabetes medications since last visit ?	1	[{"added": {}}]	8	1
+982	2021-04-25 22:23:39.687+05:30	287	If Yes, please check all that apply	1	[{"added": {}}]	8	1
+983	2021-04-25 23:01:33.521+05:30	288	Any new complaints experienced by the patient since last visit. If yes, fill the Adverse Event Log	1	[{"added": {}}]	8	1
+984	2021-04-25 23:02:41.959+05:30	289	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	1
+985	2021-04-25 23:03:00.847+05:30	290	If Yes, please specify (Tick all that apply)	1	[{"added": {}}]	8	1
+986	2021-04-25 23:03:24.677+05:30	291	Name of Investigator	1	[{"added": {}}]	8	1
+987	2021-04-25 23:03:37.869+05:30	292	Investigator’s Signature	1	[{"added": {}}]	8	1
+988	2021-04-25 23:03:58.802+05:30	293	Date	1	[{"added": {}}]	8	1
+989	2021-04-25 23:06:57.778+05:30	294	Not Applicable	1	[{"added": {}}]	8	1
+990	2021-04-25 23:07:50.403+05:30	295	Discharge date	1	[{"added": {}}]	8	1
+991	2021-04-25 23:08:10.004+05:30	296	Heart Rate (beats per minute)	1	[{"added": {}}]	8	1
+992	2021-04-25 23:08:20.251+05:30	297	Blood Pressure (mmHg)	1	[{"added": {}}]	8	1
+993	2021-04-25 23:08:33.152+05:30	298	Weight	1	[{"added": {}}]	8	1
+994	2021-04-26 10:43:50.006+05:30	267	CK Total Not Done	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+995	2021-04-26 10:44:05.94+05:30	273	CK-MB Result	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+996	2021-04-26 15:51:58.81+05:30	13	Nayan	3		7	1
+997	2021-04-26 15:51:59.097+05:30	12	Nayan	3		7	1
+998	2021-04-26 15:51:59.289+05:30	11	Nayan	3		7	1
+999	2021-04-26 15:51:59.563+05:30	10	Nayan	3		7	1
+1000	2021-04-26 15:51:59.686+05:30	9	Nayan	3		7	1
+1001	2021-04-26 15:51:59.827+05:30	8	Nayan	3		7	1
+1002	2021-04-26 15:51:59.96+05:30	7	Nayan	3		7	1
+1003	2021-04-26 15:52:00.083+05:30	6	Nayan	3		7	1
+1004	2021-04-26 15:52:00.203+05:30	5	Nayan	3		7	1
+1005	2021-04-26 15:52:00.338+05:30	4	Nayan	3		7	1
+1006	2021-04-26 15:52:00.473+05:30	3	Nayan	3		7	1
+1007	2021-04-26 15:52:00.572+05:30	2	Nayan	3		7	1
+1008	2021-04-26 15:52:00.773+05:30	1	Nayan	3		7	1
+1009	2021-04-26 16:32:01.006+05:30	1	Nayan	3		7	1
+1010	2021-04-26 16:43:28.134+05:30	1	Nayan	3		7	1
+1011	2021-04-26 18:45:18.991+05:30	1	Nayan	3		7	1
+1012	2021-04-26 18:57:33.617+05:30	2	Nayan	3		7	1
+1013	2021-04-26 18:57:45.584+05:30	3	Nayan	3		7	1
+1014	2021-04-28 10:04:06.891+05:30	3	Nayan	3		7	1
+1015	2021-04-28 10:04:07.153+05:30	2	Nayan	3		7	1
+1016	2021-04-28 10:04:07.424+05:30	1	Nayan	3		7	1
+1017	2021-04-28 10:05:08.872+05:30	1	Nayan	3		7	1
+1018	2021-04-30 21:47:02.168+05:30	6	AA	3		7	1
+1019	2021-04-30 21:47:02.311+05:30	5	A	3		7	1
+1020	2021-04-30 21:47:02.433+05:30	4	Nayan	3		7	1
+1021	2021-04-30 21:47:02.589+05:30	3	Nayan	3		7	1
+1022	2021-04-30 21:47:02.732+05:30	2	Nayan	3		7	1
+1023	2021-04-30 21:47:02.873+05:30	1	Nayan	3		7	1
+1024	2021-06-05 12:52:15.668+05:30	298	Weight	3		8	1
+1025	2021-06-05 12:52:16.006+05:30	297	Blood Pressure (mmHg)	3		8	1
+1026	2021-06-05 12:52:16.112+05:30	296	Heart Rate (beats per minute)	3		8	1
+1027	2021-06-05 12:52:16.468+05:30	295	Discharge date	3		8	1
+1028	2021-06-05 12:52:16.633+05:30	294	Not Applicable	3		8	1
+1029	2021-06-05 12:52:16.769+05:30	293	Date	3		8	1
+1030	2021-06-05 12:52:16.954+05:30	292	Investigator’s Signature	3		8	1
+1031	2021-06-05 12:52:17.087+05:30	291	Name of Investigator	3		8	1
+1032	2021-06-05 12:52:17.221+05:30	290	If Yes, please specify (Tick all that apply)	3		8	1
+1033	2021-06-05 12:52:17.376+05:30	289	Did any of the following study endpoints occur since last visit?	3		8	1
+1034	2021-06-05 12:52:17.492+05:30	288	Any new complaints experienced by the patient since last visit. If yes, fill the Adverse Event Log	3		8	1
+1035	2021-06-05 12:52:17.625+05:30	287	If Yes, please check all that apply	3		8	1
+1036	2021-06-05 12:52:17.758+05:30	286	Were there any change in cardiac and diabetes medications since last visit ?	3		8	1
+1037	2021-06-05 12:52:18.041+05:30	285	Troponin T Code	3		8	1
+1038	2021-06-05 12:52:18.402+05:30	284	Troponin T Unit	3		8	1
+1039	2021-06-05 12:52:18.753+05:30	283	Troponin T Result	3		8	1
+1040	2021-06-05 12:52:19.084+05:30	282	Troponin T Not Done	3		8	1
+1041	2021-06-05 12:52:19.206+05:30	281	Troponin T	3		8	1
+1042	2021-06-05 12:52:19.514+05:30	280	Troponin I Code	3		8	1
+1043	2021-06-05 12:52:20.027+05:30	279	Troponin I Unit	3		8	1
+1044	2021-06-05 12:52:20.115+05:30	278	Troponin I Result	3		8	1
+1045	2021-06-05 12:52:20.287+05:30	277	Troponin I Not Done	3		8	1
+1046	2021-06-05 12:52:20.404+05:30	276	Troponin I	3		8	1
+1047	2021-06-05 12:52:20.527+05:30	275	CK-MB Code	3		8	1
+1048	2021-06-05 12:52:20.788+05:30	274	CK-MB Unit	3		8	1
+1049	2021-06-05 12:52:20.937+05:30	273	CK-MB Result	3		8	1
+1050	2021-06-05 12:52:21.059+05:30	272	CK-MB Not Done	3		8	1
+1051	2021-06-05 12:52:21.186+05:30	271	CK-MB	3		8	1
+1052	2021-06-05 12:52:21.465+05:30	270	CK Total Code	3		8	1
+1053	2021-06-05 12:52:21.719+05:30	269	CK Total Unit	3		8	1
+1054	2021-06-05 12:52:22.052+05:30	268	CK Total Result	3		8	1
+1055	2021-06-05 12:52:22.336+05:30	267	CK Total Not Done	3		8	1
+1056	2021-06-05 12:52:22.502+05:30	266	CK Total	3		8	1
+1057	2021-06-05 12:52:22.623+05:30	265	Date of Sample Collection	3		8	1
+1058	2021-06-05 12:52:22.756+05:30	264	Was FFR/iFR used post stent deployment?	3		8	1
+1059	2021-06-05 12:52:22.858+05:30	263	Was IVUS used to post stent deployment?	3		8	1
+1060	2021-06-05 12:52:22.961+05:30	262	Post-Dilatation with high pressure balloon	3		8	1
+1061	2021-06-05 12:52:23.057+05:30	261	If Yes, check all that apply	3		8	1
+1062	2021-06-05 12:52:23.183+05:30	260	Did the patient experience any procedural complication	3		8	1
+1063	2021-06-05 12:52:23.302+05:30	259	Procedure Success	3		8	1
+1064	2021-06-05 12:52:23.637+05:30	258	Lesion success	3		8	1
+1065	2021-06-05 12:52:23.746+05:30	257	Device success	3		8	1
+1066	2021-06-05 12:52:23.888+05:30	256	TIMI flow	3		8	1
+1067	2021-06-05 12:52:23.966+05:30	255	Maximum deployment pressure	3		8	1
+1068	2021-06-05 12:52:24.116+05:30	254	Other Stent Length	3		8	1
+1069	2021-06-05 12:52:24.223+05:30	253	Other Stent Diameter	3		8	1
+1070	2021-06-05 12:52:24.321+05:30	252	Xience Length	3		8	1
+1071	2021-06-05 12:52:24.415+05:30	251	Xience Diameter	3		8	1
+1072	2021-06-05 12:52:24.543+05:30	250	Supraflex Length	3		8	1
+1073	2021-06-05 12:52:24.849+05:30	249	Supraflex Diameter	3		8	1
+1074	2021-06-05 12:52:24.976+05:30	248	Stent Type	3		8	1
+1075	2021-06-05 12:52:25.465+05:30	247	Are there any overlapping Stents?	3		8	1
+1076	2021-06-05 12:52:25.585+05:30	246	Number of other (non-study) stents used (Enter 0 if none)	3		8	1
+1077	2021-06-05 12:52:25.774+05:30	245	Number of Xience stents used (Enter 0 if none)	3		8	1
+1078	2021-06-05 12:52:25.898+05:30	244	Number of Supraflex stents used (Enter 0 if none)	3		8	1
+1079	2021-06-05 12:52:26.007+05:30	243	If Yes, MEDINA classification	3		8	1
+1080	2021-06-05 12:52:26.123+05:30	242	Is this a bifurcation lesion	3		8	1
+1081	2021-06-05 12:52:26.273+05:30	241	Minimal Lumen Diameter	3		8	1
+1082	2021-06-05 12:52:26.395+05:30	240	Reference vessel diameter (visual estimate)	3		8	1
+1083	2021-06-05 12:52:26.513+05:30	239	Lesion length (visual estimate)	3		8	1
+1084	2021-06-05 12:52:26.629+05:30	238	CASS Site 3	3		8	1
+1085	2021-06-05 12:52:26.764+05:30	237	CASS Site 2	3		8	1
+1086	2021-06-05 12:52:26.902+05:30	236	CASS Site 1	3		8	1
+1087	2021-06-05 12:52:27.05+05:30	235	Date of Target lesion 3 treated	3		8	1
+1088	2021-06-05 12:52:27.241+05:30	234	Was FFR/iFR used post stent deployment?	3		8	1
+1089	2021-06-05 12:52:27.385+05:30	233	Was IVUS used to post stent deployment?	3		8	1
+1090	2021-06-05 12:52:27.563+05:30	232	Post-Dilatation with high pressure balloon	3		8	1
+1091	2021-06-05 12:52:27.684+05:30	231	If Yes, check all that apply	3		8	1
+1092	2021-06-05 12:52:27.805+05:30	230	Did the patient experience any procedural complication	3		8	1
+1093	2021-06-05 12:52:27.959+05:30	229	Procedure Success	3		8	1
+1094	2021-06-05 12:52:28.081+05:30	228	Lesion success	3		8	1
+1095	2021-06-05 12:52:28.231+05:30	227	Device success	3		8	1
+1096	2021-06-05 12:52:28.582+05:30	226	TIMI flow	3		8	1
+1097	2021-06-05 12:52:28.764+05:30	225	Maximum deployment pressure	3		8	1
+1098	2021-06-05 12:52:29.019+05:30	224	Other Stent Length	3		8	1
+1099	2021-06-05 12:52:29.266+05:30	223	Other Stent Diameter	3		8	1
+1100	2021-06-05 12:52:29.552+05:30	222	Xience Length	3		8	1
+1101	2021-06-05 12:52:29.668+05:30	221	Xience Diameter	3		8	1
+1102	2021-06-05 12:52:29.801+05:30	220	Supraflex Length	3		8	1
+1103	2021-06-05 12:52:29.935+05:30	219	Supraflex Diameter	3		8	1
+1104	2021-06-05 12:52:30.117+05:30	218	Stent Type	3		8	1
+1105	2021-06-05 12:52:30.43+05:30	217	Are there any overlapping Stents?	3		8	1
+1106	2021-06-05 12:52:30.645+05:30	216	Number of other (non-study) stents used (Enter 0 if none)	3		8	1
+1107	2021-06-05 12:52:30.78+05:30	215	Number of Xience stents used (Enter 0 if none)	3		8	1
+1108	2021-06-05 12:52:30.946+05:30	214	Number of Supraflex stents used (enter 0 if none)	3		8	1
+1109	2021-06-05 12:52:31.09+05:30	213	If Yes, MEDINA classification	3		8	1
+1110	2021-06-05 12:52:31.224+05:30	212	Is this a bifurcation lesion	3		8	1
+1111	2021-06-05 12:52:31.368+05:30	211	Minimal Lumen Diameter	3		8	1
+1112	2021-06-05 12:52:31.721+05:30	210	Reference vessel diameter (visual estimate)	3		8	1
+1113	2021-06-05 12:52:31.938+05:30	209	Lesion length (visual estimate)	3		8	1
+1114	2021-06-05 12:52:32.069+05:30	208	CASS Site 3	3		8	1
+1115	2021-06-05 12:52:32.179+05:30	207	CASS Site 2	3		8	1
+1116	2021-06-05 12:52:32.503+05:30	206	CASS Site 1	3		8	1
+1117	2021-06-05 12:52:32.636+05:30	205	Date of Target lesion 2 treated	3		8	1
+1118	2021-06-05 12:52:32.741+05:30	204	Date :	3		8	1
+1119	2021-06-05 12:52:32.998+05:30	203	Investigator’s Signature:	3		8	1
+1120	2021-06-05 12:52:33.158+05:30	202	Name of Investigator:	3		8	1
+1121	2021-06-05 12:52:33.285+05:30	201	If Yes, please specify	3		8	1
+1122	2021-06-05 12:52:33.425+05:30	200	Did any of the following study endpoints occur since last visit?	3		8	1
+1123	2021-06-05 12:52:33.656+05:30	199	Any new complaints experienced by the patient since last visit  If yes, fill the Adverse Event Log	3		8	1
+1124	2021-06-05 12:52:48.038+05:30	198	Was FFR/iFR used post stent deployment?	3		8	1
+1125	2021-06-05 12:52:48.3+05:30	197	Was IVUS used to post stent deployment?	3		8	1
+1126	2021-06-05 12:52:48.751+05:30	196	Post-Dilatation with high pressure balloon	3		8	1
+1127	2021-06-05 12:52:48.864+05:30	195	If Yes, check all that apply	3		8	1
+1128	2021-06-05 12:52:48.983+05:30	194	Did the patient experience any procedural complication.	3		8	1
+1129	2021-06-05 12:52:49.283+05:30	193	Procedure Success	3		8	1
+1130	2021-06-05 12:52:49.409+05:30	192	Lesion success	3		8	1
+1131	2021-06-05 12:52:49.543+05:30	191	Device success	3		8	1
+1132	2021-06-05 12:52:49.664+05:30	190	TIMI flow	3		8	1
+1133	2021-06-05 12:52:49.815+05:30	189	Maximum deployment pressure	3		8	1
+1134	2021-06-05 12:52:49.978+05:30	188	Other Stent Length	3		8	1
+1135	2021-06-05 12:52:50.11+05:30	187	Other Stent Diameter	3		8	1
+1136	2021-06-05 12:52:50.259+05:30	186	Xience Length	3		8	1
+1137	2021-06-05 12:52:50.454+05:30	185	Xience Diameter	3		8	1
+1138	2021-06-05 12:52:50.653+05:30	184	Supraflex Length	3		8	1
+1139	2021-06-05 12:52:50.807+05:30	183	Supraflex Diameter	3		8	1
+1140	2021-06-05 12:52:50.976+05:30	182	Stent Type	3		8	1
+1141	2021-06-05 12:52:51.116+05:30	181	Are there any overlapping Stents?	3		8	1
+1142	2021-06-05 12:52:51.254+05:30	180	Number of other (non-study) stents used  (enter 0 if none)	3		8	1
+1143	2021-06-05 12:52:51.39+05:30	179	Number of Xience stents used  (enter 0 if none)	3		8	1
+1144	2021-06-05 12:52:51.502+05:30	178	Number of Supraflex stents used  (enter 0 if none)	3		8	1
+1145	2021-06-05 12:52:51.625+05:30	177	If Yes, MEDINA classification	3		8	1
+1146	2021-06-05 12:52:51.769+05:30	176	Is this a bifurcation lesion	3		8	1
+1147	2021-06-05 12:52:52.172+05:30	175	Minimal Lumen Diameter	3		8	1
+1148	2021-06-05 12:52:52.438+05:30	174	Reference vessel diameter (visual estimate)	3		8	1
+1149	2021-06-05 12:52:52.571+05:30	173	Lesion length (visual estimate)	3		8	1
+1150	2021-06-05 12:52:52.701+05:30	172	CASS Site 3	3		8	1
+1151	2021-06-05 12:52:52.823+05:30	171	CASS Site 2	3		8	1
+1152	2021-06-05 12:52:52.971+05:30	170	CASS Site 1	3		8	1
+1153	2021-06-05 12:52:53.167+05:30	169	Date of Target lesion 1 treated	3		8	1
+1154	2021-06-05 12:52:53.381+05:30	168	If yes, please select one of the following:	3		8	1
+1155	2021-06-05 12:52:53.666+05:30	167	Has IVUS/OCT been used pre-PCI	3		8	1
+1156	2021-06-05 12:52:53.787+05:30	166	FFR/ IFR Value	3		8	1
+1157	2021-06-05 12:52:54.098+05:30	165	FFR/IFR site:	3		8	1
+1158	2021-06-05 12:52:54.236+05:30	164	Date:	3		8	1
+1159	2021-06-05 12:52:54.379+05:30	163	If Yes	3		8	1
+1160	2021-06-05 12:52:54.525+05:30	162	Was FFR/iFR done	3		8	1
+1161	2021-06-05 12:52:54.721+05:30	161	Reason for staging (tick all that apply)	3		8	1
+1162	2021-06-05 12:52:55.002+05:30	160	Planned date*	3		8	1
+1163	2021-06-05 12:52:55.261+05:30	159	Was a staged procedure planned?	3		8	1
+1164	2021-06-05 12:52:55.48+05:30	158	Please provide the details of anti-platelet therapy during procedure.	3		8	1
+1165	2021-06-05 12:52:55.604+05:30	157	Vascular access site(s)	3		8	1
+1166	2021-06-05 12:52:55.739+05:30	156	Any staged procedure planned (If Yes, please provide the details in staged Procedure)	3		8	1
+1167	2021-06-05 12:52:55.862+05:30	155	Number of target vessels planned during Index procedure	3		8	1
+1168	2021-06-05 12:52:56.046+05:30	154	Number of target vessels diseased	3		8	1
+1169	2021-06-05 12:52:56.421+05:30	153	SYNTAX Score	3		8	1
+1170	2021-06-05 12:52:56.551+05:30	152	Size of largest guide catheter	3		8	1
+1171	2021-06-05 12:52:56.693+05:30	151	Procedure End Time (Time last guide catheter removed (post final angiography))	3		8	1
+1172	2021-06-05 12:52:56.82+05:30	150	Procedure start time . (It is to be calculated from the sheath insertion time)	3		8	1
+1173	2021-06-05 12:52:56.949+05:30	149	Procedure start date	3		8	1
+1174	2021-06-05 12:52:57.087+05:30	148	Date:	3		8	1
+1175	2021-06-05 12:52:57.204+05:30	147	Investigator’s Signature:	3		8	1
+1176	2021-06-05 12:52:57.385+05:30	146	Name of Investigator:	3		8	1
+1177	2021-06-05 12:52:57.673+05:30	145	Category	3		8	1
+1178	2021-06-05 12:52:57.827+05:30	144	Randomization number	3		8	1
+1179	2021-06-05 12:52:57.963+05:30	143	Patient randomized to which arm	3		8	1
+1180	2021-06-05 12:52:58.08+05:30	142	If Yes, please check all that apply	3		8	1
+1181	2021-06-05 12:52:58.216+05:30	141	Were cardiac and diabetes medications taken prior to enrollment?	3		8	1
+1182	2021-06-05 12:52:58.346+05:30	140	If Yes, please tick below:	3		8	1
+1183	2021-06-05 12:52:58.469+05:30	139	Was subject on previously prescribed regimen of aspirin/ antiplatelet.	3		8	1
+1184	2021-06-05 12:52:58.597+05:30	138	If yes	3		8	1
+1185	2021-06-05 12:52:58.73+05:30	137	Conduction abnormality	3		8	1
+1186	2021-06-05 12:52:58.851+05:30	136	If yes,	3		8	1
+1187	2021-06-05 12:52:58.925+05:30	135	ST Deviation	3		8	1
+1188	2021-06-05 12:52:59.117+05:30	134	ECG Result:	3		8	1
+1189	2021-06-05 12:52:59.296+05:30	133	If yes, ECG Date	3		8	1
+1190	2021-06-05 12:52:59.428+05:30	132	Was 12-Lead ECG performed	3		8	1
+1191	2021-06-05 12:52:59.588+05:30	131	Troponin T Code	3		8	1
+1192	2021-06-05 12:52:59.722+05:30	130	Troponin T Unit	3		8	1
+1193	2021-06-05 12:52:59.846+05:30	129	Troponin T Result	3		8	1
+1194	2021-06-05 12:52:59.988+05:30	128	Troponin T Not Done	3		8	1
+1195	2021-06-05 12:53:00.338+05:30	127	Troponin T	3		8	1
+1196	2021-06-05 12:53:00.477+05:30	126	Troponin I Code	3		8	1
+1197	2021-06-05 12:53:00.576+05:30	125	Troponin I Unit	3		8	1
+1198	2021-06-05 12:53:00.711+05:30	124	Troponin I Result	3		8	1
+1199	2021-06-05 12:53:00.845+05:30	123	Troponin I Not Done	3		8	1
+1200	2021-06-05 12:53:00.964+05:30	122	Troponin I	3		8	1
+1201	2021-06-05 12:53:01.103+05:30	121	CK-MB Code	3		8	1
+1202	2021-06-05 12:53:01.236+05:30	120	CK-MB Unit	3		8	1
+1203	2021-06-05 12:53:01.56+05:30	119	CK-MB Result	3		8	1
+1204	2021-06-05 12:53:01.708+05:30	118	CK-MB Not Done	3		8	1
+1205	2021-06-05 12:53:01.846+05:30	117	CK-MB	3		8	1
+1206	2021-06-05 12:53:01.974+05:30	116	CK Total Code	3		8	1
+1207	2021-06-05 12:53:02.096+05:30	115	CK Total Unit	3		8	1
+1208	2021-06-05 12:53:02.219+05:30	114	CK Total Result	3		8	1
+1209	2021-06-05 12:53:02.373+05:30	113	CK Total Not Done	3		8	1
+1210	2021-06-05 12:53:02.52+05:30	112	CK Total	3		8	1
+1211	2021-06-05 12:53:02.651+05:30	111	Date of Sample Collection	3		8	1
+1212	2021-06-05 12:53:02.845+05:30	110	HDL Code	3		8	1
+1213	2021-06-05 12:53:03.229+05:30	109	HDL Unit	3		8	1
+1214	2021-06-05 12:53:03.544+05:30	108	HDL Result	3		8	1
+1215	2021-06-05 12:53:03.672+05:30	107	HDL	3		8	1
+1216	2021-06-05 12:53:03.788+05:30	106	LDL Code	3		8	1
+1217	2021-06-05 12:53:03.86+05:30	105	LDL Unit	3		8	1
+1218	2021-06-05 12:53:03.993+05:30	104	LDL Result	3		8	1
+1219	2021-06-05 12:53:04.098+05:30	103	LDL	3		8	1
+1220	2021-06-05 12:53:04.42+05:30	102	Triglycerides Code	3		8	1
+1221	2021-06-05 12:53:04.666+05:30	101	Triglycerides Unit	3		8	1
+1222	2021-06-05 12:53:05.005+05:30	100	Triglycerides Result	3		8	1
+1223	2021-06-05 12:53:05.135+05:30	99	Triglycerides	3		8	1
+1224	2021-06-05 12:53:14.097+05:30	98	Total Cholesterol Code	3		8	1
+1225	2021-06-05 12:53:14.211+05:30	97	Total Cholesterol Unit	3		8	1
+1226	2021-06-05 12:53:14.794+05:30	96	Total Cholesterol Result	3		8	1
+1227	2021-06-05 12:53:14.909+05:30	95	Total Cholesterol	3		8	1
+1228	2021-06-05 12:53:15.094+05:30	94	Date of Sample collection	3		8	1
+1229	2021-06-05 12:53:15.475+05:30	93	Chloride Code	3		8	1
+1230	2021-06-05 12:53:15.61+05:30	92	Chloride Unit	3		8	1
+1231	2021-06-05 12:53:15.743+05:30	91	Chloride Result	3		8	1
+1232	2021-06-05 12:53:15.977+05:30	90	Chloride	3		8	1
+1233	2021-06-05 12:53:16.143+05:30	89	Potassium Code	3		8	1
+1234	2021-06-05 12:53:16.347+05:30	88	Potassium Unit	3		8	1
+1235	2021-06-05 12:53:16.541+05:30	87	Potassium Result	3		8	1
+1236	2021-06-05 12:53:16.688+05:30	86	Potassium	3		8	1
+1237	2021-06-05 12:53:16.817+05:30	85	Sodium Code	3		8	1
+1238	2021-06-05 12:53:16.935+05:30	84	Sodium Unit	3		8	1
+1239	2021-06-05 12:53:17.09+05:30	83	Sodium Result	3		8	1
+1240	2021-06-05 12:53:17.191+05:30	82	Sodium	3		8	1
+1241	2021-06-05 12:53:17.308+05:30	81	HbA1c Code	3		8	1
+1242	2021-06-05 12:53:17.441+05:30	80	HbA1c Unit	3		8	1
+1243	2021-06-05 12:53:17.573+05:30	79	HbA1c Result	3		8	1
+1244	2021-06-05 12:53:17.863+05:30	78	HbA1c	3		8	1
+1245	2021-06-05 12:53:18.04+05:30	77	eGFR Code	3		8	1
+1246	2021-06-05 12:53:18.423+05:30	76	eGFR Unit	3		8	1
+1247	2021-06-05 12:53:18.593+05:30	75	eGFR Result	3		8	1
+1248	2021-06-05 12:53:18.74+05:30	74	eGFR	3		8	1
+1249	2021-06-05 12:53:18.862+05:30	73	Serum Creatinine Code	3		8	1
+1250	2021-06-05 12:53:19.005+05:30	72	Serum Creatinine Unit	3		8	1
+1251	2021-06-05 12:53:19.127+05:30	71	Serum Creatinine Result	3		8	1
+1252	2021-06-05 12:53:19.275+05:30	70	Serum Creatinine	3		8	1
+1253	2021-06-05 12:53:19.566+05:30	69	Platelet Count Code	3		8	1
+1254	2021-06-05 12:53:19.849+05:30	68	Platelet Count Unit	3		8	1
+1255	2021-06-05 12:53:20.004+05:30	67	Platelet Count Result	3		8	1
+1256	2021-06-05 12:53:20.128+05:30	66	Platelet Count	3		8	1
+1257	2021-06-05 12:53:20.298+05:30	65	WBC Code	3		8	1
+1258	2021-06-05 12:53:20.438+05:30	64	WBC Unit	3		8	1
+1259	2021-06-05 12:53:20.638+05:30	63	WBC Result	3		8	1
+1260	2021-06-05 12:53:20.78+05:30	62	WBC	3		8	1
+1261	2021-06-05 12:53:20.919+05:30	61	Haemoglobin Code	3		8	1
+1262	2021-06-05 12:53:21.062+05:30	60	Haemoglobin Unit	3		8	1
+1263	2021-06-05 12:53:21.217+05:30	59	Haemoglobin Result	3		8	1
+1264	2021-06-05 12:53:21.335+05:30	58	Haemoglobin	3		8	1
+1265	2021-06-05 12:53:21.462+05:30	57	Date of Sample collection*	3		8	1
+1266	2021-06-05 12:53:21.596+05:30	56	Procedure Performed (Check all that apply)	3		8	1
+1267	2021-06-05 12:53:21.733+05:30	55	CASS Site3	3		8	1
+1268	2021-06-05 12:53:21.882+05:30	54	CASS Site 2	3		8	1
+1269	2021-06-05 12:53:22.109+05:30	53	CASS Site	3		8	1
+1270	2021-06-05 12:53:22.433+05:30	52	DATE OF PCI	3		8	1
+1271	2021-06-05 12:53:22.567+05:30	51	Did subject had prior stent implantation more than 6 months before	3		8	1
+1272	2021-06-05 12:53:22.715+05:30	50	NYHA Class	3		8	1
+1273	2021-06-05 12:53:22.948+05:30	49	If angina equivalent, please specify	3		8	1
+1274	2021-06-05 12:53:23.082+05:30	48	Silent Ischemia documented by	3		8	1
+1275	2021-06-05 12:53:23.219+05:30	47	If stable angina, please indicate Canadian Cardiovascular Society class (CCS)	3		8	1
+1276	2021-06-05 12:53:23.343+05:30	46	If unstable angina, please indicate Braunwald classification	3		8	1
+1277	2021-06-05 12:53:23.485+05:30	45	Coronary Artery Disease presentation	3		8	1
+1278	2021-06-05 12:53:23.625+05:30	44	Date of LVEF measurement (The date of LVEF within 30 days prior to PCI is acceptable) (If LVEF measurement is < 30%, subject is not eligible for the study).	3		8	1
+1279	2021-06-05 12:53:23.742+05:30	43	LVEF measurement (in %)	3		8	1
+1280	2021-06-05 12:53:23.869+05:30	42	Left Ventricular Ejection Fraction (LVEF)	3		8	1
+1281	2021-06-05 12:53:24.009+05:30	41	If Yes, specify the diseases in details	3		8	1
+1282	2021-06-05 12:53:24.151+05:30	40	Other relevant concomitant diseases	3		8	1
+1283	2021-06-05 12:53:24.308+05:30	39	History of Liver Cirrhosis	3		8	1
+1284	2021-06-05 12:53:24.594+05:30	38	Major Bleeding (intracranial, gastrointestinal or uro-genital which requires Hospitalization)	3		8	1
+1285	2021-06-05 12:53:24.822+05:30	37	Known Chronic Obstructive Pulmonary Disease (COPD) (Chronic lung disease: long-term use of bronchodilators or steroids for lung disease)	3		8	1
+1286	2021-06-05 12:53:24.907+05:30	36	History of previous stroke (If Yes, subject must have had stroke more than 6 months back in order to be enrolled).	3		8	1
+1287	2021-06-05 12:53:25.066+05:30	35	Renal insufficiency (serum creatinine > 2.5mg/dL, or creatinine clearance ≤ 30 mL/min)	3		8	1
+1288	2021-06-05 12:53:25.193+05:30	34	History of Congestive Heart failure.(If Yes, subject must not be NHYA class III or IV)	3		8	1
+1289	2021-06-05 12:53:25.519+05:30	33	If yes, Paroxysmal or Permanent	3		8	1
+1290	2021-06-05 12:53:25.645+05:30	32	History of Atrial Fibrillation	3		8	1
+1291	2021-06-05 12:53:25.75+05:30	31	History of ICD, PPI or CRTD implantation	3		8	1
+1292	2021-06-05 12:53:25.843+05:30	30	History of cardiac surgery (other than CABG)	3		8	1
+1293	2021-06-05 12:53:26.238+05:30	29	History of Percutaneous Coronary Intervention (PCI) If Yes, subject must have had prior stent implantation more than 6 months.	3		8	1
+1294	2021-06-05 12:53:26.414+05:30	28	History of Myocardial Infarction (MI) (STEMI, non-STEMI or unknown; other than the index event)	3		8	1
+1295	2021-06-05 12:53:26.593+05:30	27	Dyslipidemia (Cholesterol >215 mg/dl or requiring treatment)	3		8	1
+1296	2021-06-05 12:53:26.736+05:30	26	Hypertension (BP ≥140/90 mmHg on repeated measurements and/or on antihypertension treatment)	3		8	1
+1297	2021-06-05 12:53:26.863+05:30	25	History of Smoking	3		8	1
+1298	2021-06-05 12:53:27.162+05:30	24	Family History of Coronary Artery Disease	3		8	1
+1299	2021-06-05 12:53:27.327+05:30	23	Type of diabetes	3		8	1
+1300	2021-06-05 12:53:27.469+05:30	22	If Yes, Duration ( In Years ):	3		8	1
+1301	2021-06-05 12:53:27.812+05:30	21	Current diabetes mellitus	3		8	1
+1302	2021-06-05 12:53:27.933+05:30	20	Concurrent enrollment in another clinical trial	3		8	1
+1303	2021-06-05 12:53:28.084+05:30	19	Women who are pregnant, nursing, or who plan to become pregnant while in the study.	3		8	1
+1304	2021-06-05 12:53:28.194+05:30	18	Extra-cardiac illness that is expected to limit survival to less than 5 years.	3		8	1
+1305	2021-06-05 12:53:28.322+05:30	17	Intolerance or contraindication to aspirin or both clopidogrel and ticagrelor or prasugrel.	3		8	1
+1306	2021-06-05 12:53:28.46+05:30	16	Contraindication to PCI because of a coexisting clinical condition	3		8	1
+1307	2021-06-05 12:53:28.749+05:30	15	Acute ST-elevation MI (Q-wave) within 72 hours prior to enrollment requiring revascularization	3		8	1
+1308	2021-06-05 12:53:28.906+05:30	14	Two or more chronic total occlusions in major coronary territories that are targeted for revascularization.	3		8	1
+1309	2021-06-05 12:53:29.054+05:30	13	In-stent restenosis of a target vessel.	3		8	1
+1310	2021-06-05 12:53:29.193+05:30	12	Prior history of significant bleeding (within the previous 6 months) that might be expected to occur during PCI/DES related anticoagulation.	3		8	1
+1311	2021-06-05 12:53:29.301+05:30	11	Previous stroke within 6 months or patients with stroke at more than 6 months with significant residual neurologic involvement, as reflected in a Rankin Score > 1.	3		8	1
+1312	2021-06-05 12:53:29.456+05:30	10	Prior PCI with stent implantation within 6 months.	3		8	1
+1313	2021-06-05 12:53:29.593+05:30	9	Prior CABG surgery.	3		8	1
+1314	2021-06-05 12:53:29.71+05:30	8	Severe congestive heart failure (class III or IV according to NYHA, or pulmonary edema) at the time of enrollment.	3		8	1
+1315	2021-06-05 12:53:29.831+05:30	7	Signed informed consent	3		8	1
+1316	2021-06-05 12:53:30.142+05:30	6	Willing to comply with all follow-up required study visits	3		8	1
+1317	2021-06-05 12:53:30.287+05:30	5	Indication for revascularization based upon symptoms of angina/angina  equivalents and/or objective evidence of myocardial ischemia	3		8	1
+1318	2021-06-05 12:53:30.413+05:30	4	Angiographic characteristics amenable to PCI as decided by the heart team	3		8	1
+1319	2021-06-05 12:53:30.531+05:30	3	Angiographically confirmed multivessel CAD [critical (≥ 70%) lesions in at least  two major epicardial vessels and in at least two separate coronary artery  territories (LAD, LCX, RCA)]. The populatio	3		8	1
+1320	2021-06-05 12:53:30.657+05:30	2	Patient with diabetes mellitus (Type 1 or Type 2)	3		8	1
+1321	2021-06-05 12:53:30.776+05:30	1	Age ≥ 18 years.	3		8	1
+1322	2021-06-05 12:53:40.56+05:30	6	Jaypee University of	3		7	1
+1323	2021-06-05 12:53:40.758+05:30	5	Nayan	3		7	1
+1324	2021-06-05 12:53:41.238+05:30	4	Nayan	3		7	1
+1325	2021-06-05 12:53:41.824+05:30	3	Nayan	3		7	1
+1326	2021-06-05 12:53:42.27+05:30	2	Saksham	3		7	1
+1327	2021-06-05 12:53:42.528+05:30	1	Nayan	3		7	1
+1328	2021-06-05 12:54:23.17+05:30	1	Visit Date	1	[{"added": {}}]	8	1
+1329	2021-06-05 12:54:44.123+05:30	2	Date of PCI	1	[{"added": {}}]	8	1
+1330	2021-06-05 12:55:31.981+05:30	3	Date of Informed Consent form signed	1	[{"added": {}}]	8	1
+1331	2021-06-05 12:55:58.962+05:30	4	CAD registry number	1	[{"added": {}}]	8	1
+1332	2021-06-05 12:56:14.172+05:30	5	Consultant in Charge	1	[{"added": {}}]	8	1
+1333	2021-06-05 21:53:23.552+05:30	6	Nayan	3		7	1
+1334	2021-06-05 21:53:23.708+05:30	5	Nayan	3		7	1
+1335	2021-06-05 21:53:23.802+05:30	4	Saksham	3		7	1
+1336	2021-06-05 21:53:23.946+05:30	3	Nayan	3		7	1
+1337	2021-06-05 21:53:24.052+05:30	2	Nayan	3		7	1
+1338	2021-06-05 21:53:24.176+05:30	1	Nayan	3		7	1
+1339	2021-06-05 22:00:43.186+05:30	3	Saksham	3		7	1
+1340	2021-06-05 22:00:43.409+05:30	2	Nayan	3		7	1
+1341	2021-06-05 22:00:43.676+05:30	1	Nayan	3		7	1
+1342	2021-06-06 14:38:27.824+05:30	6	Date of Birth:	1	[{"added": {}}]	8	6
+1343	2021-06-06 14:38:37.649+05:30	7	Age (in years):	1	[{"added": {}}]	8	6
+1344	2021-06-06 14:38:45.73+05:30	8	Sex:	1	[{"added": {}}]	8	6
+1345	2021-06-06 14:38:55.748+05:30	9	Address: Village-	1	[{"added": {}}]	8	6
+1346	2021-06-06 14:39:04.856+05:30	10	PO-	1	[{"added": {}}]	8	6
+1347	2021-06-06 14:39:14.973+05:30	11	District-	1	[{"added": {}}]	8	6
+1348	2021-06-06 14:39:23.608+05:30	12	Phone number:	1	[{"added": {}}]	8	6
+1349	2021-06-06 14:59:37.163+05:30	4	Saksham	3		7	6
+1350	2021-06-06 14:59:37.169+05:30	3	ma	3		7	6
+1351	2021-06-06 14:59:37.173+05:30	2	ma	3		7	6
+1352	2021-06-06 14:59:37.176+05:30	1	Sa	3		7	6
+1353	2021-06-06 15:18:43.916+05:30	3	e	3		7	6
+1354	2021-06-06 15:18:43.951+05:30	2	Ram	3		7	6
+1355	2021-06-06 15:18:43.955+05:30	1	saksham	3		7	6
+1356	2021-06-06 15:23:25.982+05:30	9	Address: Village-	2	[]	8	6
+1357	2021-06-06 15:23:40.344+05:30	9	Village-	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1358	2021-06-06 15:31:29.3+05:30	13	Current diabetes mellitus	1	[{"added": {}}]	8	6
+1359	2021-06-06 15:31:40.469+05:30	14	If Yes, Duration:	1	[{"added": {}}]	8	6
+1360	2021-06-06 15:31:50.896+05:30	15	Type of diabetes	1	[{"added": {}}]	8	6
+1361	2021-06-06 15:56:31.193+05:30	14	If Yes, Duration:	3		8	6
+1362	2021-06-06 15:56:41.069+05:30	14	Type of diabetes	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1363	2021-06-06 15:56:49.279+05:30	15	Type of diabetes	3		8	6
+1364	2021-06-06 16:06:45.987+05:30	2	m	3		7	6
+1365	2021-06-06 16:06:45.991+05:30	1	Saksham	3		7	6
+1366	2021-06-06 16:08:01.544+05:30	15	Type of diabetes	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1367	2021-06-06 16:08:18.042+05:30	14	If Yes, then duration	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1368	2021-06-06 16:09:59.875+05:30	14	If Yes, then duration	3		8	6
+1369	2021-06-06 16:10:09.323+05:30	14	Type of diabetes	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1370	2021-06-06 16:10:26.347+05:30	15	Type of diabetes	3		8	6
+1371	2021-06-06 16:10:43.194+05:30	2	Nam	3		7	6
+1372	2021-06-06 16:10:43.197+05:30	1	M	3		7	6
+1373	2021-06-06 20:19:56.521+05:30	15	Type of diabetes	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1374	2021-06-06 20:20:20.995+05:30	14	If Yes, Duration:	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1375	2021-06-06 20:26:32.814+05:30	2	sa	3		7	6
+1376	2021-06-06 20:26:32.819+05:30	1	KA	3		7	6
+1377	2021-06-07 09:25:54.719+05:30	4	m	3		7	6
+1378	2021-06-07 09:25:54.722+05:30	3	Man	3		7	6
+1379	2021-06-07 09:26:20.411+05:30	6	m	3		7	6
+1380	2021-06-07 09:26:20.415+05:30	5	m	3		7	6
+1381	2021-06-07 09:27:09.042+05:30	16	Family History of Coronary Artery Disease	1	[{"added": {}}]	8	6
+1382	2021-06-07 09:27:17.308+05:30	17	History of Smoking	1	[{"added": {}}]	8	6
+1383	2021-06-07 09:27:28.74+05:30	18	Hypertension (BP ≥140/90 mmHg on repeated measurements and/or on antihypertension treatment)	1	[{"added": {}}]	8	6
+1384	2021-06-07 09:27:45.053+05:30	19	Dyslipidemia (Cholesterol >215 mg/dl or requiring treatment)	1	[{"added": {}}]	8	6
+1385	2021-06-07 09:28:15.994+05:30	21	District-	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1386	2021-06-07 09:28:27.189+05:30	11	District-	3		8	6
+1387	2021-06-07 09:28:41.119+05:30	22	Phone number:	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1388	2021-06-07 09:28:44.408+05:30	12	Phone number:	3		8	6
+1389	2021-06-07 09:28:51.587+05:30	23	Current diabetes mellitus	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1390	2021-06-07 09:28:54.145+05:30	13	Current diabetes mellitus	3		8	6
+1391	2021-06-07 09:29:00.343+05:30	24	If Yes, Duration:	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1392	2021-06-07 09:29:03.091+05:30	14	If Yes, Duration:	3		8	6
+1393	2021-06-07 09:29:08.652+05:30	25	Type of diabetes	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1394	2021-06-07 09:29:10.58+05:30	15	Type of diabetes	3		8	6
+1395	2021-06-07 09:29:20.995+05:30	26	Family History of Coronary Artery Disease	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1396	2021-06-07 09:29:24.294+05:30	16	Family History of Coronary Artery Disease	3		8	6
+1397	2021-06-07 09:29:35.98+05:30	27	History of Smoking	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1398	2021-06-07 09:29:38.241+05:30	17	History of Smoking	3		8	6
+1399	2021-06-07 09:29:44.909+05:30	28	Hypertension (BP ≥140/90 mmHg on repeated measurements and/or on antihypertension treatment)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1400	2021-06-07 09:29:47.295+05:30	18	Hypertension (BP ≥140/90 mmHg on repeated measurements and/or on antihypertension treatment)	3		8	6
+1401	2021-06-07 09:29:55.243+05:30	29	Dyslipidemia (Cholesterol >215 mg/dl or requiring treatment)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1402	2021-06-07 09:29:57.523+05:30	19	Dyslipidemia (Cholesterol >215 mg/dl or requiring treatment)	3		8	6
+1403	2021-06-07 09:32:05.633+05:30	30	History of Myocardial Infarction (MI)	1	[{"added": {}}]	8	6
+1404	2021-06-07 09:32:22.688+05:30	41	History of Percutaneous Coronary Intervention (PCI)	1	[{"added": {}}]	8	6
+1405	2021-06-07 09:32:31.981+05:30	42	History of cardiac surgery (other than CABG)	1	[{"added": {}}]	8	6
+1406	2021-06-07 09:32:40.271+05:30	43	History of ICD, PPI or CRTD implantation	1	[{"added": {}}]	8	6
+1407	2021-06-07 09:33:04.527+05:30	44	History of Atrial Fibrillation	1	[{"added": {}}]	8	6
+1408	2021-06-07 09:33:12.901+05:30	45	History of Congestive Heart failure	1	[{"added": {}}]	8	6
+1409	2021-06-07 09:33:20.944+05:30	46	Renal insufficiency (serum creatinine > 2.5mg/dL, or creatinine clearance ≤ 30 mL/min)	1	[{"added": {}}]	8	6
+1410	2021-06-07 09:34:06.949+05:30	47	History of previous stroke	1	[{"added": {}}]	8	6
+1411	2021-06-07 09:34:21.059+05:30	48	Known Chronic Obstructive Pulmonary Disease (COPD) (Chronic lung disease: long-term use of bronchodilators or steroids for lung disease)	1	[{"added": {}}]	8	6
+1412	2021-06-07 09:34:32.985+05:30	49	Major Bleeding (intracranial, gastrointestinal or uro-genital which requires Hospitalization)	1	[{"added": {}}]	8	6
+1413	2021-06-07 09:34:40.828+05:30	50	History of Liver Cirrhosis	1	[{"added": {}}]	8	6
+1414	2021-06-07 09:34:57.411+05:30	61	History of Liver Cirrhosis	1	[{"added": {}}]	8	6
+1415	2021-06-07 09:35:16.728+05:30	62	Other relevant concomitant diseases	1	[{"added": {}}]	8	6
+1416	2021-06-07 09:36:02.47+05:30	63	Left Ventricular Ejection Fraction (LVEF)	1	[{"added": {}}]	8	6
+1417	2021-06-07 09:36:14.043+05:30	64	RWMA-	1	[{"added": {}}]	8	6
+1418	2021-06-07 09:50:32.341+05:30	64	Left Ventricular Ejection Fraction (LVEF)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1419	2021-06-07 09:50:34.596+05:30	63	Left Ventricular Ejection Fraction (LVEF)	3		8	6
+1420	2021-06-07 09:50:58.203+05:30	63	If Yes, specify the diseases in details	1	[{"added": {}}]	8	6
+1421	2021-06-07 09:51:43.08+05:30	61	History of Liver Cirrhosis	3		8	6
+1422	2021-06-07 09:51:54.307+05:30	61	Other relevant concomitant diseases	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1423	2021-06-07 09:52:04.851+05:30	62	Other relevant concomitant diseases	3		8	6
+1424	2021-06-07 09:52:10.03+05:30	62	If Yes, specify the diseases in details	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1425	2021-06-07 09:52:12.306+05:30	63	If Yes, specify the diseases in details	3		8	6
+1426	2021-06-07 09:52:20.042+05:30	63	Left Ventricular Ejection Fraction (LVEF)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1427	2021-06-07 09:52:22.68+05:30	64	Left Ventricular Ejection Fraction (LVEF)	3		8	6
+1428	2021-06-07 09:52:39.857+05:30	64	RWMA	1	[{"added": {}}]	8	6
+1429	2021-06-07 10:39:41.007+05:30	11	District-	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1430	2021-06-07 10:39:43.359+05:30	21	District-	3		8	6
+1431	2021-06-07 10:39:50.779+05:30	12	Phone number:	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1432	2021-06-07 10:39:52.788+05:30	22	Phone number:	3		8	6
+1433	2021-06-07 10:44:19.866+05:30	31	History of Percutaneous Coronary Intervention (PCI)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1434	2021-06-07 10:44:22.124+05:30	41	History of Percutaneous Coronary Intervention (PCI)	3		8	6
+1435	2021-06-07 10:44:29.171+05:30	32	History of cardiac surgery (other than CABG)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1436	2021-06-07 10:44:31.488+05:30	42	History of cardiac surgery (other than CABG)	3		8	6
+1437	2021-06-07 10:44:37.973+05:30	33	History of ICD, PPI or CRTD implantation	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1438	2021-06-07 10:44:40.254+05:30	43	History of ICD, PPI or CRTD implantation	3		8	6
+1439	2021-06-07 10:44:46.128+05:30	34	History of Atrial Fibrillation	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1440	2021-06-07 10:44:48.279+05:30	44	History of Atrial Fibrillation	3		8	6
+1441	2021-06-07 10:44:55.155+05:30	35	History of Congestive Heart failure	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1442	2021-06-07 10:44:57.352+05:30	45	History of Congestive Heart failure	3		8	6
+1443	2021-06-07 10:45:03.812+05:30	36	Renal insufficiency (serum creatinine > 2.5mg/dL, or creatinine clearance ≤ 30 mL/min)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1444	2021-06-07 10:45:06.042+05:30	46	Renal insufficiency (serum creatinine > 2.5mg/dL, or creatinine clearance ≤ 30 mL/min)	3		8	6
+1445	2021-06-07 10:45:13.315+05:30	37	History of previous stroke	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1446	2021-06-07 10:45:15.391+05:30	47	History of previous stroke	3		8	6
+1447	2021-06-07 10:45:21.331+05:30	38	Known Chronic Obstructive Pulmonary Disease (COPD) (Chronic lung disease: long-term use of bronchodilators or steroids for lung disease)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1448	2021-06-07 10:45:24.634+05:30	48	Known Chronic Obstructive Pulmonary Disease (COPD) (Chronic lung disease: long-term use of bronchodilators or steroids for lung disease)	3		8	6
+1449	2021-06-07 10:45:31.057+05:30	39	Major Bleeding (intracranial, gastrointestinal or uro-genital which requires Hospitalization)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1450	2021-06-07 10:45:33.371+05:30	49	Major Bleeding (intracranial, gastrointestinal or uro-genital which requires Hospitalization)	3		8	6
+1451	2021-06-07 10:45:40.569+05:30	40	History of Liver Cirrhosis	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1452	2021-06-07 10:45:42.878+05:30	50	History of Liver Cirrhosis	3		8	6
+1453	2021-06-07 10:45:59.498+05:30	51	Other relevant concomitant diseases	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1454	2021-06-07 10:46:02.305+05:30	61	Other relevant concomitant diseases	3		8	6
+1455	2021-06-07 10:46:07.534+05:30	52	If Yes, specify the diseases in details	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1456	2021-06-07 10:46:09.867+05:30	62	If Yes, specify the diseases in details	3		8	6
+1457	2021-06-07 10:46:16.098+05:30	53	Left Ventricular Ejection Fraction (LVEF)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1458	2021-06-07 10:46:18.169+05:30	63	Left Ventricular Ejection Fraction (LVEF)	3		8	6
+1459	2021-06-07 10:46:22.705+05:30	54	RWMA	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1460	2021-06-07 10:46:25.002+05:30	64	RWMA	3		8	6
+1461	2021-06-07 10:48:09.211+05:30	41	Other relevant concomitant diseases	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1462	2021-06-07 10:48:11.409+05:30	51	Other relevant concomitant diseases	3		8	6
+1463	2021-06-07 10:48:17.969+05:30	42	If Yes, specify the diseases in details	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1464	2021-06-07 10:48:20.071+05:30	52	If Yes, specify the diseases in details	3		8	6
+1465	2021-06-07 10:48:25.301+05:30	43	Left Ventricular Ejection Fraction (LVEF)	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1466	2021-06-07 10:48:27.524+05:30	53	Left Ventricular Ejection Fraction (LVEF)	3		8	6
+1467	2021-06-07 10:48:32.742+05:30	44	RWMA	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1468	2021-06-07 10:48:34.785+05:30	54	RWMA	3		8	6
+1469	2021-06-07 12:21:38.226+05:30	10	PO:	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1470	2021-06-07 12:21:47.613+05:30	11	District:	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1471	2021-06-07 12:21:58.275+05:30	9	Village:	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1472	2021-06-07 12:52:01.873+05:30	13	Heart Rate (beats per minute)	1	[{"added": {}}]	8	1
+1473	2021-06-07 12:56:29.863+05:30	14	Blood Pressure (mmHg)	1	[{"added": {}}]	8	1
+1474	2021-06-07 12:56:49.184+05:30	15	Weight (in kg)	1	[{"added": {}}]	8	1
+1475	2021-06-07 12:57:07.23+05:30	16	Height (in cm)	1	[{"added": {}}]	8	1
+1476	2021-06-07 12:59:15.155+05:30	17	BMI (Kg/m2)	1	[{"added": {}}]	8	1
+1477	2021-06-07 13:06:12.064+05:30	12	Alternate Phone number:	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1478	2021-06-07 20:13:48.012+05:30	45	LVEF measurement (in %)	1	[{"added": {}}]	8	1
+1479	2021-06-07 20:14:04.454+05:30	46	Date of LVEF measurement (The date of LVEF within 30 days prior to PCI is acceptable) (If LVEF measurement is < 30%, subject is not eligible for the study).	1	[{"added": {}}]	8	1
+1480	2021-06-07 20:18:53.425+05:30	46	Date of LVEF measurement (The date of LVEF within 30 days prior to PCI is acceptable)	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1481	2021-06-07 20:25:28.323+05:30	47	Coronary Artery Disease presentation	1	[{"added": {}}]	8	1
+1482	2021-06-07 20:37:25.298+05:30	48	If stable angina, please indicate Canadian Cardiovascular Society class (CCS)	1	[{"added": {}}]	8	1
+1483	2021-06-07 20:38:12.556+05:30	49	If STEMI	1	[{"added": {}}]	8	1
+1484	2021-06-07 20:39:00.638+05:30	50	Silent Ischemia documented by	1	[{"added": {}}]	8	1
+1485	2021-06-07 20:39:11.466+05:30	51	If angina equivalent, please specify	1	[{"added": {}}]	8	1
+1486	2021-06-07 20:39:23.181+05:30	52	NYHA Class	1	[{"added": {}}]	8	1
+1487	2021-06-07 20:44:48.538+05:30	53	NYHA Class	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1488	2021-06-07 20:44:57.109+05:30	52	NYHA Class	3		8	1
+1489	2021-06-07 20:45:03.892+05:30	52	If angina equivalent, please specify	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1490	2021-06-07 20:45:09.551+05:30	51	If angina equivalent, please specify	3		8	1
+1491	2021-06-07 20:45:16.902+05:30	51	Silent Ischemia documented by	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1492	2021-06-07 20:45:24.742+05:30	50	Silent Ischemia documented by	3		8	1
+1493	2021-06-07 20:45:31.558+05:30	50	If STEMI	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1494	2021-06-07 20:45:36.954+05:30	49	If STEMI	3		8	1
+1495	2021-06-07 20:45:42.809+05:30	49	If stable angina, please indicate Canadian Cardiovascular Society class (CCS)	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1496	2021-06-07 20:45:51.362+05:30	48	If unstable angina, please indicate Braunwald classification	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1497	2021-06-07 22:05:11.242+05:30	56	NYHA Class	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1498	2021-06-07 22:05:22.193+05:30	55	If angina equivalent, please specify	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1499	2021-06-07 22:05:32.003+05:30	54	Silent Ischemia documented by	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1500	2021-06-07 22:05:49.264+05:30	51	Territory	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1501	2021-06-07 22:06:07.746+05:30	52	Window Period (in hours)	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1502	2021-06-07 22:06:26.249+05:30	53	KILLIP Class	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1503	2021-06-07 22:13:10.451+05:30	8	Nayan	3		7	1
+1504	2021-06-07 22:13:10.584+05:30	7	Nayan	3		7	1
+1505	2021-06-07 22:13:10.717+05:30	6	Nayan	3		7	1
+1506	2021-06-07 22:13:10.861+05:30	5	Nayan	3		7	1
+1507	2021-06-07 22:13:10.971+05:30	4	K	3		7	1
+1508	2021-06-07 22:13:11.116+05:30	3	L	3		7	1
+1509	2021-06-07 22:13:11.227+05:30	2	m	3		7	1
+1510	2021-06-07 22:13:11.44+05:30	1	Sak	3		7	1
+1511	2021-06-07 22:15:00.562+05:30	1	Nayan	3		7	1
+1512	2021-06-07 22:16:43.475+05:30	50	If STEMI	3		8	1
+1513	2021-06-07 22:17:08.795+05:30	50	Stemi, Territory	2	[{"changed": {"fields": ["Q id", "Q text"]}}]	8	1
+1514	2021-06-07 22:17:29.021+05:30	51	Territory	3		8	1
+1515	2021-06-07 22:17:52.351+05:30	52	STEMI - Window Period (in hours)	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1516	2021-06-07 22:18:04.853+05:30	50	STEMI - Territory	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1517	2021-06-07 22:18:10.323+05:30	51	STEMI - Window Period (in hours)	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1518	2021-06-07 22:18:15.246+05:30	52	STEMI - Window Period (in hours)	3		8	1
+1519	2021-06-07 22:18:26.63+05:30	52	STEMI - KILLIP Class	2	[{"changed": {"fields": ["Q id", "Q text"]}}]	8	1
+1520	2021-06-07 22:18:34.607+05:30	53	KILLIP Class	3		8	1
+1521	2021-06-07 22:18:42.36+05:30	53	Silent Ischemia documented by	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1522	2021-06-07 22:19:02.171+05:30	54	Silent Ischemia documented by	3		8	1
+1523	2021-06-07 22:19:08.437+05:30	54	If angina equivalent, please specify	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1524	2021-06-07 22:19:16.12+05:30	55	If angina equivalent, please specify	3		8	1
+1525	2021-06-07 22:19:21.599+05:30	55	NYHA Class	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1526	2021-06-07 22:19:26.01+05:30	56	NYHA Class	3		8	1
+1527	2021-06-07 22:21:50.94+05:30	1	Nayan	3		7	1
+1528	2021-06-07 22:23:38.236+05:30	1	Nayan	3		7	1
+1529	2021-06-07 22:27:07.301+05:30	1	Nayan	3		7	1
+1530	2021-06-08 11:05:56.505+05:30	56	Date of PCI	1	[{"added": {}}]	8	1
+1531	2021-06-08 11:06:10.711+05:30	61	Date of PCI	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1532	2021-06-08 11:11:00.965+05:30	62	CASS Site 1	1	[{"added": {}}]	8	1
+1533	2021-06-08 11:11:10.083+05:30	63	CASS Site 2	1	[{"added": {}}]	8	1
+1534	2021-06-08 11:11:15.401+05:30	64	CASS Site 3	1	[{"added": {}}]	8	1
+1535	2021-06-08 11:11:30.841+05:30	65	Procedure Performed (Check all that apply)	1	[{"added": {}}]	8	1
+1536	2021-06-08 11:16:41.688+05:30	56	Date of PCI	3		8	1
+1537	2021-06-08 11:17:01.453+05:30	66	Procedure Performed (Check all that apply)	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1538	2021-06-08 11:17:06.117+05:30	65	Procedure Performed (Check all that apply)	3		8	1
+1539	2021-06-08 11:17:12.569+05:30	65	CASS Site 3	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1540	2021-06-08 11:17:16.959+05:30	64	CASS Site 3	3		8	1
+1541	2021-06-08 11:17:24.215+05:30	64	CASS Site 2	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1542	2021-06-08 11:17:29.928+05:30	63	CASS Site 2	3		8	1
+1543	2021-06-08 11:17:36.031+05:30	63	CASS Site 1	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1544	2021-06-08 11:17:40.126+05:30	62	CASS Site 1	3		8	1
+1545	2021-06-08 11:17:45.58+05:30	62	Date of PCI	2	[{"changed": {"fields": ["Q id"]}}]	8	1
+1546	2021-06-08 11:17:50.924+05:30	61	Did subject had prior stent implantation more than 6 months before	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1547	2021-06-08 11:37:55.552+05:30	2	Nayan	3		7	1
+1548	2021-06-08 11:37:55.826+05:30	1	Nayan	3		7	1
+1549	2021-06-08 16:07:21.304+05:30	71	Haemoglobin	1	[{"added": {}}]	8	6
+1550	2021-06-08 16:07:28.606+05:30	72	WBC Count	1	[{"added": {}}]	8	6
+1551	2021-06-08 16:07:35.853+05:30	73	Platelet Count	1	[{"added": {}}]	8	6
+1552	2021-06-08 16:07:46.205+05:30	74	Serum Creatinine	1	[{"added": {}}]	8	6
+1553	2021-06-08 16:07:53.171+05:30	75	eGFR	1	[{"added": {}}]	8	6
+1554	2021-06-08 16:08:00.857+05:30	76	HbA1c	1	[{"added": {}}]	8	6
+1555	2021-06-08 16:08:07.821+05:30	77	Sodium	1	[{"added": {}}]	8	6
+1556	2021-06-08 16:08:14.092+05:30	78	Potassium	1	[{"added": {}}]	8	6
+1557	2021-06-08 16:08:20.203+05:30	79	Chloride	1	[{"added": {}}]	8	6
+1558	2021-06-08 16:08:49.834+05:30	80	Fasting Blood Sugar	1	[{"added": {}}]	8	6
+1559	2021-06-08 16:08:58.778+05:30	81	Random Blood sugar	1	[{"added": {}}]	8	6
+1560	2021-06-08 16:09:06.712+05:30	82	CRP	1	[{"added": {}}]	8	6
+1561	2021-06-08 16:09:30.001+05:30	83	MDA	1	[{"added": {}}]	8	6
+1562	2021-06-08 16:09:39.816+05:30	84	SOD	1	[{"added": {}}]	8	6
+1563	2021-06-08 16:12:45.017+05:30	70	Date of Sample collection*	1	[{"added": {}}]	8	6
+1564	2021-06-08 16:38:12.432+05:30	9	mk	3		7	6
+1565	2021-06-08 16:38:12.435+05:30	8	KM	3		7	6
+1566	2021-06-08 16:38:12.438+05:30	7	s	3		7	6
+1567	2021-06-08 16:38:12.441+05:30	6	Saksham	3		7	6
+1568	2021-06-08 16:38:12.444+05:30	5	Nayan	3		7	6
+1569	2021-06-08 16:38:12.448+05:30	4	Nayan	3		7	6
+1570	2021-06-08 16:38:12.452+05:30	3	Nayan	3		7	6
+1571	2021-06-08 16:38:12.455+05:30	2	Nayan	3		7	6
+1572	2021-06-08 16:38:12.458+05:30	1	Nayan	3		7	6
+1573	2021-06-08 20:18:14.235+05:30	90	Date of Sample collection	1	[{"added": {}}]	8	6
+1574	2021-06-08 20:18:24.325+05:30	91	Total Cholesterol	1	[{"added": {}}]	8	6
+1575	2021-06-08 20:18:33.011+05:30	92	Triglycerides	1	[{"added": {}}]	8	6
+1576	2021-06-08 20:18:40.355+05:30	93	LDL	1	[{"added": {}}]	8	6
+1577	2021-06-08 20:18:48.64+05:30	94	HDL	1	[{"added": {}}]	8	6
+1578	2021-06-08 20:27:41.966+05:30	2	Lam	3		7	6
+1579	2021-06-08 20:27:41.97+05:30	1	Saksham	3		7	6
+1580	2021-06-08 20:59:22.056+05:30	100	Date of Sample Collection:	1	[{"added": {}}]	8	6
+1581	2021-06-08 20:59:32.404+05:30	101	CK Total	1	[{"added": {}}]	8	6
+1582	2021-06-08 20:59:42.251+05:30	102	CK-MB	1	[{"added": {}}]	8	6
+1583	2021-06-08 20:59:50.587+05:30	103	Troponin I	1	[{"added": {}}]	8	6
+1584	2021-06-08 21:00:01.097+05:30	104	Troponin T	1	[{"added": {}}]	8	6
+1585	2021-06-08 21:42:21.372+05:30	7	Nayan	3		7	1
+1586	2021-06-08 21:42:21.54+05:30	6	Nayan	3		7	1
+1587	2021-06-08 21:42:21.695+05:30	5	Mnnn	3		7	1
+1588	2021-06-08 21:42:21.862+05:30	4	Mnnn	3		7	1
+1589	2021-06-08 21:42:22.07+05:30	3	S	3		7	1
+1590	2021-06-08 21:46:48.999+05:30	110	Was 12-Lead ECG performed	1	[{"added": {}}]	8	1
+1591	2021-06-08 21:49:54.669+05:30	111	ECG Date	1	[{"added": {}}]	8	1
+1592	2021-06-08 21:50:51.247+05:30	112	ECG Result:	1	[{"added": {}}]	8	1
+1593	2021-06-08 22:28:36.057+05:30	113	If Abnormal, please provide details	1	[{"added": {}}]	8	1
+1594	2021-06-08 22:30:16.056+05:30	114	ST Deviation	1	[{"added": {}}]	8	1
+1595	2021-06-08 22:30:38.516+05:30	115	Conduction abnormality	1	[{"added": {}}]	8	1
+1596	2021-06-09 11:08:40.928+05:30	3	Nayan	3		7	1
+1597	2021-06-09 11:08:41.083+05:30	2	Nayan	3		7	1
+1598	2021-06-09 11:08:41.344+05:30	1	Nayan	3		7	1
+1599	2021-06-09 11:16:27.56+05:30	116	QRS Duration	1	[{"added": {}}]	8	1
+1600	2021-06-09 12:26:24.667+05:30	120	Was subject on previously prescribed regimen of aspirin/ antiplatelet.	1	[{"added": {}}]	8	1
+1601	2021-06-09 12:42:15.529+05:30	121	If Yes, please tick below:	1	[{"added": {}}]	8	1
+1602	2021-06-09 12:50:42.451+05:30	122	Aspirin	1	[{"added": {}}]	8	1
+1603	2021-06-09 12:50:59.62+05:30	123	Clopidogrel	1	[{"added": {}}]	8	1
+1604	2021-06-09 12:51:13.964+05:30	124	Prasugrel	1	[{"added": {}}]	8	1
+1605	2021-06-09 12:51:25.232+05:30	125	Ticagrelor	1	[{"added": {}}]	8	1
+1606	2021-06-10 19:36:37.014+05:30	125	Ticagrelor	3		8	1
+1607	2021-06-10 19:36:37.338+05:30	124	Prasugrel	3		8	1
+1608	2021-06-10 19:36:37.666+05:30	123	Clopidogrel	3		8	1
+1609	2021-06-10 19:36:38.02+05:30	122	Aspirin	3		8	1
+1610	2021-06-10 19:42:48.04+05:30	122	Were cardiac and diabetes medications taken prior to enrollment?	1	[{"added": {}}]	8	1
+1611	2021-06-10 19:43:01.02+05:30	123	If Yes, please check all that apply	1	[{"added": {}}]	8	1
+1612	2021-06-10 21:15:09.398+05:30	130	Funding	1	[{"added": {}}]	8	1
+1613	2021-06-10 21:15:52.32+05:30	131	Procedure start date	1	[{"added": {}}]	8	1
+1614	2021-06-10 21:16:31.964+05:30	132	Procedure start time	1	[{"added": {}}]	8	1
+1615	2021-06-10 21:16:37.983+05:30	133	Procedure end time	1	[{"added": {}}]	8	1
+1616	2021-06-10 21:18:15.636+05:30	134	Size of largest guide catheter	1	[{"added": {}}]	8	1
+1617	2021-06-10 21:18:31.3+05:30	135	SYNTAX Score	1	[{"added": {}}]	8	1
+1618	2021-06-10 21:21:43.844+05:30	136	LMCA involvement	1	[{"added": {}}]	8	1
+1619	2021-06-10 21:22:04.469+05:30	137	Number of target vessels diseased	1	[{"added": {}}]	8	1
+1620	2021-06-10 21:22:15.642+05:30	138	Number of target vessels planned during Index procedure	1	[{"added": {}}]	8	1
+1621	2021-06-10 21:23:06.483+05:30	139	Any staged procedure planned	1	[{"added": {}}]	8	1
+1622	2021-06-10 21:23:38.002+05:30	140	Vascular access site(s)	1	[{"added": {}}]	8	1
+1623	2021-06-10 21:24:20.68+05:30	141	IABP Use	1	[{"added": {}}]	8	1
+1624	2021-06-10 21:24:44.645+05:30	142	TPI used	1	[{"added": {}}]	8	1
+1625	2021-06-10 21:25:05.679+05:30	143	Please provide the details of anti-platelet therapy during procedure.	1	[{"added": {}}]	8	1
+1626	2021-06-10 21:25:28.596+05:30	141	IABP Used	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1627	2021-06-10 21:25:36.357+05:30	142	TPI Used	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1628	2021-06-10 22:38:44.006+05:30	11	Nayan	3		7	1
+1629	2021-06-10 22:38:44.328+05:30	10	Nayan	3		7	1
+1630	2021-06-10 22:38:44.672+05:30	9	Nayan	3		7	1
+1631	2021-06-10 22:38:44.826+05:30	8	Nayan	3		7	1
+1632	2021-06-10 22:38:44.946+05:30	7	Nayan	3		7	1
+1633	2021-06-10 22:38:45.072+05:30	6	Nayan	3		7	1
+1634	2021-06-10 22:38:45.227+05:30	5	Nayan	3		7	1
+1635	2021-06-10 22:38:45.392+05:30	4	Nayan	3		7	1
+1636	2021-06-10 22:38:45.637+05:30	3	Nayan	3		7	1
+1637	2021-06-10 22:38:45.791+05:30	2	Nayan	3		7	1
+1638	2021-06-10 22:38:45.881+05:30	1	Nayan	3		7	1
+1639	2021-06-11 14:48:29.698+05:30	150	Was a staged procedure planned?	1	[{"added": {}}]	8	6
+1640	2021-06-11 14:48:35.244+05:30	151	Was a staged procedure planned?	1	[{"added": {}}]	8	6
+1641	2021-06-11 14:48:51.034+05:30	152	Planned date*	1	[{"added": {}}]	8	6
+1642	2021-06-11 14:49:08.373+05:30	153	Reason for staging (tick all that apply)	1	[{"added": {}}]	8	6
+1643	2021-06-11 14:49:34.75+05:30	154	If yes, please specify	1	[{"added": {}}]	8	6
+1644	2021-06-11 15:09:42.381+05:30	150	Was a staged procedure planned?	3		8	6
+1645	2021-06-11 16:39:01.573+05:30	10	Lww	3		7	6
+1646	2021-06-11 16:39:01.576+05:30	9	m	3		7	6
+1647	2021-06-11 16:39:01.579+05:30	8	Kash	3		7	6
+1648	2021-06-11 16:39:01.581+05:30	7	k	3		7	6
+1649	2021-06-11 16:39:01.585+05:30	6	k	3		7	6
+1650	2021-06-11 16:39:01.588+05:30	5	Mnnn	3		7	6
+1651	2021-06-11 16:39:01.591+05:30	4	Lam	3		7	6
+1652	2021-06-11 16:39:01.594+05:30	3	K	3		7	6
+1653	2021-06-11 16:39:01.597+05:30	2	N	3		7	6
+1654	2021-06-11 16:39:01.601+05:30	1	S	3		7	6
+1655	2021-06-11 16:44:53.839+05:30	154	Due to other reason*	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1656	2021-06-11 17:39:41.194+05:30	6	kkkk	3		7	6
+1657	2021-06-11 17:39:41.213+05:30	5	Kmmk	3		7	6
+1658	2021-06-11 17:39:41.218+05:30	4	Kmmk	3		7	6
+1659	2021-06-11 17:39:41.222+05:30	3	m	3		7	6
+1660	2021-06-11 17:39:41.226+05:30	2	Naya	3		7	6
+1661	2021-06-11 17:39:41.23+05:30	1	Saksham	3		7	6
+1662	2021-06-11 21:22:01.918+05:30	161	Was FFR/iFR done	1	[{"added": {}}]	8	6
+1663	2021-06-11 21:22:10.929+05:30	162	If Yes,	1	[{"added": {}}]	8	6
+1664	2021-06-11 21:22:20.727+05:30	163	Date:	1	[{"added": {}}]	8	6
+1665	2021-06-11 21:22:28.735+05:30	164	FFR/IFR site:	1	[{"added": {}}]	8	6
+1666	2021-06-11 21:22:36.29+05:30	165	FFR/ IFR Value	1	[{"added": {}}]	8	6
+1667	2021-06-11 21:23:21.866+05:30	166	Select the one used pre PCI:	1	[{"added": {}}]	8	6
+1668	2021-06-11 21:24:06.089+05:30	167	HasIVUS/OCTbeenusedpre-PCI	1	[{"added": {}}]	8	6
+1669	2021-06-11 21:24:24.88+05:30	168	If yes, please select one of the following:	1	[{"added": {}}]	8	6
+1670	2021-06-12 11:42:00.708+05:30	166	Select the one used pre PCI:	3		8	6
+1671	2021-06-12 11:42:13.35+05:30	167	Has IVUS/OCT been used pre-PCI	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1672	2021-06-12 11:42:28.021+05:30	166	Has IVUS/OCT been used pre-PCI	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1673	2021-06-12 11:42:31.661+05:30	167	Has IVUS/OCT been used pre-PCI	3		8	6
+1674	2021-06-12 11:42:37.369+05:30	167	If yes, please select one of the following:	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1675	2021-06-12 11:42:39.514+05:30	168	If yes, please select one of the following:	3		8	6
+1676	2021-06-12 14:14:56.884+05:30	175	Date of Target lesion 1 treated	1	[{"added": {}}]	8	6
+1677	2021-06-12 14:15:12.688+05:30	176	CASS Site 1	1	[{"added": {}}]	8	6
+1678	2021-06-12 14:15:39.336+05:30	177	CASS Site 2	1	[{"added": {}}]	8	6
+1679	2021-06-12 14:15:45.132+05:30	178	CASS Site 3	1	[{"added": {}}]	8	6
+1680	2021-06-12 14:16:25.683+05:30	179	Pre PCI TIMI Flow	1	[{"added": {}}]	8	6
+1681	2021-06-12 14:16:45.996+05:30	180	Thrombus	1	[{"added": {}}]	8	6
+1682	2021-06-12 14:16:58.269+05:30	181	Lesion length (visual estimate	1	[{"added": {}}]	8	6
+1683	2021-06-12 14:17:10.393+05:30	182	Reference vessel diameter (visual estimate)	1	[{"added": {}}]	8	6
+1684	2021-06-12 14:17:17.935+05:30	183	Minimal Lumen Diameter	1	[{"added": {}}]	8	6
+1685	2021-06-12 14:17:32.219+05:30	184	Is this a bifurcation lesion	1	[{"added": {}}]	8	6
+1686	2021-06-12 14:17:40.112+05:30	185	If Yes, MEDINA classification	1	[{"added": {}}]	8	6
+1687	2021-06-12 14:18:26.996+05:30	182	Lesion length (visual estimate	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1688	2021-06-12 14:18:29.843+05:30	181	Lesion length (visual estimate	3		8	6
+1689	2021-06-12 14:18:37.775+05:30	184	Minimal Lumen Diameter	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1690	2021-06-12 14:18:40.39+05:30	183	Minimal Lumen Diameter	3		8	6
+1691	2021-06-12 14:19:40.022+05:30	181	Grade of Thrombus	1	[{"added": {}}]	8	6
+1692	2021-06-12 14:20:19.238+05:30	183	Reference vessel diameter (visual estimate)	1	[{"added": {}}]	8	6
+1693	2021-06-12 23:02:29.527+05:30	185	Is this a bifurcation lesion	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1694	2021-06-12 23:02:41.684+05:30	186	If Yes, MEDINA classification	1	[{"added": {}}]	8	6
+1695	2021-06-12 23:05:11.704+05:30	187	Number of stents used	1	[{"added": {}}]	8	6
+1696	2021-06-12 23:05:35.469+05:30	188	Predilation	1	[{"added": {}}]	8	6
+1697	2021-06-12 23:05:50.543+05:30	189	Thrombosuction	1	[{"added": {}}]	8	6
+1698	2021-06-12 23:05:58.736+05:30	190	Rotablation	1	[{"added": {}}]	8	6
+1699	2021-06-12 23:06:18.387+05:30	191	Guidezilla	1	[{"added": {}}]	8	6
+1700	2021-06-12 23:06:25.906+05:30	192	IVL	1	[{"added": {}}]	8	6
+1701	2021-06-12 23:06:41.95+05:30	193	Ostial Stenting	1	[{"added": {}}]	8	6
+1702	2021-06-12 23:06:59.419+05:30	194	Any special devices	1	[{"added": {}}]	8	6
+1703	2021-06-12 23:07:36.284+05:30	195	Name of device	1	[{"added": {}}]	8	6
+1704	2021-06-12 23:07:48.363+05:30	196	Bifurcation Stenting	1	[{"added": {}}]	8	6
+1705	2021-06-12 23:08:09.135+05:30	197	Bifurcation Technique	1	[{"added": {}}]	8	6
+1706	2021-06-12 23:48:16.757+05:30	182	Lesion length (visual estimate)	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1707	2021-06-13 00:06:24.497+05:30	2	Ma	3		7	6
+1708	2021-06-13 00:06:24.503+05:30	1	Saksham	3		7	6
+1709	2021-06-13 00:15:01.307+05:30	1	Saksham	3		7	6
+1710	2021-06-13 00:39:30.621+05:30	168	Other Findigs	1	[{"added": {}}]	8	6
+1711	2021-06-13 00:39:38.091+05:30	168	Other Findings	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1712	2021-06-13 00:55:25.289+05:30	3	Naman	3		7	6
+1713	2021-06-13 00:55:25.292+05:30	2	Saksham	3		7	6
+1714	2021-06-13 13:37:58.448+05:30	9	L	3		7	6
+1715	2021-06-13 13:37:58.454+05:30	8	Sak	3		7	6
+1716	2021-06-13 13:37:58.458+05:30	7	Nayan	3		7	6
+1717	2021-06-13 13:37:58.461+05:30	6	Saksham	3		7	6
+1718	2021-06-13 13:37:58.465+05:30	5	Saksham	3		7	6
+1719	2021-06-13 13:37:58.468+05:30	4	Maya	3		7	6
+1720	2021-06-13 22:19:40.313+05:30	210	Number of stents used	1	[{"added": {}}]	8	1
+1721	2021-06-13 22:23:12.446+05:30	211	First Stent	1	[{"added": {}}]	8	1
+1722	2021-06-13 22:23:39.238+05:30	212	Second Stent	1	[{"added": {}}]	8	1
+1723	2021-06-13 22:23:50.872+05:30	213	Third Stent	1	[{"added": {}}]	8	1
+1724	2021-06-14 16:25:39.556+05:30	214	TIMI Flow	1	[{"added": {}}]	8	6
+1725	2021-06-14 16:34:12.92+05:30	215	Drugs Given	1	[{"added": {}}]	8	6
+1726	2021-06-14 16:34:33.272+05:30	216	Distal Delivery	1	[{"added": {}}]	8	6
+1727	2021-06-14 16:35:26.71+05:30	217	Device success	1	[{"added": {}}]	8	6
+1728	2021-06-14 16:35:38.67+05:30	218	Lesion success	1	[{"added": {}}]	8	6
+1729	2021-06-14 16:35:45.874+05:30	219	Procedure Success	1	[{"added": {}}]	8	6
+1730	2021-06-14 16:36:14.342+05:30	220	Did the patient experience any procedural complication	1	[{"added": {}}]	8	6
+1731	2021-06-14 16:36:24.974+05:30	221	If Yes, check all that apply	1	[{"added": {}}]	8	6
+1732	2021-06-14 16:36:46.249+05:30	222	Post-Dilatation with high pressure balloon	1	[{"added": {}}]	8	6
+1733	2021-06-14 16:37:06.738+05:30	223	Was IVUS used to post stent deployment?	1	[{"added": {}}]	8	6
+1734	2021-06-14 16:37:28.249+05:30	224	If Yes, Findings	1	[{"added": {}}]	8	6
+1735	2021-06-14 16:38:02.477+05:30	225	Was FFR/iFR used post stent deployment?	1	[{"added": {}}]	8	6
+1736	2021-06-14 16:38:35.201+05:30	226	If Yes, Post PCI FFR value	1	[{"added": {}}]	8	6
+1737	2021-06-14 18:26:48.631+05:30	223	Post-Dilatation with high pressure balloon	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1738	2021-06-14 18:26:51.023+05:30	222	Post-Dilatation with high pressure balloon	3		8	6
+1739	2021-06-14 18:27:46.41+05:30	222	Others	1	[{"added": {}}]	8	6
+1740	2021-06-14 18:27:53.665+05:30	226	Was FFR/iFR used post stent deployment?	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+1741	2021-06-14 18:29:21.378+05:30	224	If Yes, FindingsWas IVUS used to post stent deployment?	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1742	2021-06-14 18:29:45.558+05:30	224	Was IVUS used to post stent deployment?	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1743	2021-06-14 18:30:05.216+05:30	225	Findings	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1744	2021-06-14 18:30:52.365+05:30	227	Post PCI FFR Value	1	[{"added": {}}]	8	6
+1745	2021-06-14 20:08:07.558+05:30	211	Stent Information	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+1746	2021-06-14 20:11:25.011+05:30	10	s	3		7	6
+1747	2021-06-14 20:11:37.537+05:30	9	Nayan	3		7	6
+1748	2021-06-14 20:11:37.552+05:30	8	Nayan	3		7	6
+1749	2021-06-14 20:11:37.555+05:30	7	Nayan	3		7	6
+1750	2021-06-14 20:11:37.557+05:30	6	Nayan	3		7	6
+1751	2021-06-14 20:11:37.561+05:30	5	Nayan	3		7	6
+1752	2021-06-14 20:11:37.564+05:30	4	Ruchi	3		7	6
+1753	2021-06-14 20:11:37.567+05:30	3	Nayan	3		7	6
+1754	2021-06-14 20:11:37.57+05:30	2	M	3		7	6
+1755	2021-06-14 20:11:37.573+05:30	1	Saksham	3		7	6
+1756	2021-06-14 20:16:57.771+05:30	1	Saksham	3		7	6
+1757	2021-06-14 20:51:29.731+05:30	1	Saksham	3		7	6
+1758	2021-06-14 21:31:41.345+05:30	4	Harnoor	3		7	6
+1759	2021-06-14 21:31:41.351+05:30	3	pam	3		7	6
+1760	2021-06-14 21:31:41.355+05:30	2	Saksham	3		7	6
+1761	2021-06-14 21:51:49.062+05:30	3	Noor	3		7	6
+1762	2021-06-14 21:51:49.066+05:30	2	M	3		7	6
+1763	2021-06-14 21:51:49.069+05:30	1	Saksham	3		7	6
+1764	2021-06-14 21:58:50.918+05:30	6	Ruchi	3		7	6
+1765	2021-06-14 21:58:50.921+05:30	5	Ruchi	3		7	6
+1766	2021-06-14 21:58:50.925+05:30	4	Nan	3		7	6
+1767	2021-06-14 22:00:47.94+05:30	8	Saksham	3		7	6
+1768	2021-06-14 22:00:47.943+05:30	7	Ruci	3		7	6
+1769	2021-06-15 20:27:08.621+05:30	11	Nayan	3		7	1
+1770	2021-06-15 20:27:09.094+05:30	10	Nayan	3		7	1
+1771	2021-06-15 20:27:09.345+05:30	9	Nayan	3		7	1
+1772	2021-06-15 20:27:09.505+05:30	8	Nayan	3		7	1
+1773	2021-06-15 20:27:09.633+05:30	7	Nayan	3		7	1
+1774	2021-06-15 20:27:09.739+05:30	6	Nayan	3		7	1
+1775	2021-06-15 20:27:09.866+05:30	5	Nayan	3		7	1
+1776	2021-06-15 20:27:10+05:30	4	Nayan	3		7	1
+1777	2021-06-15 20:27:10.35+05:30	3	Nayan	3		7	1
+1778	2021-06-15 20:27:10.484+05:30	2	Nayan	3		7	1
+1779	2021-06-15 20:27:10.574+05:30	1	Saksham	3		7	1
+1780	2021-06-15 20:51:49.904+05:30	240	Date of Target lesion 2 treated	1	[{"added": {}}]	8	1
+1781	2021-06-15 20:52:02.208+05:30	241	CASS Site 1	1	[{"added": {}}]	8	1
+1782	2021-06-15 20:52:10.785+05:30	242	CASS Site 1	1	[{"added": {}}]	8	1
+1783	2021-06-15 20:52:16.103+05:30	243	CASS Site 2	1	[{"added": {}}]	8	1
+1784	2021-06-15 20:52:23.419+05:30	244	CASS Site 3	1	[{"added": {}}]	8	1
+1785	2021-06-15 20:52:35.802+05:30	245	Pre PCI TIMI Flow	1	[{"added": {}}]	8	1
+1786	2021-06-15 20:52:48.45+05:30	246	Thrombus	1	[{"added": {}}]	8	1
+1787	2021-06-15 20:53:02.072+05:30	247	Grade of Thrombus	1	[{"added": {}}]	8	1
+1788	2021-06-15 20:53:27.411+05:30	248	Lesion length (visual estimate)	1	[{"added": {}}]	8	1
+1789	2021-06-15 20:53:42.943+05:30	249	Reference vessel diameter (visual estimate)	1	[{"added": {}}]	8	1
+1790	2021-06-15 20:54:03.654+05:30	250	Minimal Lumen Diameter	1	[{"added": {}}]	8	1
+1791	2021-06-15 20:54:14.415+05:30	251	Is this a bifurcation lesion	1	[{"added": {}}]	8	1
+1792	2021-06-15 20:54:24.69+05:30	252	If Yes, MEDINA classification	1	[{"added": {}}]	8	1
+1793	2021-06-15 20:54:33.744+05:30	253	If Yes, MEDINA classification	1	[{"added": {}}]	8	1
+1794	2021-06-15 20:54:59.825+05:30	253	Number of stents used	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1795	2021-06-15 20:55:09.563+05:30	254	Predilation	1	[{"added": {}}]	8	1
+1796	2021-06-15 20:55:18.739+05:30	255	Thrombosuction	1	[{"added": {}}]	8	1
+1797	2021-06-15 20:55:28.426+05:30	256	Rotablation	1	[{"added": {}}]	8	1
+1798	2021-06-15 20:55:44.499+05:30	257	Guidezilla	1	[{"added": {}}]	8	1
+1799	2021-06-15 20:56:17.748+05:30	258	IVL	1	[{"added": {}}]	8	1
+1800	2021-06-15 20:56:29.675+05:30	259	Ostial Stenting	1	[{"added": {}}]	8	1
+1801	2021-06-15 20:56:39.947+05:30	260	Any special devices	1	[{"added": {}}]	8	1
+1802	2021-06-15 20:56:49.333+05:30	261	Name of device	1	[{"added": {}}]	8	1
+1803	2021-06-15 20:56:58.822+05:30	262	Bifurcation Stenting	1	[{"added": {}}]	8	1
+1804	2021-06-15 20:57:10.171+05:30	263	Bifurcation Technique	1	[{"added": {}}]	8	1
+1805	2021-06-15 21:53:20.179+05:30	240	Date of Target lesion 2 treated	3		8	1
+1806	2021-06-15 21:53:28.69+05:30	241	Date of Target lesion 2 treated	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1807	2021-06-15 22:01:30.471+05:30	270	Number of stents used	1	[{"added": {}}]	8	1
+1808	2021-06-15 22:01:45.083+05:30	271	Stent Information	1	[{"added": {}}]	8	1
+1809	2021-06-15 22:02:11.332+05:30	272	TIMI Flow	1	[{"added": {}}]	8	1
+1810	2021-06-15 22:02:22.538+05:30	273	Drugs Given	1	[{"added": {}}]	8	1
+1811	2021-06-15 22:02:35.23+05:30	274	Distal Delivery	1	[{"added": {}}]	8	1
+1812	2021-06-15 22:02:45.798+05:30	275	Device success	1	[{"added": {}}]	8	1
+1813	2021-06-15 22:02:57.662+05:30	276	Lesion success	1	[{"added": {}}]	8	1
+1814	2021-06-15 22:03:07.992+05:30	277	Procedure Success	1	[{"added": {}}]	8	1
+1815	2021-06-15 22:03:19.105+05:30	278	Did the patient experience any procedural complication	1	[{"added": {}}]	8	1
+1816	2021-06-15 22:03:29.963+05:30	279	If Yes, check all that apply	1	[{"added": {}}]	8	1
+1817	2021-06-15 22:03:39.349+05:30	280	Post-Dilatation with high pressure balloon	1	[{"added": {}}]	8	1
+1818	2021-06-15 22:03:49.686+05:30	281	Was IVUS used to post stent deployment?	1	[{"added": {}}]	8	1
+1819	2021-06-15 22:04:00.469+05:30	282	Findings	1	[{"added": {}}]	8	1
+1820	2021-06-15 22:04:11.637+05:30	283	Was FFR/iFR used post stent deployment?	1	[{"added": {}}]	8	1
+1821	2021-06-15 22:04:24.542+05:30	284	Post PCI FFR Value	1	[{"added": {}}]	8	1
+1822	2021-06-15 22:23:21.412+05:30	290	Date of Target lesion 3 treated	1	[{"added": {}}]	8	1
+1823	2021-06-15 22:23:32.073+05:30	291	CASS Site 1	1	[{"added": {}}]	8	1
+1824	2021-06-15 22:23:37.831+05:30	292	CASS Site 2	1	[{"added": {}}]	8	1
+1825	2021-06-15 22:23:44.675+05:30	293	CASS Site 3	1	[{"added": {}}]	8	1
+1826	2021-06-15 22:23:54.285+05:30	294	Pre PCI TIMI Flow	1	[{"added": {}}]	8	1
+1827	2021-06-15 22:24:03.369+05:30	295	Thrombus	1	[{"added": {}}]	8	1
+1828	2021-06-15 22:24:11.496+05:30	296	Grade of Thrombus	1	[{"added": {}}]	8	1
+1829	2021-06-15 22:24:19.865+05:30	297	Lesion length (visual estimate)	1	[{"added": {}}]	8	1
+1830	2021-06-15 22:24:30.889+05:30	298	Reference vessel diameter (visual estimate)	1	[{"added": {}}]	8	1
+1831	2021-06-15 22:24:43.74+05:30	299	Minimal Lumen Diameter	1	[{"added": {}}]	8	1
+1832	2021-06-15 22:24:51.929+05:30	300	Is this a bifurcation lesion	1	[{"added": {}}]	8	1
+1833	2021-06-15 22:25:01.346+05:30	301	If Yes, MEDINA classification	1	[{"added": {}}]	8	1
+1834	2021-06-15 22:25:10.446+05:30	302	Number of stents used	1	[{"added": {}}]	8	1
+1835	2021-06-15 22:25:19.343+05:30	303	Predilation	1	[{"added": {}}]	8	1
+1836	2021-06-15 22:25:26.941+05:30	304	Thrombosuction	1	[{"added": {}}]	8	1
+1837	2021-06-15 22:25:33.924+05:30	305	Rotablation	1	[{"added": {}}]	8	1
+1838	2021-06-15 22:25:40.951+05:30	306	Guidezilla	1	[{"added": {}}]	8	1
+1839	2021-06-15 22:25:50.129+05:30	307	IVL	1	[{"added": {}}]	8	1
+1840	2021-06-15 22:25:59.671+05:30	308	Ostial Stenting	1	[{"added": {}}]	8	1
+1841	2021-06-15 22:26:08.331+05:30	309	Any special devices	1	[{"added": {}}]	8	1
+1842	2021-06-15 22:26:18.244+05:30	310	Name of device	1	[{"added": {}}]	8	1
+1843	2021-06-15 22:26:29.381+05:30	311	Bifurcation Stenting	1	[{"added": {}}]	8	1
+1844	2021-06-15 22:26:39.03+05:30	312	Bifurcation Technique	1	[{"added": {}}]	8	1
+1845	2021-06-15 22:51:10.599+05:30	320	Number of stents used	1	[{"added": {}}]	8	1
+1846	2021-06-15 22:51:19.287+05:30	321	Stent Information	1	[{"added": {}}]	8	1
+1847	2021-06-15 22:51:28.197+05:30	322	TIMI Flow	1	[{"added": {}}]	8	1
+1848	2021-06-15 22:51:36.193+05:30	323	Drugs Given	1	[{"added": {}}]	8	1
+1849	2021-06-15 22:51:44.259+05:30	324	Distal Delivery	1	[{"added": {}}]	8	1
+1850	2021-06-15 22:51:52.004+05:30	325	Device success	1	[{"added": {}}]	8	1
+1851	2021-06-15 22:51:59.814+05:30	326	Lesion success	1	[{"added": {}}]	8	1
+1852	2021-06-15 22:52:09.708+05:30	327	Procedure Success	1	[{"added": {}}]	8	1
+1853	2021-06-15 22:52:18.74+05:30	328	Did the patient experience any procedural complication	1	[{"added": {}}]	8	1
+1854	2021-06-15 22:52:27.466+05:30	329	If Yes, check all that apply	1	[{"added": {}}]	8	1
+1855	2021-06-15 22:52:36.19+05:30	330	Post-Dilatation with high pressure balloon	1	[{"added": {}}]	8	1
+1856	2021-06-15 22:52:45.253+05:30	331	Was IVUS used to post stent deployment?	1	[{"added": {}}]	8	1
+1857	2021-06-15 22:52:53.429+05:30	332	Findings	1	[{"added": {}}]	8	1
+1858	2021-06-15 22:53:03.294+05:30	333	Was FFR/iFR used post stent deployment?	1	[{"added": {}}]	8	1
+1859	2021-06-15 22:53:13.051+05:30	334	Post PCI FFR Value	1	[{"added": {}}]	8	1
+1860	2021-06-16 13:50:16.993+05:30	340	Date of Sample Collection:	1	[{"added": {}}]	8	1
+1861	2021-06-16 13:50:27.578+05:30	341	CK Total	1	[{"added": {}}]	8	1
+1862	2021-06-16 13:50:37.38+05:30	342	CK-MB	1	[{"added": {}}]	8	1
+1863	2021-06-16 13:50:51.96+05:30	343	Troponin I	1	[{"added": {}}]	8	1
+1864	2021-06-16 13:51:02.613+05:30	344	Troponin T	1	[{"added": {}}]	8	1
+1865	2021-06-16 14:12:54.557+05:30	350	Were there any change in cardiac and diabetes medications since last visit ?	1	[{"added": {}}]	8	1
+1866	2021-06-16 14:13:15.747+05:30	351	If Yes, please check all that apply	1	[{"added": {}}]	8	1
+1867	2021-06-16 21:37:23.046+05:30	360	Any new complaints experienced by the patient since last visit	1	[{"added": {}}]	8	1
+1868	2021-06-16 21:37:36.297+05:30	361	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	1
+1869	2021-06-16 21:38:22.8+05:30	362	If Yes, please specify	1	[{"added": {}}]	8	1
+1870	2021-06-17 16:14:07.135+05:30	370	Echo after PCI :	1	[{"added": {}}]	8	6
+1871	2021-06-17 16:14:31.561+05:30	371	Done  (Y/N) :	1	[{"added": {}}]	8	6
+1872	2021-06-17 16:14:54.635+05:30	372	Done on day after PCI	1	[{"added": {}}]	8	6
+1873	2021-06-17 16:15:03.006+05:30	373	LVED	1	[{"added": {}}]	8	6
+1874	2021-06-17 16:15:11.224+05:30	374	LVES	1	[{"added": {}}]	8	6
+1875	2021-06-17 16:15:20.025+05:30	375	LVEF	1	[{"added": {}}]	8	6
+1876	2021-06-17 16:15:26.469+05:30	376	GLS	1	[{"added": {}}]	8	6
+1877	2021-06-17 16:15:58.489+05:30	377	LV Diastolic Dysfunction	1	[{"added": {}}]	8	6
+1878	2021-06-17 16:16:08.436+05:30	378	RWMA	1	[{"added": {}}]	8	6
+1879	2021-06-17 16:16:19.238+05:30	379	MR Grade	1	[{"added": {}}]	8	6
+1880	2021-06-17 16:16:35.792+05:30	380	PAH	1	[{"added": {}}]	8	6
+1881	2021-06-17 16:16:48.009+05:30	381	RV Function	1	[{"added": {}}]	8	6
+1882	2021-06-17 16:18:28.868+05:30	370	Echo after PCI :	3		8	6
+1883	2021-06-17 18:00:04.286+05:30	381	RV Function	3		8	6
+1884	2021-06-17 18:00:04.292+05:30	380	PAH	3		8	6
+1885	2021-06-17 18:00:04.294+05:30	379	MR Grade	3		8	6
+1886	2021-06-17 18:00:04.297+05:30	378	RWMA	3		8	6
+1887	2021-06-17 18:00:13.728+05:30	378	Grade	1	[{"added": {}}]	8	6
+1888	2021-06-17 18:00:28.674+05:30	379	RWMA	1	[{"added": {}}]	8	6
+1889	2021-06-17 18:00:34.824+05:30	380	MR Grade	1	[{"added": {}}]	8	6
+1890	2021-06-17 18:00:43.68+05:30	381	PAH	1	[{"added": {}}]	8	6
+1891	2021-06-17 18:00:50.485+05:30	382	RV Function	1	[{"added": {}}]	8	6
+1892	2021-06-17 18:17:41.374+05:30	14	Saksham	3		7	6
+1893	2021-06-17 18:17:41.38+05:30	13	Nayan	3		7	6
+1894	2021-06-17 18:17:41.383+05:30	12	Nayan	3		7	6
+1895	2021-06-17 18:17:41.387+05:30	11	Nayan	3		7	6
+1896	2021-06-17 18:17:41.39+05:30	10	Nayan	3		7	6
+1897	2021-06-17 18:17:41.392+05:30	9	Nayan	3		7	6
+1898	2021-06-17 18:17:41.395+05:30	8	Nayan	3		7	6
+1899	2021-06-17 18:17:41.399+05:30	7	Nayan	3		7	6
+1900	2021-06-17 18:17:41.403+05:30	6	Nayan	3		7	6
+1901	2021-06-17 18:17:41.408+05:30	5	Nayan	3		7	6
+1902	2021-06-17 18:17:41.411+05:30	4	Nayan	3		7	6
+1903	2021-06-17 18:17:41.414+05:30	3	Nayan	3		7	6
+1904	2021-06-17 18:17:41.42+05:30	2	Nayan	3		7	6
+1905	2021-06-17 18:17:41.424+05:30	1	Nayan	3		7	6
+1906	2021-06-17 21:38:08.681+05:30	390	Discharge date	1	[{"added": {}}]	8	1
+1907	2021-06-17 21:38:25.07+05:30	391	Heart Rate (beats per minute)	1	[{"added": {}}]	8	1
+1908	2021-06-17 21:38:33.956+05:30	392	Blood Pressure (mmHg)	1	[{"added": {}}]	8	1
+1909	2021-06-17 21:39:06.994+05:30	393	Weight (in Kg):	1	[{"added": {}}]	8	1
+1910	2021-06-17 22:03:57.082+05:30	400	Was 12-Lead ECG performed	1	[{"added": {}}]	8	1
+1911	2021-06-17 22:04:13.724+05:30	401	ECG Date	1	[{"added": {}}]	8	1
+1912	2021-06-17 22:04:27.734+05:30	402	Are there any clinically relevant changes in the ECG as compared to the previous ECG?	1	[{"added": {}}]	8	1
+1913	2021-06-17 22:04:46.88+05:30	403	If yes, specify	1	[{"added": {}}]	8	1
+1914	2021-06-17 22:05:05.842+05:30	404	Any arrhythmia:	1	[{"added": {}}]	8	1
+1915	2021-06-17 22:05:17.256+05:30	405	Atrioventricular Block:	1	[{"added": {}}]	8	1
+1916	2021-06-17 23:05:29.187+05:30	421	Date of Sample Collection	1	[{"added": {}}]	8	6
+1917	2021-06-17 23:05:38.043+05:30	422	CK Total	1	[{"added": {}}]	8	6
+1918	2021-06-17 23:05:46.073+05:30	423	CK-MB	1	[{"added": {}}]	8	6
+1919	2021-06-17 23:05:57.028+05:30	424	Troponin I	1	[{"added": {}}]	8	6
+1920	2021-06-17 23:06:39.929+05:30	425	Troponin T	1	[{"added": {}}]	8	6
+1921	2021-06-17 23:09:30.397+05:30	7	Nayan	3		7	6
+1922	2021-06-17 23:09:30.403+05:30	6	Nayan	3		7	6
+1923	2021-06-17 23:09:30.407+05:30	5	Nayan	3		7	6
+1924	2021-06-17 23:09:30.41+05:30	4	Nayan	3		7	6
+1925	2021-06-17 23:09:30.414+05:30	3	Saksham	3		7	6
+1926	2021-06-17 23:09:30.419+05:30	2	Nayan	3		7	6
+1927	2021-06-17 23:09:30.423+05:30	1	Saksham	3		7	6
+1928	2021-06-17 23:23:53.929+05:30	440	Was the antiplatelet therapy same as pre-procedure?	1	[{"added": {}}]	8	6
+1929	2021-06-17 23:24:14.892+05:30	441	If yes, tick all that apply:	1	[{"added": {}}]	8	6
+1930	2021-06-17 23:24:38.244+05:30	442	Was there any change in dose?	1	[{"added": {}}]	8	6
+1931	2021-06-17 23:24:52.867+05:30	443	If yes, dose	1	[{"added": {}}]	8	6
+1932	2021-06-18 00:20:23.684+05:30	2	Sakshammm	3		7	6
+1933	2021-06-18 00:20:23.688+05:30	1	Saksham	3		7	6
+1934	2021-06-18 12:12:48.37+05:30	4	nan	3		7	6
+1935	2021-06-18 12:12:48.376+05:30	3	Saksham	3		7	6
+1936	2021-06-18 12:12:48.378+05:30	2	Nayan	3		7	6
+1937	2021-06-18 12:12:48.381+05:30	1	Saksham	3		7	6
+1938	2021-06-18 12:47:42.154+05:30	451	Was there any change in cardiac and diabetes medications?	1	[{"added": {}}]	8	6
+1939	2021-06-18 12:47:51.35+05:30	452	If Yes, please check all that apply	1	[{"added": {}}]	8	6
+1940	2021-06-18 13:05:08.668+05:30	461	Any new complaints experienced by the patient since last visit	1	[{"added": {}}]	8	6
+1941	2021-06-18 13:05:37.898+05:30	462	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	6
+1942	2021-06-18 13:05:50.027+05:30	463	If Yes, please specify	1	[{"added": {}}]	8	6
+1943	2021-06-18 20:29:14.775+05:30	470	Was follow-up performed	1	[{"added": {}}]	8	1
+1944	2021-06-18 20:29:40.591+05:30	471	Follow-up type	1	[{"added": {}}]	8	1
+1945	2021-06-18 20:30:35.304+05:30	472	Assessment Date	1	[{"added": {}}]	8	1
+1946	2021-06-18 21:38:48.97+05:30	473	Heart Rate (beats per minute)	1	[{"added": {}}]	8	1
+1947	2021-06-18 21:39:00.016+05:30	474	Blood Pressure (mmHg)	1	[{"added": {}}]	8	1
+1948	2021-06-18 21:39:14.885+05:30	475	Weight (in Kg):	1	[{"added": {}}]	8	1
+1949	2021-06-18 22:00:36.335+05:30	480	Angina Assessment	1	[{"added": {}}]	8	1
+1950	2021-06-18 22:01:22.398+05:30	481	Current Anginal status (X One)	1	[{"added": {}}]	8	1
+1951	2021-06-18 22:01:42.201+05:30	482	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)	1	[{"added": {}}]	8	1
+1952	2021-06-18 22:02:18.553+05:30	483	Was 12-Lead ECG performed	1	[{"added": {}}]	8	1
+1953	2021-06-18 22:02:30.937+05:30	484	ECG Date	1	[{"added": {}}]	8	1
+1954	2021-06-18 22:02:41.31+05:30	485	Are there any clinically relevant changes in the ECG as compared to the previous ECG?	1	[{"added": {}}]	8	1
+1955	2021-06-18 22:02:51.016+05:30	486	If yes, specify	1	[{"added": {}}]	8	1
+1956	2021-06-18 22:03:03.041+05:30	487	Any arrhythmia:	1	[{"added": {}}]	8	1
+1957	2021-06-18 22:03:12.153+05:30	488	Atrioventricular Block:	1	[{"added": {}}]	8	1
+1958	2021-06-18 22:43:32.808+05:30	8	Nayan	3		7	1
+1959	2021-06-18 22:43:32.969+05:30	7	Nayan	3		7	1
+1960	2021-06-18 22:43:33.165+05:30	6	Nayan	3		7	1
+1961	2021-06-18 22:43:33.298+05:30	5	Nayan	3		7	1
+1962	2021-06-18 22:43:33.452+05:30	4	Nayan	3		7	1
+1963	2021-06-18 22:43:33.613+05:30	3	Saksham	3		7	1
+1964	2021-06-18 22:43:33.797+05:30	2	Neeru	3		7	1
+1965	2021-06-18 22:43:33.934+05:30	1	Saksham	3		7	1
+1966	2021-06-19 11:05:25.291+05:30	3	Ruchi	3		7	6
+1967	2021-06-19 11:05:25.297+05:30	2	Nayan	3		7	6
+1968	2021-06-19 11:05:25.301+05:30	1	Nayan	3		7	6
+1969	2021-06-19 11:23:27.58+05:30	5	Laxman	3		7	6
+1970	2021-06-19 11:23:27.583+05:30	4	Neeru	3		7	6
+1971	2021-06-19 11:23:27.589+05:30	3	Nayan	3		7	6
+1972	2021-06-19 11:23:27.592+05:30	2	Saks	3		7	6
+1973	2021-06-19 11:23:27.595+05:30	1	Saksham	3		7	6
+1974	2021-06-19 19:42:36.764+05:30	491	Was there any change in antiplatelet medication since last Visit?	1	[{"added": {}}]	8	1
+1975	2021-06-19 19:43:01.404+05:30	492	If yes, tick all that apply:	1	[{"added": {}}]	8	1
+1976	2021-06-19 19:43:15.537+05:30	493	Was there any change in dose?	1	[{"added": {}}]	8	1
+1977	2021-06-19 19:43:34.443+05:30	494	Dose	1	[{"added": {}}]	8	1
+1978	2021-06-19 19:50:38.4+05:30	443	Dose	2	[{"changed": {"fields": ["Q text"]}}]	8	1
+1979	2021-06-19 19:57:32.987+05:30	500	Was there any change in cardiac and diabetes medications?	1	[{"added": {}}]	8	1
+1980	2021-06-19 19:57:46.91+05:30	501	If Yes, please check all that apply	1	[{"added": {}}]	8	1
+1981	2021-06-19 20:04:00.211+05:30	505	Any new complaints experienced by the patient since last visit	1	[{"added": {}}]	8	1
+1982	2021-06-19 20:04:10.628+05:30	506	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	1
+1983	2021-06-19 20:04:24.2+05:30	507	If Yes, please specify	1	[{"added": {}}]	8	1
+1984	2021-06-19 20:10:36.951+05:30	511	Was follow-up performed	1	[{"added": {}}]	8	1
+1985	2021-06-19 20:11:24.576+05:30	512	Follow-up type	1	[{"added": {}}]	8	1
+1986	2021-06-19 20:11:33.12+05:30	513	Assessment Date	1	[{"added": {}}]	8	1
+1987	2021-06-19 20:11:42.227+05:30	514	Heart Rate (beats per minute)	1	[{"added": {}}]	8	1
+1988	2021-06-19 20:11:51.436+05:30	515	Blood Pressure (mmHg)	1	[{"added": {}}]	8	1
+1989	2021-06-19 20:12:02.13+05:30	516	Weight (in Kg):	1	[{"added": {}}]	8	1
+1990	2021-06-19 20:22:29.487+05:30	520	Angina Assessment	1	[{"added": {}}]	8	1
+1991	2021-06-19 20:22:39.085+05:30	521	Current Anginal status (X One)	1	[{"added": {}}]	8	1
+1992	2021-06-19 20:22:52.507+05:30	522	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)	1	[{"added": {}}]	8	1
+1993	2021-06-19 20:24:23.214+05:30	526	Was 12-Lead ECG performed	1	[{"added": {}}]	8	1
+1994	2021-06-19 20:24:31.871+05:30	527	ECG Date	1	[{"added": {}}]	8	1
+1995	2021-06-19 20:24:41.311+05:30	528	Are there any clinically relevant changes in the ECG as compared to the previous ECG?	1	[{"added": {}}]	8	1
+1996	2021-06-19 20:24:51.773+05:30	529	If yes, specify	1	[{"added": {}}]	8	1
+1997	2021-06-19 20:25:04.376+05:30	530	Any arrhythmia:	1	[{"added": {}}]	8	1
+1998	2021-06-19 20:25:14.972+05:30	531	Atrioventricular Block:	1	[{"added": {}}]	8	1
+1999	2021-06-19 20:40:29.483+05:30	540	Serum Creatinine	1	[{"added": {}}]	8	1
+2000	2021-06-19 20:40:39.511+05:30	541	eGFR	1	[{"added": {}}]	8	1
+2001	2021-06-19 20:40:47.821+05:30	542	HbA1c	1	[{"added": {}}]	8	1
+2002	2021-06-19 20:40:58.333+05:30	543	Haemoglobin	1	[{"added": {}}]	8	1
+2003	2021-06-19 20:41:07.264+05:30	544	WBC Count	1	[{"added": {}}]	8	1
+2004	2021-06-19 20:41:16.638+05:30	545	Platelet Count	1	[{"added": {}}]	8	1
+2005	2021-06-19 20:41:24.989+05:30	546	Total Cholesterol	1	[{"added": {}}]	8	1
+2006	2021-06-19 20:41:35.853+05:30	547	Triglycerides	1	[{"added": {}}]	8	1
+2007	2021-06-19 20:41:44.647+05:30	548	LDL	1	[{"added": {}}]	8	1
+2008	2021-06-19 20:41:54.549+05:30	549	HDL	1	[{"added": {}}]	8	1
+2009	2021-06-19 20:42:06.539+05:30	550	Sodium	1	[{"added": {}}]	8	1
+2010	2021-06-19 20:42:14.26+05:30	551	Potassium	1	[{"added": {}}]	8	1
+2011	2021-06-19 20:42:22.798+05:30	552	Chloride	1	[{"added": {}}]	8	1
+2012	2021-06-19 20:53:50.862+05:30	5	Nayan	3		7	1
+2013	2021-06-19 20:53:50.961+05:30	4	Nayan	3		7	1
+2014	2021-06-19 20:53:51.079+05:30	3	Nayan	3		7	1
+2015	2021-06-19 20:53:51.213+05:30	2	Nayan	3		7	1
+2016	2021-06-19 20:53:51.384+05:30	1	Nayan	3		7	1
+2017	2021-06-19 20:54:51.182+05:30	1	Nayan	3		7	1
+2018	2021-06-19 20:56:10.618+05:30	1	Nayan	3		7	1
+2019	2021-06-19 21:51:37.113+05:30	560	Was there any change in antiplatelet medication since last Visit?	1	[{"added": {}}]	8	1
+2020	2021-06-19 21:51:55.638+05:30	561	If yes, tick all that apply:	1	[{"added": {}}]	8	1
+2021	2021-06-19 21:52:05.056+05:30	562	Was there any change in dose?	1	[{"added": {}}]	8	1
+2022	2021-06-19 21:52:16.832+05:30	563	Dose	1	[{"added": {}}]	8	1
+2023	2021-06-19 21:53:16.348+05:30	566	Were there any change in cardiac and diabetes medications since last visit ?	1	[{"added": {}}]	8	1
+2024	2021-06-19 21:53:28.491+05:30	567	If Yes, please check all that apply	1	[{"added": {}}]	8	1
+2025	2021-06-19 21:54:41.31+05:30	571	Any new complaints experienced by the patient since last visit	1	[{"added": {}}]	8	1
+2026	2021-06-19 21:54:50.474+05:30	572	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	1
+2027	2021-06-19 21:55:01.814+05:30	573	If Yes, please specify	1	[{"added": {}}]	8	1
+2028	2021-06-20 13:03:53.993+05:30	581	Was follow-up performed	1	[{"added": {}}]	8	6
+2029	2021-06-20 13:04:05.389+05:30	582	If Yes, specify type of follow-up	1	[{"added": {}}]	8	6
+2030	2021-06-20 13:04:19.64+05:30	583	Assessment Date	1	[{"added": {}}]	8	6
+2031	2021-06-20 13:05:05.273+05:30	584	Heart Rate (beats per minute)	1	[{"added": {}}]	8	6
+2032	2021-06-20 13:05:14.317+05:30	585	Blood Pressure (mmHg)	1	[{"added": {}}]	8	6
+2033	2021-06-20 13:05:22.737+05:30	586	Weight	1	[{"added": {}}]	8	6
+2034	2021-06-20 13:24:18.69+05:30	4	Saksham	3		7	6
+2035	2021-06-20 13:24:18.695+05:30	3	Saksham	3		7	6
+2036	2021-06-20 13:24:18.698+05:30	2	Saksham	3		7	6
+2037	2021-06-20 13:24:18.701+05:30	1	Nayan	3		7	6
+2038	2021-06-20 13:29:20.116+05:30	591	Angina Assessment	1	[{"added": {}}]	8	6
+2039	2021-06-20 13:29:37.493+05:30	592	Current Anginal status (X One)	1	[{"added": {}}]	8	6
+2040	2021-06-20 13:29:53.85+05:30	593	If Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)	1	[{"added": {}}]	8	6
+2041	2021-06-20 13:33:23.137+05:30	3	Saksham	3		7	6
+2042	2021-06-20 13:33:23.14+05:30	2	n	3		7	6
+2043	2021-06-20 13:33:23.145+05:30	1	Saksham	3		7	6
+2044	2021-06-20 14:49:27.88+05:30	601	Left Ventricular Ejection Fraction (LVEF) measured	1	[{"added": {}}]	8	6
+2045	2021-06-20 14:49:36.563+05:30	602	If Yes, LVEF measurement	1	[{"added": {}}]	8	6
+2046	2021-06-20 14:49:45.526+05:30	603	Date of LVEF measurement	1	[{"added": {}}]	8	6
+2047	2021-06-20 15:05:22.612+05:30	5	Nayan	3		7	6
+2048	2021-06-20 15:05:22.617+05:30	4	Saksham	3		7	6
+2049	2021-06-20 15:05:22.622+05:30	3	Saksham	3		7	6
+2050	2021-06-20 15:05:22.626+05:30	2	Saksham	3		7	6
+2051	2021-06-20 15:05:22.629+05:30	1	Saksham	3		7	6
+2052	2021-06-20 15:11:24.241+05:30	611	Was 12-Lead ECG performed	1	[{"added": {}}]	8	6
+2053	2021-06-20 15:11:31.564+05:30	612	If yes, ECG Date	1	[{"added": {}}]	8	6
+2054	2021-06-20 15:11:46.043+05:30	613	Are there any clinically relevant changes in the ECG as compared to the previous ECG?	1	[{"added": {}}]	8	6
+2055	2021-06-20 15:11:53.722+05:30	614	If yes, specify	1	[{"added": {}}]	8	6
+2056	2021-06-20 15:12:09.401+05:30	615	Any arrhythmia:	1	[{"added": {}}]	8	6
+2057	2021-06-20 15:13:23.194+05:30	616	Atrioventricular Block:	1	[{"added": {}}]	8	6
+2058	2021-06-20 15:14:45.433+05:30	3	Saksham	3		7	6
+2059	2021-06-20 15:14:45.438+05:30	2	Saksham	3		7	6
+2060	2021-06-20 15:14:45.442+05:30	1	Saksham	3		7	6
+2061	2021-06-20 15:19:53.987+05:30	621	Serum Creatinine	1	[{"added": {}}]	8	6
+2062	2021-06-20 15:20:04.553+05:30	622	eGFR	1	[{"added": {}}]	8	6
+2063	2021-06-20 15:20:16.129+05:30	623	HbA1c	1	[{"added": {}}]	8	6
+2064	2021-06-20 15:20:26.067+05:30	624	Total Cholesterol	1	[{"added": {}}]	8	6
+2065	2021-06-20 15:20:39.759+05:30	625	Triglycerides	1	[{"added": {}}]	8	6
+2066	2021-06-20 15:20:49.143+05:30	626	LDL	1	[{"added": {}}]	8	6
+2067	2021-06-20 15:20:56.047+05:30	627	HDL	1	[{"added": {}}]	8	6
+2068	2021-06-20 15:21:04.671+05:30	628	Haemoglobin	1	[{"added": {}}]	8	6
+2069	2021-06-20 15:21:14.13+05:30	629	WBC	1	[{"added": {}}]	8	6
+2070	2021-06-20 15:21:23.529+05:30	630	Sodium	1	[{"added": {}}]	8	6
+2071	2021-06-20 15:21:40.45+05:30	631	Potassium	1	[{"added": {}}]	8	6
+2072	2021-06-20 15:23:18.515+05:30	630	Platelet Count	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+2073	2021-06-20 15:23:45.861+05:30	631	Sodium	2	[{"changed": {"fields": ["Q text"]}}]	8	6
+2074	2021-06-20 15:23:59.857+05:30	632	Potassium	1	[{"added": {}}]	8	6
+2075	2021-06-20 15:24:05.405+05:30	633	Chloride	1	[{"added": {}}]	8	6
+2076	2021-06-20 15:30:24.903+05:30	671	Was there any change in antiplatelet medication since last Visit?	1	[{"added": {}}]	8	6
+2077	2021-06-20 15:30:37.175+05:30	672	If yes, tick all that apply:	1	[{"added": {}}]	8	6
+2078	2021-06-20 15:30:46.302+05:30	673	Was there any change in dose?	1	[{"added": {}}]	8	6
+2079	2021-06-20 15:30:54.515+05:30	674	If yes, dose	1	[{"added": {}}]	8	6
+2080	2021-06-20 15:32:20.33+05:30	2	Neeru	3		7	6
+2081	2021-06-20 15:32:20.337+05:30	1	Saksham	3		7	6
+2082	2021-06-20 18:51:25.936+05:30	681	Were there any change in cardiac and diabetes medications since last visit ?	1	[{"added": {}}]	8	6
+2083	2021-06-20 18:51:34.503+05:30	682	If Yes, please check all that apply	1	[{"added": {}}]	8	6
+2084	2021-06-20 19:12:32.134+05:30	691	Any new complaints experienced by the patient since last visit	1	[{"added": {}}]	8	6
+2085	2021-06-20 19:12:41.3+05:30	692	If yes, fill the Adverse Event Log	1	[{"added": {}}]	8	6
+2086	2021-06-20 19:12:54.301+05:30	693	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	6
+2087	2021-06-20 19:13:03.823+05:30	694	If Yes, please specify	1	[{"added": {}}]	8	6
+2088	2021-06-20 19:15:42.228+05:30	692	If yes, fill the Adverse Event Log	3		8	6
+2089	2021-06-20 19:15:49.855+05:30	692	Did any of the following study endpoints occur since last visit?	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+2090	2021-06-20 19:15:59.738+05:30	693	Did any of the following study endpoints occur since last visit?	3		8	6
+2091	2021-06-20 19:16:06.211+05:30	693	If Yes, please specify	2	[{"changed": {"fields": ["Q id"]}}]	8	6
+2092	2021-06-20 19:16:10.202+05:30	694	If Yes, please specify	3		8	6
+2093	2021-06-20 19:29:26.472+05:30	5	Ruchi	3		7	6
+2094	2021-06-20 19:29:26.476+05:30	4	Nayan	3		7	6
+2095	2021-06-20 19:29:26.479+05:30	3	Saksham	3		7	6
+2096	2021-06-20 19:29:26.482+05:30	2	Y	3		7	6
+2097	2021-06-20 19:29:26.485+05:30	1	Saksham	3		7	6
+2098	2021-06-21 11:42:19.262+05:30	700	Was follow-up performed	1	[{"added": {}}]	8	1
+2099	2021-06-21 11:42:33.833+05:30	701	Follow-up type	1	[{"added": {}}]	8	1
+2100	2021-06-21 11:42:46.148+05:30	702	Assessment Date	1	[{"added": {}}]	8	1
+2101	2021-06-21 12:02:56.932+05:30	705	Angina Assessment	1	[{"added": {}}]	8	1
+2102	2021-06-21 12:03:07.974+05:30	706	Current Anginal status (X One)	1	[{"added": {}}]	8	1
+2103	2021-06-21 12:03:28.586+05:30	707	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)	1	[{"added": {}}]	8	1
+2104	2021-06-21 12:22:56.457+05:30	711	Was 12-Lead ECG performed	1	[{"added": {}}]	8	1
+2105	2021-06-21 12:23:05.488+05:30	712	ECG Date	1	[{"added": {}}]	8	1
+2106	2021-06-21 12:23:29.424+05:30	713	Are there any clinically relevant changes in the ECG as compared to the previous ECG?	1	[{"added": {}}]	8	1
+2107	2021-06-21 12:23:40.129+05:30	714	If yes, specify	1	[{"added": {}}]	8	1
+2108	2021-06-21 12:23:51.652+05:30	715	Any arrhythmia:	1	[{"added": {}}]	8	1
+2109	2021-06-21 12:24:00.534+05:30	716	Atrioventricular Block:	1	[{"added": {}}]	8	1
+2110	2021-06-21 12:28:40.041+05:30	720	Was there any change in antiplatelet medication since last Visit?	1	[{"added": {}}]	8	1
+2111	2021-06-21 12:28:51.178+05:30	721	If yes, tick all that apply:	1	[{"added": {}}]	8	1
+2112	2021-06-21 12:29:01.349+05:30	722	Was there any change in dose?	1	[{"added": {}}]	8	1
+2113	2021-06-21 12:29:12.932+05:30	723	Dose	1	[{"added": {}}]	8	1
+2114	2021-06-21 12:31:45.76+05:30	726	Were there any change in cardiac and diabetes medications since last visit ?	1	[{"added": {}}]	8	1
+2115	2021-06-21 12:31:59.284+05:30	727	If Yes, please check all that apply	1	[{"added": {}}]	8	1
+2116	2021-06-21 12:34:14.921+05:30	731	Any new complaints experienced by the patient since last visit	1	[{"added": {}}]	8	1
+2117	2021-06-21 12:34:24.871+05:30	732	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	1
+2118	2021-06-21 12:34:44.756+05:30	733	If Yes, please specify	1	[{"added": {}}]	8	1
+2119	2021-06-21 12:39:19.807+05:30	740	Was telephonic follow-up performed	1	[{"added": {}}]	8	1
+2216	2021-06-27 23:48:52.571+05:30	8	Nayan	3		7	6
+2120	2021-06-21 12:39:29.54+05:30	741	Assessment Date	1	[{"added": {}}]	8	1
+2121	2021-06-21 12:43:54.32+05:30	745	Angina Assessment	1	[{"added": {}}]	8	1
+2122	2021-06-21 12:44:03.927+05:30	746	Current Anginal status (X One)	1	[{"added": {}}]	8	1
+2123	2021-06-21 12:44:14.759+05:30	747	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)	1	[{"added": {}}]	8	1
+2124	2021-06-21 12:46:38.286+05:30	751	Any new complaints experienced by the patient since last visit	1	[{"added": {}}]	8	1
+2125	2021-06-21 12:46:47.898+05:30	752	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	1
+2126	2021-06-21 12:46:57.814+05:30	753	If Yes, please specify	1	[{"added": {}}]	8	1
+2127	2021-06-21 13:34:59.025+05:30	760	Was telephonic follow-up performed	1	[{"added": {}}]	8	1
+2128	2021-06-21 13:35:09.018+05:30	761	Assessment Date	1	[{"added": {}}]	8	1
+2129	2021-06-21 13:37:33.464+05:30	765	Angina Assessment	1	[{"added": {}}]	8	1
+2130	2021-06-21 13:37:44.003+05:30	766	Current Anginal status (X One)	1	[{"added": {}}]	8	1
+2131	2021-06-21 13:37:52.524+05:30	767	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)	1	[{"added": {}}]	8	1
+2132	2021-06-21 13:39:12.172+05:30	771	Any new complaints experienced by the patient since last visit	1	[{"added": {}}]	8	1
+2133	2021-06-21 13:39:23.438+05:30	772	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	1
+2134	2021-06-21 13:39:32.504+05:30	773	If Yes, please specify	1	[{"added": {}}]	8	1
+2135	2021-06-21 13:45:25.615+05:30	780	Was telephonic follow-up performed	1	[{"added": {}}]	8	1
+2136	2021-06-21 13:45:35.71+05:30	781	Assessment Date	1	[{"added": {}}]	8	1
+2137	2021-06-21 13:47:01.38+05:30	785	Angina Assessment	1	[{"added": {}}]	8	1
+2138	2021-06-21 13:47:09.721+05:30	786	Current Anginal status (X One)	1	[{"added": {}}]	8	1
+2139	2021-06-21 13:47:18.441+05:30	787	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)	1	[{"added": {}}]	8	1
+2140	2021-06-21 13:49:11.722+05:30	791	Any new complaints experienced by the patient since last visit	1	[{"added": {}}]	8	1
+2141	2021-06-21 13:49:20.277+05:30	792	Did any of the following study endpoints occur since last visit?	1	[{"added": {}}]	8	1
+2142	2021-06-21 13:49:30.883+05:30	793	If Yes, please specify	1	[{"added": {}}]	8	1
+2143	2021-06-22 10:52:53.651+05:30	801	Did the patient complete the protocol:	1	[{"added": {}}]	8	6
+2144	2021-06-22 10:53:06.712+05:30	802	Date of Completion?	1	[{"added": {}}]	8	6
+2145	2021-06-22 10:53:17.786+05:30	803	Date of Discontinuation	1	[{"added": {}}]	8	6
+2146	2021-06-22 10:53:29.167+05:30	804	Please specify the primary reason for pre-mature discontinuation (Check only one):	1	[{"added": {}}]	8	6
+2147	2021-06-22 10:53:40.702+05:30	805	*If Lost to follow-up or Withdrew consent, date of last patient contact	1	[{"added": {}}]	8	6
+2148	2021-06-22 11:27:41.152+05:30	5	Neeru	3		7	6
+2149	2021-06-22 11:27:41.156+05:30	4	Saksham	3		7	6
+2150	2021-06-22 11:27:41.16+05:30	3	Saksham	3		7	6
+2151	2021-06-22 11:27:41.163+05:30	2	Nayan	3		7	6
+2152	2021-06-22 11:27:41.166+05:30	1	Saksham	3		7	6
+2153	2021-06-22 11:33:10.63+05:30	2	Saksham	3		7	6
+2154	2021-06-22 11:33:10.633+05:30	1	Saksham	3		7	6
+2155	2021-06-22 11:40:48.131+05:30	2	Saksham	3		7	6
+2156	2021-06-22 11:40:48.136+05:30	1	Saksham	3		7	6
+2157	2021-06-22 11:47:30.017+05:30	2	Nayan	3		7	6
+2158	2021-06-22 11:47:30.021+05:30	1	Saksham	3		7	6
+2159	2021-06-22 13:01:18.577+05:30	6	Saksham	3		7	6
+2160	2021-06-22 13:01:18.582+05:30	5	Saksham	3		7	6
+2161	2021-06-22 13:01:18.585+05:30	4	Nayan	3		7	6
+2162	2021-06-22 13:01:18.589+05:30	3	Saks	3		7	6
+2163	2021-06-22 13:01:18.593+05:30	2	Saksham	3		7	6
+2164	2021-06-22 13:01:18.597+05:30	1	Saksham	3		7	6
+2165	2021-06-22 13:15:29.222+05:30	2	Saksham	3		7	6
+2166	2021-06-22 13:15:29.226+05:30	1	Saksham	3		7	6
+2167	2021-06-22 13:27:48.505+05:30	7	Saksham	3		7	6
+2168	2021-06-22 13:27:48.508+05:30	6	Saksham	3		7	6
+2169	2021-06-22 13:27:48.511+05:30	5	Saksham	3		7	6
+2170	2021-06-22 13:27:48.514+05:30	4	Saksham	3		7	6
+2171	2021-06-22 13:27:48.518+05:30	3	Saksham	3		7	6
+2172	2021-06-22 13:27:48.522+05:30	2	Nayan	3		7	6
+2173	2021-06-22 13:27:48.526+05:30	1	Saksham	3		7	6
+2174	2021-06-22 13:31:07.382+05:30	3	Kr	3		4	6
+2175	2021-06-22 13:31:07.386+05:30	5	Kri	3		4	6
+2176	2021-06-22 13:31:07.388+05:30	2	Kritika	3		4	6
+2177	2021-06-22 13:31:07.391+05:30	4	saksham	3		4	6
+2178	2021-06-22 13:31:46.642+05:30	1	dell	2	[{"changed": {"fields": ["First name", "Last name"]}}]	4	6
+2179	2021-06-22 13:32:16.567+05:30	6	root	2	[{"changed": {"fields": ["First name", "Last name", "Email address"]}}]	4	6
+2180	2021-06-22 18:35:48.821+05:30	2	Saksham	3		7	6
+2181	2021-06-22 18:35:48.824+05:30	1	Saksham	3		7	6
+2182	2021-06-22 20:21:04.083+05:30	5	Nayan	3		7	1
+2183	2021-06-22 20:21:04.196+05:30	4	Nayan	3		7	1
+2184	2021-06-23 13:37:53.678+05:30	19	Saksham	3		7	6
+2185	2021-06-23 13:37:53.682+05:30	18	Saksham	3		7	6
+2186	2021-06-23 13:37:53.685+05:30	17	Mana	3		7	6
+2187	2021-06-23 13:37:53.688+05:30	16	Saksham	3		7	6
+2188	2021-06-23 13:37:53.691+05:30	15	Saksham	3		7	6
+2189	2021-06-23 13:37:53.694+05:30	14	MOjan	3		7	6
+2190	2021-06-23 13:37:53.698+05:30	13	Manan	3		7	6
+2191	2021-06-23 13:37:53.701+05:30	12	Saksham	3		7	6
+2192	2021-06-23 13:37:53.704+05:30	11	Nam	3		7	6
+2193	2021-06-23 13:37:53.707+05:30	10	Nayan	3		7	6
+2194	2021-06-23 13:37:53.71+05:30	9	Nayan	3		7	6
+2195	2021-06-23 13:37:53.714+05:30	8	Nayan	3		7	6
+2196	2021-06-23 13:37:53.717+05:30	7	Saksham	3		7	6
+2197	2021-06-23 13:37:53.72+05:30	6	Nayan	3		7	6
+2198	2021-06-23 13:37:53.723+05:30	3	Saksham	3		7	6
+2199	2021-06-23 13:42:49.244+05:30	1	Saksham	1	[{"added": {}}]	7	6
+2200	2021-06-23 21:53:43.845+05:30	5	Yogesh	3		7	6
+2201	2021-06-23 21:53:43.85+05:30	4	Jagpreet	3		7	6
+2202	2021-06-23 21:53:43.853+05:30	3	Ruchi	3		7	6
+2203	2021-06-23 21:53:43.856+05:30	2	Nayan	3		7	6
+2204	2021-06-23 21:53:43.86+05:30	1	Saksham	3		7	6
+2205	2021-06-23 22:13:04.696+05:30	3	Nayan	3		7	1
+2206	2021-06-23 22:13:04.795+05:30	2	Yogesh	3		7	1
+2207	2021-06-23 22:13:05.01+05:30	1	Saksham	3		7	1
+2208	2021-06-23 22:13:44.59+05:30	2	Nayan	3		7	1
+2209	2021-06-23 22:13:44.703+05:30	1	Nayan	3		7	1
+2210	2021-06-27 16:27:10.766+05:30	4	Saksham	3		7	6
+2211	2021-06-27 16:27:10.771+05:30	3	Nayan	3		7	6
+2212	2021-06-27 16:27:10.774+05:30	2	Nayan	3		7	6
+2213	2021-06-27 16:27:10.777+05:30	1	Nayan	3		7	6
+2214	2021-06-27 19:08:20.634+05:30	1	Nayan	1	[{"added": {}}]	7	6
+2215	2021-06-27 23:48:52.566+05:30	9	Nayan	3		7	6
+2217	2021-06-27 23:48:52.574+05:30	7	Nayan	3		7	6
+2218	2021-06-27 23:48:52.577+05:30	6	Ruchi	3		7	6
+2219	2021-06-27 23:48:52.581+05:30	5	Saksham	3		7	6
+2220	2021-06-27 23:48:52.585+05:30	1	Nayan	3		7	6
+2221	2021-06-28 00:01:10.894+05:30	4	Saksham	3		7	6
+2222	2021-06-28 00:01:10.902+05:30	3	Saks	3		7	6
+2223	2021-06-28 00:01:10.906+05:30	2	Saksham	3		7	6
+2224	2021-06-28 00:01:10.909+05:30	1	Saksham	3		7	6
+2225	2021-06-28 16:05:35.112+05:30	2	Saksham	3		7	6
+2226	2021-06-28 16:05:35.118+05:30	1	Saksham	3		7	6
+2227	2021-06-28 17:47:24.018+05:30	2	Naman	3		7	6
+2228	2021-06-28 17:47:24.022+05:30	1	Saksham	3		7	6
+2229	2021-07-02 12:59:43.471+05:30	3	Nayan	3		7	6
+2230	2021-07-02 12:59:43.476+05:30	2	Nayan	3		7	6
+2231	2021-07-02 12:59:43.48+05:30	1	Saksham	3		7	6
+2232	2021-07-04 21:33:00.33713+05:30	6	Saksham	3		7	1
+2233	2021-07-04 21:33:00.44949+05:30	4	Nayan	3		7	1
+2234	2021-07-04 21:33:00.450507+05:30	3	Nayan	3		7	1
+2235	2021-07-04 21:33:00.453488+05:30	1	Nayan	3		7	1
+2236	2021-07-04 21:38:16.388716+05:30	8	Saksham	3		7	1
+2237	2021-07-04 21:38:16.422161+05:30	7	Saksham	3		7	1
+2238	2021-07-04 21:44:01.453145+05:30	10	Saksham	3		7	1
+2239	2021-07-04 21:44:01.47962+05:30	9	Saksham	3		7	1
+2240	2021-07-04 21:46:48.531506+05:30	13	Saksham	3		7	1
+2241	2021-07-04 21:46:48.555771+05:30	12	Saksham	3		7	1
+2242	2021-07-04 21:46:48.557775+05:30	11	Saksham	3		7	1
+2243	2021-07-04 22:37:18.381359+05:30	14	Saksham	3		7	1
+2244	2021-07-05 19:12:03.5773+05:30	18	Nayan	3		7	1
+2245	2021-07-05 19:37:03.444612+05:30	19	Nayan	3		7	1
+2246	2021-07-05 19:37:03.449772+05:30	17	Nayan	3		7	1
+2247	2021-07-05 19:37:03.451784+05:30	15	Nayan	3		7	1
+2248	2021-07-07 22:03:09.766529+05:30	7	igmc0172	1	[{"added": {}}]	4	1
+2249	2021-07-07 22:03:34.094168+05:30	8	universal	1	[{"added": {}}]	4	1
+2250	2021-07-07 22:04:19.01841+05:30	7	igmc0172	2	[{"changed": {"fields": ["First name", "Last name"]}}]	4	1
+2251	2021-07-07 22:04:43.854002+05:30	8	universal	2	[{"changed": {"fields": ["First name"]}}]	4	1
+2252	2021-07-07 22:15:46.491979+05:30	1	dell	2	[{"changed": {"fields": ["Last name"]}}]	4	1
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	enroll	patient
+8	enroll	question
+9	enroll	result
+10	enroll	user
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2021-07-02 21:02:15.992537+05:30
+2	auth	0001_initial	2021-07-02 21:02:16.701564+05:30
+3	admin	0001_initial	2021-07-02 21:02:18.257374+05:30
+4	admin	0002_logentry_remove_auto_add	2021-07-02 21:02:18.551756+05:30
+5	admin	0003_logentry_add_action_flag_choices	2021-07-02 21:02:18.568744+05:30
+6	contenttypes	0002_remove_content_type_name	2021-07-02 21:02:18.634829+05:30
+7	auth	0002_alter_permission_name_max_length	2021-07-02 21:02:18.74946+05:30
+8	auth	0003_alter_user_email_max_length	2021-07-02 21:02:18.760481+05:30
+9	auth	0004_alter_user_username_opts	2021-07-02 21:02:18.771451+05:30
+10	auth	0005_alter_user_last_login_null	2021-07-02 21:02:18.783249+05:30
+11	auth	0006_require_contenttypes_0002	2021-07-02 21:02:18.786451+05:30
+12	auth	0007_alter_validators_add_error_messages	2021-07-02 21:02:18.799446+05:30
+13	auth	0008_alter_user_username_max_length	2021-07-02 21:02:18.900235+05:30
+14	auth	0009_alter_user_last_name_max_length	2021-07-02 21:02:18.91224+05:30
+15	auth	0010_alter_group_name_max_length	2021-07-02 21:02:18.926222+05:30
+16	auth	0011_update_proxy_permissions	2021-07-02 21:02:18.939089+05:30
+17	auth	0012_alter_user_first_name_max_length	2021-07-02 21:02:18.951062+05:30
+18	enroll	0001_initial	2021-07-02 21:02:19.088078+05:30
+19	enroll	0002_auto_20210324_1027	2021-07-02 21:02:19.310159+05:30
+20	enroll	0003_auto_20210326_1649	2021-07-02 21:02:19.316157+05:30
+21	enroll	0004_auto_20210327_0758	2021-07-02 21:02:19.324181+05:30
+22	enroll	0005_auto_20210329_2231	2021-07-02 21:02:19.332149+05:30
+23	enroll	0006_auto_20210522_2131	2021-07-02 21:02:19.340144+05:30
+24	enroll	0007_auto_20210605_1241	2021-07-02 21:02:19.34616+05:30
+25	enroll	0008_auto_20210605_1242	2021-07-02 21:02:19.353181+05:30
+26	sessions	0001_initial	2021-07-02 21:02:19.488029+05:30
+27	enroll	0009_auto_20210702_2142	2021-07-02 21:42:45.559333+05:30
+28	enroll	0010_user	2021-07-03 21:27:06.612252+05:30
+29	enroll	0011_auto_20210704_2130	2021-07-04 21:30:42.898542+05:30
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+110hmyufins140w06rwhbl0r9f960xen	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1lO0h5:___E14Q_jmLavAR96hxOcSuov_Nk4vthXwybu6NJ7sw	2021-04-04 21:42:47.749+05:30
+29z8ubt4cgz8tpcni67hp5lcoolunmsf	.eJxVjMsOwiAQRf-FtSHI8HTp3m8gMANSNZCUdmX8d9ukC93ec859sxDXpYZ15DlMxC7MsNPvliI-c9sBPWK7d469LfOU-K7wgw5-65Rf18P9O6hx1K12iNaA0yiKLprQyDMIsqSSVehTMkV7D-DRCKUskFIeHYDZCpLSO_b5AtjjNws:1lpmz1:tv2VgnTKjyIgYXxYNTSufYE2ea64zelORItkoqSblbk	2021-06-20 12:44:07.05+05:30
+2vi22to5jpe5hpkhbs2gs3lk4t7tckyv	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1laLrf:alsTXjOfHiMMGc8S3v5CGemhCIlLO4lz1toU33HhviE	2021-05-08 22:44:43.459+05:30
+2y1ubez8v5savtr34etfeqy1hhqpxlom	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1lUO8q:6tI7MB1j0aXNc6ScErvPClFska3wdSlIuTxcy8fNFzg	2021-04-22 11:57:48.663+05:30
+bho8e7qz6iebanenpkepugyar4cqlh5y	.eJxVjDsOwjAQBe_iGln-rT-U9JzBWq9tHECOFCcV4u4QKQW0b2bei0Xc1ha3UZY4ZXZmhp1-t4T0KH0H-Y79NnOa-7pMie8KP-jg1zmX5-Vw_w4ajvatrSBAtAoUgjdQtA0Kq7DG-VyUxKS0KACyBm2T9N44DE4DQKBEpCp7fwDBUzcY:1lPpfL:UJywEh7XR7Yx5xn912Y1-pADy2GVdSeN-e-aB-i6BE0	2021-04-09 22:20:31.039+05:30
+bl0agvb8cipd5qan9i2pd6c9mmx4bqqh	.eJxVjMsOwiAQRf-FtSHlMZBx6d5vIAwMUjWQlHZl_Hdt0oVu7znnvkSI21rDNngJcxZnocXpd6OYHtx2kO-x3bpMva3LTHJX5EGHvPbMz8vh_h3UOOq3Ll4D4wS6WEKfnLLWMhVXmEkbcJjRau8SGgUIVsUJ0KMnnSmBSUW8P9CgN2M:1lOvdF:PTfafpMpJ22xsCd4zX5WO05t_RNZF6hzbh_G-IRn3H0	2021-04-07 10:30:37.916+05:30
+cm055kz77oa0jjj48l7y3tmwy89x4u86	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1ly6gN:QOiXblQoD4O2EhPReUi4im-a4pfceJLawnhiHSZPJog	2021-07-13 11:23:15.516+05:30
+ctqq7hfs9vx8fhbajmg1koljhsqjdxnj	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1lWEaT:TmBSBsjyJtl5_HUzVgdktJzjp9Cjz4v3NoL_-yjj8Nw	2021-04-27 14:09:57.259+05:30
+dhnqenias6h03u1mh9s9wghisugk1ptn	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1luFjz:tbHS_ST0vmp8zeHofBgjZG6RT0YbgctGrsHvgrOwaDo	2021-07-02 20:15:03.757+05:30
+esj2ro8f4r7lgxcpcl1ecedbu8fviiqx	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1lpQUE:b4n-YkqCqr63ah_1DLdYjAjb2wrFvpGgkTKmAB0B_vY	2021-06-19 12:42:50.364+05:30
+ibw0rpsu7bwo6m9zagfwnp1s9n779kfy	.eJxVjMsOwiAQRf-FtSHI8HTp3m8gMANSNZCUdmX8d9ukC93ec859sxDXpYZ15DlMxC7MsNPvliI-c9sBPWK7d469LfOU-K7wgw5-65Rf18P9O6hx1K12iNaA0yiKLprQyDMIsqSSVehTMkV7D-DRCKUskFIeHYDZCpLSO_b5AtjjNws:1lzDcA:BAYdMKBBcx0jtchGbqTQMFHh2Z2ZonFfsihcEY4rv5k	2021-07-16 12:59:30.252+05:30
+ix53tieanv33xct8zd98uua5f7634ce2	.eJxVjMsOwiAQRf-FtSHD0CK4dN9vIDMwlaqBpI-V8d-1SRe6veec-1KRtrXEbZE5TlldVK9OvxtTekjdQb5TvTWdWl3nifWu6IMuemhZntfD_TsotJRvbTlAcj0IBArZnQ0DWgc-dNYjQDZoWFiImJ0JnUASN6bRo8URELN6fwDHhjeF:1lR8VN:dJLgvedMkGrbK1Ep_WKmQcxH_PRmY8moxqNxtiGna4E	2021-04-13 12:39:37.617+05:30
+khuvcybkxuiw907the4bjlbm05hu9px6	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1lTo39:ARPWVLEIa0d7Hpj2D9CB7w-b1wW5K-vcuO6gPyXOtJA	2021-04-20 21:25:31.633+05:30
+koxmec4hrj83y0hjlyub9f60iqer8725	.eJxVjMsOwiAQRf-FtSHI8HTp3m8gMANSNZCUdmX8d9ukC93ec859sxDXpYZ15DlMxC7MsNPvliI-c9sBPWK7d469LfOU-K7wgw5-65Rf18P9O6hx1K12iNaA0yiKLprQyDMIsqSSVehTMkV7D-DRCKUskFIeHYDZCpLSO_b5AtjjNws:1lxqCO:Gi9RPwliS_m1PIiP8Y6Rj_-hhCUqQdCSdcBNdd-j0-Y	2021-07-12 17:47:12.694+05:30
+ozj4wwglyoscm4ansmqlckgk96yywaeu	.eJxVjMsOwiAQRf-FtSHI8HTp3m8gMANSNZCUdmX8d9ukC93ec859sxDXpYZ15DlMxC7MsNPvliI-c9sBPWK7d469LfOU-K7wgw5-65Rf18P9O6hx1K12iNaA0yiKLprQyDMIsqSSVehTMkV7D-DRCKUskFIeHYDZCpLSO_b5AtjjNws:1lvbNN:LolH0fq22LPFa-JY8Obb0rIjSBl0Jw4hcuaVCd0EqWc	2021-07-06 13:33:17.935+05:30
+tfgljqa2ps1df1mallcnmpmok8sjlkhv	.eJxVjDsOwjAQBe_iGln-rT-U9JzBWq9tHECOFCcV4u4QKQW0b2bei0Xc1ha3UZY4ZXZmhp1-t4T0KH0H-Y79NnOa-7pMie8KP-jg1zmX5-Vw_w4ajvatrSBAtAoUgjdQtA0Kq7DG-VyUxKS0KACyBm2T9N44DE4DQKBEpCp7fwDBUzcY:1lXNUD:aWM03fehlcZGvV2W8yAbNiGET9MfEhPCJ6kXO59YrVI	2021-04-30 17:52:13.773+05:30
+y64ouoqdtw655v25vs5mo6cs51t8ny0r	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1lONCA:BnNzrdmsgyhF0an_PJmGEi1mDeHniDebY-f1Q3e859c	2021-04-05 21:44:22.379+05:30
+ypsis9lzhmudvu8nuxdxjkg527sokhdf	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1m03su:_AaE8DQoclTzV75_ylEvQeOSVZeYH7JXf6ZgwpU6iM4	2021-07-18 20:48:16.572203+05:30
+iauewb9lnd9mf77t6h27mtis2v0lc4kv	.eJxVjEEOwiAQRe_C2pAyLQy4dO8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnEWSpx-t0DxkeoO-E711mRsdV3mIHdFHrTLa-P0vBzu30GhXr61c4FhGkaLGDWPGp0xljJmppAQtUY9qkjO4DAZq01S4EIASsA5MoB4fwDK9DeP:1m27eb:hV926RyfM7Elk2b9oannM6Dc6NlaXHV6jE-Q9pSHJd8	2021-07-24 13:14:01.896845+05:30
+\.
+
+
+--
+-- Data for Name: enroll_patient; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.enroll_patient (p_id, f_name, l_name, age) FROM stdin;
+20	Nayan	Aggarwal	0
+21	Saksham	Tandon	22
+22	Nayan	Aggarwal	22
+23	Nayan	Aggarwal	0
+24	Nayan	Aggarwal	0
+\.
+
+
+--
+-- Data for Name: enroll_question; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.enroll_question (q_id, q_text) FROM stdin;
+1	Visit Date
+2	Date of PCI
+3	Date of Informed Consent form signed
+4	CAD registry number
+5	Consultant in Charge
+6	Date of Birth:
+7	Age (in years):
+8	Sex:
+9	Village:
+10	PO:
+11	District:
+12	Alternate Phone number:
+13	Heart Rate (beats per minute)
+14	Blood Pressure (mmHg)
+15	Weight (in kg)
+16	Height (in cm)
+17	BMI (Kg/m2)
+23	Current diabetes mellitus
+24	If Yes, Duration:
+25	Type of diabetes
+26	Family History of Coronary Artery Disease
+27	History of Smoking
+28	Hypertension (BP ≥140/90 mmHg on repeated measurements and/or on antihypertension treatment)
+29	Dyslipidemia (Cholesterol >215 mg/dl or requiring treatment)
+30	History of Myocardial Infarction (MI)
+31	History of Percutaneous Coronary Intervention (PCI)
+32	History of cardiac surgery (other than CABG)
+33	History of ICD, PPI or CRTD implantation
+34	History of Atrial Fibrillation
+35	History of Congestive Heart failure
+36	Renal insufficiency (serum creatinine > 2.5mg/dL, or creatinine clearance ≤ 30 mL/min)
+37	History of previous stroke
+38	Known Chronic Obstructive Pulmonary Disease (COPD) (Chronic lung disease: long-term use of bronchodilators or steroids for lung disease)
+39	Major Bleeding (intracranial, gastrointestinal or uro-genital which requires Hospitalization)
+40	History of Liver Cirrhosis
+41	Other relevant concomitant diseases
+42	If Yes, specify the diseases in details
+43	Left Ventricular Ejection Fraction (LVEF)
+44	RWMA
+45	LVEF measurement (in %)
+46	Date of LVEF measurement (The date of LVEF within 30 days prior to PCI is acceptable)
+47	Coronary Artery Disease presentation
+48	If unstable angina, please indicate Braunwald classification
+49	If stable angina, please indicate Canadian Cardiovascular Society class (CCS)
+50	STEMI - Territory
+51	STEMI - Window Period (in hours)
+52	STEMI - KILLIP Class
+53	Silent Ischemia documented by
+54	If angina equivalent, please specify
+55	NYHA Class
+61	Did subject had prior stent implantation more than 6 months before
+62	Date of PCI
+63	CASS Site 1
+64	CASS Site 2
+65	CASS Site 3
+66	Procedure Performed (Check all that apply)
+70	Date of Sample collection*
+71	Haemoglobin
+72	WBC Count
+73	Platelet Count
+74	Serum Creatinine
+75	eGFR
+76	HbA1c
+77	Sodium
+78	Potassium
+79	Chloride
+80	Fasting Blood Sugar
+81	Random Blood sugar
+82	CRP
+83	MDA
+84	SOD
+90	Date of Sample collection
+91	Total Cholesterol
+92	Triglycerides
+93	LDL
+94	HDL
+100	Date of Sample Collection:
+101	CK Total
+102	CK-MB
+103	Troponin I
+104	Troponin T
+110	Was 12-Lead ECG performed
+111	ECG Date
+112	ECG Result:
+113	If Abnormal, please provide details
+114	ST Deviation
+115	Conduction abnormality
+116	QRS Duration
+120	Was subject on previously prescribed regimen of aspirin/ antiplatelet.
+121	If Yes, please tick below:
+122	Were cardiac and diabetes medications taken prior to enrollment?
+123	If Yes, please check all that apply
+130	Funding
+131	Procedure start date
+132	Procedure start time
+133	Procedure end time
+134	Size of largest guide catheter
+135	SYNTAX Score
+136	LMCA involvement
+137	Number of target vessels diseased
+138	Number of target vessels planned during Index procedure
+139	Any staged procedure planned
+140	Vascular access site(s)
+141	IABP Used
+142	TPI Used
+143	Please provide the details of anti-platelet therapy during procedure.
+151	Was a staged procedure planned?
+152	Planned date*
+153	Reason for staging (tick all that apply)
+154	Due to other reason*
+161	Was FFR/iFR done
+162	If Yes,
+163	Date:
+164	FFR/IFR site:
+165	FFR/ IFR Value
+166	Has IVUS/OCT been used pre-PCI
+167	If yes, please select one of the following:
+168	Other Findings
+175	Date of Target lesion 1 treated
+176	CASS Site 1
+177	CASS Site 2
+178	CASS Site 3
+179	Pre PCI TIMI Flow
+180	Thrombus
+181	Grade of Thrombus
+182	Lesion length (visual estimate)
+183	Reference vessel diameter (visual estimate)
+184	Minimal Lumen Diameter
+185	Is this a bifurcation lesion
+186	If Yes, MEDINA classification
+187	Number of stents used
+188	Predilation
+189	Thrombosuction
+190	Rotablation
+191	Guidezilla
+192	IVL
+193	Ostial Stenting
+194	Any special devices
+195	Name of device
+196	Bifurcation Stenting
+197	Bifurcation Technique
+210	Number of stents used
+211	Stent Information
+212	Second Stent
+213	Third Stent
+214	TIMI Flow
+215	Drugs Given
+216	Distal Delivery
+217	Device success
+218	Lesion success
+219	Procedure Success
+220	Did the patient experience any procedural complication
+221	If Yes, check all that apply
+222	Others
+223	Post-Dilatation with high pressure balloon
+224	Was IVUS used to post stent deployment?
+225	Findings
+226	Was FFR/iFR used post stent deployment?
+227	Post PCI FFR Value
+241	Date of Target lesion 2 treated
+242	CASS Site 1
+243	CASS Site 2
+244	CASS Site 3
+245	Pre PCI TIMI Flow
+246	Thrombus
+247	Grade of Thrombus
+248	Lesion length (visual estimate)
+249	Reference vessel diameter (visual estimate)
+250	Minimal Lumen Diameter
+251	Is this a bifurcation lesion
+252	If Yes, MEDINA classification
+253	Number of stents used
+254	Predilation
+255	Thrombosuction
+256	Rotablation
+257	Guidezilla
+258	IVL
+259	Ostial Stenting
+260	Any special devices
+261	Name of device
+262	Bifurcation Stenting
+263	Bifurcation Technique
+270	Number of stents used
+271	Stent Information
+272	TIMI Flow
+273	Drugs Given
+274	Distal Delivery
+275	Device success
+276	Lesion success
+277	Procedure Success
+278	Did the patient experience any procedural complication
+279	If Yes, check all that apply
+280	Post-Dilatation with high pressure balloon
+281	Was IVUS used to post stent deployment?
+282	Findings
+283	Was FFR/iFR used post stent deployment?
+284	Post PCI FFR Value
+290	Date of Target lesion 3 treated
+291	CASS Site 1
+292	CASS Site 2
+293	CASS Site 3
+294	Pre PCI TIMI Flow
+295	Thrombus
+296	Grade of Thrombus
+297	Lesion length (visual estimate)
+298	Reference vessel diameter (visual estimate)
+299	Minimal Lumen Diameter
+300	Is this a bifurcation lesion
+301	If Yes, MEDINA classification
+302	Number of stents used
+303	Predilation
+304	Thrombosuction
+305	Rotablation
+306	Guidezilla
+307	IVL
+308	Ostial Stenting
+309	Any special devices
+310	Name of device
+311	Bifurcation Stenting
+312	Bifurcation Technique
+320	Number of stents used
+321	Stent Information
+322	TIMI Flow
+323	Drugs Given
+324	Distal Delivery
+325	Device success
+326	Lesion success
+327	Procedure Success
+328	Did the patient experience any procedural complication
+329	If Yes, check all that apply
+330	Post-Dilatation with high pressure balloon
+331	Was IVUS used to post stent deployment?
+332	Findings
+333	Was FFR/iFR used post stent deployment?
+334	Post PCI FFR Value
+340	Date of Sample Collection:
+341	CK Total
+342	CK-MB
+343	Troponin I
+344	Troponin T
+350	Were there any change in cardiac and diabetes medications since last visit ?
+351	If Yes, please check all that apply
+360	Any new complaints experienced by the patient since last visit
+361	Did any of the following study endpoints occur since last visit?
+362	If Yes, please specify
+371	Done  (Y/N) :
+372	Done on day after PCI
+373	LVED
+374	LVES
+375	LVEF
+376	GLS
+377	LV Diastolic Dysfunction
+378	Grade
+379	RWMA
+380	MR Grade
+381	PAH
+382	RV Function
+390	Discharge date
+391	Heart Rate (beats per minute)
+392	Blood Pressure (mmHg)
+393	Weight (in Kg):
+400	Was 12-Lead ECG performed
+401	ECG Date
+402	Are there any clinically relevant changes in the ECG as compared to the previous ECG?
+403	If yes, specify
+404	Any arrhythmia:
+405	Atrioventricular Block:
+421	Date of Sample Collection
+422	CK Total
+423	CK-MB
+424	Troponin I
+425	Troponin T
+440	Was the antiplatelet therapy same as pre-procedure?
+441	If yes, tick all that apply:
+442	Was there any change in dose?
+443	Dose
+451	Was there any change in cardiac and diabetes medications?
+452	If Yes, please check all that apply
+461	Any new complaints experienced by the patient since last visit
+462	Did any of the following study endpoints occur since last visit?
+463	If Yes, please specify
+470	Was follow-up performed
+471	Follow-up type
+472	Assessment Date
+473	Heart Rate (beats per minute)
+474	Blood Pressure (mmHg)
+475	Weight (in Kg):
+480	Angina Assessment
+481	Current Anginal status (X One)
+482	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)
+483	Was 12-Lead ECG performed
+484	ECG Date
+485	Are there any clinically relevant changes in the ECG as compared to the previous ECG?
+486	If yes, specify
+487	Any arrhythmia:
+488	Atrioventricular Block:
+491	Was there any change in antiplatelet medication since last Visit?
+492	If yes, tick all that apply:
+493	Was there any change in dose?
+494	Dose
+500	Was there any change in cardiac and diabetes medications?
+501	If Yes, please check all that apply
+505	Any new complaints experienced by the patient since last visit
+506	Did any of the following study endpoints occur since last visit?
+507	If Yes, please specify
+511	Was follow-up performed
+512	Follow-up type
+513	Assessment Date
+514	Heart Rate (beats per minute)
+515	Blood Pressure (mmHg)
+516	Weight (in Kg):
+520	Angina Assessment
+521	Current Anginal status (X One)
+522	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)
+526	Was 12-Lead ECG performed
+527	ECG Date
+528	Are there any clinically relevant changes in the ECG as compared to the previous ECG?
+529	If yes, specify
+530	Any arrhythmia:
+531	Atrioventricular Block:
+540	Serum Creatinine
+541	eGFR
+542	HbA1c
+543	Haemoglobin
+544	WBC Count
+545	Platelet Count
+546	Total Cholesterol
+547	Triglycerides
+548	LDL
+549	HDL
+550	Sodium
+551	Potassium
+552	Chloride
+560	Was there any change in antiplatelet medication since last Visit?
+561	If yes, tick all that apply:
+562	Was there any change in dose?
+563	Dose
+566	Were there any change in cardiac and diabetes medications since last visit ?
+567	If Yes, please check all that apply
+571	Any new complaints experienced by the patient since last visit
+572	Did any of the following study endpoints occur since last visit?
+573	If Yes, please specify
+581	Was follow-up performed
+582	If Yes, specify type of follow-up
+583	Assessment Date
+584	Heart Rate (beats per minute)
+585	Blood Pressure (mmHg)
+586	Weight
+591	Angina Assessment
+592	Current Anginal status (X One)
+593	If Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)
+601	Left Ventricular Ejection Fraction (LVEF) measured
+602	If Yes, LVEF measurement
+603	Date of LVEF measurement
+611	Was 12-Lead ECG performed
+612	If yes, ECG Date
+613	Are there any clinically relevant changes in the ECG as compared to the previous ECG?
+614	If yes, specify
+615	Any arrhythmia:
+616	Atrioventricular Block:
+621	Serum Creatinine
+622	eGFR
+623	HbA1c
+624	Total Cholesterol
+625	Triglycerides
+626	LDL
+627	HDL
+628	Haemoglobin
+629	WBC
+630	Platelet Count
+631	Sodium
+632	Potassium
+633	Chloride
+671	Was there any change in antiplatelet medication since last Visit?
+672	If yes, tick all that apply:
+673	Was there any change in dose?
+674	If yes, dose
+681	Were there any change in cardiac and diabetes medications since last visit ?
+682	If Yes, please check all that apply
+691	Any new complaints experienced by the patient since last visit
+692	Did any of the following study endpoints occur since last visit?
+693	If Yes, please specify
+700	Was follow-up performed
+701	Follow-up type
+702	Assessment Date
+705	Angina Assessment
+706	Current Anginal status (X One)
+707	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)
+711	Was 12-Lead ECG performed
+712	ECG Date
+713	Are there any clinically relevant changes in the ECG as compared to the previous ECG?
+714	If yes, specify
+715	Any arrhythmia:
+716	Atrioventricular Block:
+720	Was there any change in antiplatelet medication since last Visit?
+721	If yes, tick all that apply:
+722	Was there any change in dose?
+723	Dose
+726	Were there any change in cardiac and diabetes medications since last visit ?
+727	If Yes, please check all that apply
+731	Any new complaints experienced by the patient since last visit
+732	Did any of the following study endpoints occur since last visit?
+733	If Yes, please specify
+740	Was telephonic follow-up performed
+741	Assessment Date
+745	Angina Assessment
+746	Current Anginal status (X One)
+747	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)
+751	Any new complaints experienced by the patient since last visit
+752	Did any of the following study endpoints occur since last visit?
+753	If Yes, please specify
+760	Was telephonic follow-up performed
+761	Assessment Date
+765	Angina Assessment
+766	Current Anginal status (X One)
+767	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)
+771	Any new complaints experienced by the patient since last visit
+772	Did any of the following study endpoints occur since last visit?
+773	If Yes, please specify
+780	Was telephonic follow-up performed
+781	Assessment Date
+785	Angina Assessment
+786	Current Anginal status (X One)
+787	Stable Angina, Canadian Cardiovascular Society (CCS) classification (X One)
+791	Any new complaints experienced by the patient since last visit
+792	Did any of the following study endpoints occur since last visit?
+793	If Yes, please specify
+801	Did the patient complete the protocol:
+802	Date of Completion?
+803	Date of Discontinuation
+804	Please specify the primary reason for pre-mature discontinuation (Check only one):
+805	*If Lost to follow-up or Withdrew consent, date of last patient contact
+\.
+
+
+--
+-- Data for Name: enroll_result; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.enroll_result (id, ans_text, p_id_id, q_id_id) FROM stdin;
+94	2021-07-05	21	1
+95	2021-07-05	21	2
+96	2021-07-05	21	3
+97	0	21	4
+98	Dr.	21	5
+99	2021-07-05	21	6
+100	0	21	7
+101	Male	21	8
+102	-	21	9
+103	-	21	10
+104	-	21	11
+105	0	21	12
+106	0	21	13
+107	/	21	14
+108	0.0	21	15
+109	0.0	21	16
+110	0.0	21	17
+111	Yes	21	440
+112	['Prasugrel']	21	441
+113	Yes	21	442
+114	dfg	21	443
+115	No	20	161
+116	2021-07-05	20	163
+117	LMCA	20	164
+118	0.0	20	165
+119	No	20	166
+120	-	20	168
+121	2021-07-07	22	1
+122	2021-07-07	22	2
+123	2021-07-07	22	3
+124	0	22	4
+125	Dr. Naveen	22	5
+\.
+
+
+--
+-- Data for Name: enroll_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.enroll_user (username, password) FROM stdin;
+igmc0172	Igmc@0172
+universal	Crf@2021
+Saksham	Saksham@123
+Nayan	Nayan@123
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 8, true);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 2252, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 29, true);
+
+
+--
+-- Name: enroll_patient_p_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.enroll_patient_p_id_seq', 24, true);
+
+
+--
+-- Name: enroll_result_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.enroll_result_id_seq', 125, true);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: enroll_patient enroll_patient_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.enroll_patient
+    ADD CONSTRAINT enroll_patient_pkey PRIMARY KEY (p_id);
+
+
+--
+-- Name: enroll_question enroll_question_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.enroll_question
+    ADD CONSTRAINT enroll_question_pkey PRIMARY KEY (q_id);
+
+
+--
+-- Name: enroll_result enroll_result_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.enroll_result
+    ADD CONSTRAINT enroll_result_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: enroll_user enroll_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.enroll_user
+    ADD CONSTRAINT enroll_user_pkey PRIMARY KEY (username);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: enroll_result_p_id_id_c20b09a9; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX enroll_result_p_id_id_c20b09a9 ON public.enroll_result USING btree (p_id_id);
+
+
+--
+-- Name: enroll_result_q_id_id_d8dad327; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX enroll_result_q_id_id_d8dad327 ON public.enroll_result USING btree (q_id_id);
+
+
+--
+-- Name: enroll_user_username_a600390d_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX enroll_user_username_a600390d_like ON public.enroll_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: enroll_result enroll_result_p_id_id_c20b09a9_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.enroll_result
+    ADD CONSTRAINT enroll_result_p_id_id_c20b09a9_fk FOREIGN KEY (p_id_id) REFERENCES public.enroll_patient(p_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: enroll_result enroll_result_q_id_id_d8dad327_fk_enroll_question_q_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.enroll_result
+    ADD CONSTRAINT enroll_result_q_id_id_d8dad327_fk_enroll_question_q_id FOREIGN KEY (q_id_id) REFERENCES public.enroll_question(q_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
