@@ -2,6 +2,11 @@ from django.urls import path
 from .views import *
 from accounts.views import login
 
+from django.contrib.staticfiles.storage import staticfiles_storage
+#from django.urls import include, path
+from django.views.generic.base import RedirectView
+from django.conf import settings
+
 app_name = "enroll"
 
 urlpatterns = [
