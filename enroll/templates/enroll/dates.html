@@ -8,10 +8,12 @@
 	<div class="col-sm-12">
     <form method="POST">
       {% csrf_token %}
+      <form>
+      {% csrf_token %}
 			
       <table class="table table-hover">
         <thead>
-          <tr>
+          <tr class="alert alert-warning">
             <th class="text-center">Site ID</th>
             <th class="text-center">Patient ID</th>
             <th class="text-center">Patient Initials</th> 
@@ -72,9 +74,10 @@
           {% endfor %}
         </tbody>
       </table>
-      <input type="submit" class="btn btn-success" name="next" value="Save and Next">
-      <input type="submit" class="btn btn-success" name="home" value="Save and Exit" style="float: right;">
+      <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;">
+      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" >
     </form>
+  </form>
 	</div>
 </div>
 {% endblock %}

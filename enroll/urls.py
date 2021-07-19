@@ -14,6 +14,7 @@ urlpatterns = [
     path('create/', patient_create, name='create'),
     path('patient_list/',patient_list,),
     path('form_list/<p_id>', form_list, name = 'forms'),
+    path('upload_csv/<pk>/', upload),
     path('patient/<p_id>/',update_patient,name ='update'),
     path('submitted/', successful,),
     path('pdetails/<pk>/', display_patient_detail),
@@ -83,4 +84,5 @@ urlpatterns = [
     path('assessment7/', assessment7),
     path('adverse9/', adverse9),
     path('endstudy/',endofstudy),
+    path('details_csv/<pk>/',details_csv),
 ]

@@ -5,22 +5,25 @@
 {% include 'enroll/includes/messages.html' %}
 
 {% if user.is_authenticated %}
+<img src="/static/enroll/img/l10.png" style="float:top-left;width:100px;">
 <center>
     <h4>Welcome, <em>{{user.first_name}}</em></h4>
 </center>
+
 <div class="row">
     <div class="col-sm-3"></div>
 
-    <div class="col-sm-6 " style=" padding: 5%;">
+    <div class="col-sm-6 " style="margin-top: 25px; padding-left: 5%; padding-right: 5%;">
         <h4 class="text-center alert alert-info">New Patient</h4>
         <form method="POST">
             {% csrf_token %}
             {{form.as_p}}
-            <button class="btn btn-secondary" type="submit" name="create">Create</button>
-            <a href="/patient_list/" class="btn btn-primary" style="float: right;">List of Patients</a>
+            <button class="btn btn-secondary" type="submit" name="create" style="padding: 2%;">Create</button>
+            <a href="/patient_list/" class="btn btn-primary" style="float: right; padding: 2%;">List of Patients</a>
         </form>
     </div>
 </div>
+
 
 <div class="row">
     <div class="col-sm-10"></div>

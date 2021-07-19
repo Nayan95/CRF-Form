@@ -6,6 +6,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="{% static 'enroll/css/bootstrap.css' %}">
+	<link rel="icon" href="{% static 'enroll/favicon.ico' %}">
 </head>
 
 <style>
@@ -53,7 +54,11 @@
 	<div class="row">
   		<div class="col-lg col-md">
 			<h5 class="text-center alert alert-secondary">≤14 Days to ≤24 Days To PCI</h5>
+			{% if 1 in result %}
+			<a class="dropdown-item" style="background-color: grey;" href="/dates/">Patient Details</a>
+			{% elif 1 not in result %}
 			<a class="dropdown-item" href="/dates/">Patient Details</a>
+			{% endif %}
 			<a class="dropdown-item" href="/patient_demo/">Pateint Demographics & Vital Signs</a>
 			<a class="dropdown-item" href="/diahis/">Medical and Cardiac History & Angina Status</a>
 			<a class="dropdown-item" href="/previous/">Previous PCI</a>
@@ -63,6 +68,7 @@
 			<a class="dropdown-item" href="/lead1/">LEAD ECG</a>
 			<a class="dropdown-item" href="/preprocedure/">PRE-PROCEDURE MEDICATION LOG</a>
 		</div>
+
 		
 		<div class="col-lg col-md">
 			<h5 class="text-center alert alert-secondary">PCI</h5>
@@ -156,8 +162,8 @@
 			<a class="dropdown-item" href="/endstudy/">END OF STUDY</a>
 		</div>
 	
-	</div>
 
+	</div>
 	<div class="container mt-5">
 		{% block content %}
 		{% endblock %}

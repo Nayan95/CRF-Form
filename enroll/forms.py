@@ -5,6 +5,7 @@ from .models import Result, Patient
 import datetime
 
 
+
 class PatientForm(forms.ModelForm):
     class Meta:
         model = Patient
@@ -22,6 +23,10 @@ class PatientForm(forms.ModelForm):
             'age': forms.NumberInput(attrs={'class': 'form-control'})
             # 'visit_date': forms.DateInput(format='%d/%m/%Y'),
         }
+
+class imp_exp(forms.Form):
+    p_id = forms.IntegerField(label='Patient ID', widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    file = forms.FileField()
 
 class GetDetails(forms.Form):
     p_id = forms.IntegerField(label='Patient ID', widget=forms.NumberInput(attrs={'class': 'form-control'}))

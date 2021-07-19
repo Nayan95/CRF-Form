@@ -1,3 +1,4 @@
+from re import T
 from typing import Text
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -5,7 +6,7 @@ from django.http import HttpResponse, request
 from .models import Patient, Question, Result
 from .forms import *
 from datetime import date, time
-
+import csv, io
 
 # Create your views here.
 
@@ -21,6 +22,26 @@ def display_patient_detail(request,pk):
         }
     return render(request, "enroll/patient_result.html", context)
 
+def details_csv(request,pk):
+    i = pk
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f"attachment; filename=patient-{i}.csv"
+    
+    # Create a csv writer
+    writer = csv.writer(response)
+
+    # Designate The Model
+    results = Result.objects.filter(p_id=pk).order_by('q_id')
+
+    # Add column headings to the csv file
+    writer.writerow(['ID','Question', 'Answer'])
+
+    # Loop Thu and output
+    for result in results:
+        writer.writerow([result.q_id.q_id ,result.q_id.q_text, result.ans_text])
+
+    return response
+
 def successful(request):
     global i
     patients = Patient.objects.get(p_id=i)
@@ -34,7 +55,6 @@ def successful(request):
 def patient_create(request):
     global i
     form = PatientForm()
-
     if request.method == "POST":
         print('Receiving a post request')
         if "create" in request.POST:
@@ -53,6 +73,7 @@ def patient_create(request):
             print(i)
             return redirect('/dates/')
 
+        
     context = {
         "form": form
     }
@@ -60,39 +81,86 @@ def patient_create(request):
 
 def patient_list(request):
     patients = Patient.objects.all().order_by('p_id')
-
     if 'searched' in request.POST:
-        search = request.POST['search']
+        try:
+            search = request.POST['search']
+            search = search[0].upper()
+        except:
+            pass
         searched_patient = Patient.objects.filter(f_name__contains=search)
         context = {
             'searched_patient':searched_patient,
-            'patients':patients,
         }
         return render(request,'enroll/patient_list.html',context)
+
+    if 'exit' in request.POST:
+        return redirect('/create/')
     
     context ={
         'patients':patients,
     }
     return render(request,'enroll/patient_list.html',context)
 
+def upload(request, pk):
+    global i
+    x=Result.objects.filter(p_id = pk)[0]
+    print(x)
+    i=x.p_id.p_id
+    if request.method == "POST":
+        #form = imp_exp(request.POST, request.FILES)
+        #i = request.POST['p_id']
+        f = request.FILES['file']
+
+        if not f.name.endswith('.csv'):
+            messages.error(request, 'THIS IS NOT A CSV FILE')
+            return redirect('/patient_list/')
+        Result.objects.filter(p_id = pk).delete()
+        data_set = f.read().decode('UTF-8')
+        io_string = io.StringIO(data_set)
+        next(io_string)
+        for column in csv.reader(io_string, delimiter=','):
+            _, created = Result.objects.update_or_create(
+                p_id = Patient.objects.get(p_id = i),
+                q_id = Question.objects.get(q_id = column[0]),
+                ans_text = column[2]
+            )
+        return redirect('/create/') 
+    
+    return render(request, "enroll/upload_csv.html")
+
 def form_list(request,p_id):
     global i
     i = p_id
     patient = Patient.objects.get(p_id = i)
-    
-    return render(request, 'enroll/form_list.html', {"patient": patient})
+    lst=[]
+    for j in Result.objects.filter(p_id = i):
+        lst.append(j.q_id)
+    print(lst)
+    return render(request, 'enroll/form_list.html', {"patient": patient, "result": lst})
 
 def update_patient(request,p_id):
     global i
     i = p_id
-    patient = Patient.objects.get(p_id = i)
-    form = PatientForm(request.POST or None,instance=patient)
-
-    if form.is_valid():
-         form.save()
-         return redirect('/patient_list/')
+    #patient = Patient.objects.get(p_id = i)
+    #form = PatientForm(request.POST or None,instance=patient)
+    res = []
+    for val in range(1, 6):
+        res.append(Result.objects.get(p_id=i, q_id = val))
+    print('Rws', res)
+    form1 = DateTime(instance=res[0])
+    form2 = DateTime(instance=res[1])
+    form3 = DateTime(instance=res[2])
+    form4 = TextInput(instance=res[3])
+    form5 = TextInput(instance=res[4])
+    #if request.method == "POST":
+        #form = MasterForm(request.POST, instance=res)
+        #form = TextInput(request.POST or None, instance=res)
+        #if form.is_valid():
+        #    edt = form.save(commit=False)
+        #    form.save()
+        #    return redirect('/patient_list/')
     
-    return render(request,'enroll/update_patient.html',{'patient':patient,'form':form})
+    return render(request,'enroll/update_patient.html',{'patient':res,'form1':form1,'form2':form2,'form3':form3,'form4':form4,'form5':form5})
 
 def delete_patient(request,pk):
     patient = Patient.objects.get(p_id = pk)
@@ -114,6 +182,7 @@ def date_form(request):
     date_ques2 = Question.objects.filter(q_id=3)
     number_ques = Question.objects.filter(q_id=4)
     text_ques = Question.objects.filter(q_id=5)
+
 
     if request.method == 'POST':
         # If answers already exists
@@ -148,7 +217,7 @@ def date_form(request):
         if "next" in request.POST:
             return redirect('/patient_demo/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "patient": patient,
@@ -263,7 +332,7 @@ def patient_demographics(request):
         if "next" in request.POST:
             return redirect('/diahis/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "dob_ques": dob_ques,
@@ -451,7 +520,7 @@ def diabetes_history(request):
         if "next" in request.POST:
             return redirect('/previous/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'diabetesform': diabetesform,
@@ -533,7 +602,7 @@ def previous(request):
         if "next" in request.POST:
             return redirect('/labtest/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "dateform": dateform,
@@ -604,7 +673,7 @@ def lab_test(request):
         if "next" in request.POST:
             return redirect('/lipidprof/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "date_ques": date_ques,
@@ -673,7 +742,7 @@ def lipid_profile(request):
         if "next" in request.POST:
             return redirect('/cardiac/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "date_ques": date_ques,
@@ -753,7 +822,7 @@ def cardiac_enzymes(request):
         if "next" in request.POST:
             return redirect('/lead1/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "date_ques": date_ques,
@@ -824,7 +893,7 @@ def lead1(request):
             if "next" in request.POST:
                 return redirect('/preprocedure/')
             elif "home" in request.POST:
-                return redirect('/create/')
+                return redirect('/submitted/')
         else:
             get_ques()
 
@@ -869,7 +938,7 @@ def lead1(request):
         if "next" in request.POST:
             return redirect('/preprocedure/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesno_ques': yesno_ques,
@@ -944,7 +1013,7 @@ def preprocedure(request):
         if "next" in request.POST:
             return redirect('/indprocedure/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'asprin_ques': asprin_ques,
@@ -1087,7 +1156,7 @@ def indpreocedure(request):
         if "next" in request.POST:
             return redirect('/staged/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'fund_ques': fund_ques,
@@ -1165,7 +1234,7 @@ def staged(request):
         if "next" in request.POST:
             return redirect('/ffr/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "yesno_ques": yesno_ques,
@@ -1273,7 +1342,7 @@ def ffr(request):
         if "next" in request.POST:
             return redirect('/lesion1/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "yesno_ques": yesno_ques,
@@ -1442,7 +1511,7 @@ def lesion1(request):
         if "next" in request.POST:
             return redirect('/stent1/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "questions1": questions1,
@@ -1619,7 +1688,7 @@ def stent1(request):
         if "next" in request.POST:
             return redirect('/lesion2/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "number_form": number_form,
@@ -1785,7 +1854,7 @@ def lesion2(request):
         if "next" in request.POST:
             return redirect('/stent2/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "questions1": questions1,
@@ -1959,7 +2028,7 @@ def stent2(request):
         if "next" in request.POST:
             return redirect('/lesion3/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "number_form": number_form,
@@ -2134,7 +2203,7 @@ def lesion3(request):
             if "next" in request.POST:
                 return redirect('/stent3/')
             elif "home" in request.POST:
-                return redirect('/create/')
+                return redirect('/submitted/')
 
 
     context = {
@@ -2310,7 +2379,7 @@ def stent3(request):
         if "next" in request.POST:
             return redirect('/cardiac1/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "number_form": number_form,
@@ -2392,7 +2461,7 @@ def cardiac_enzymes1(request):
         if "next" in request.POST:
             return redirect('/conco1/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "date_ques": date_ques,
@@ -2443,7 +2512,7 @@ def concomitant1(request):
         if "next" in request.POST:
             return redirect('/adverse1/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -2500,7 +2569,7 @@ def adverse1(request):
         if "next" in request.POST:
             return redirect('/echo/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -2611,7 +2680,7 @@ def echo(request):
         if "next" in request.POST:
             return redirect('/vital/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'number_form': number_form,
@@ -2678,7 +2747,7 @@ def vital_sign(request):
         if "next" in request.POST:
             return redirect('/lead2/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'dateques': date_ques,
@@ -2766,7 +2835,7 @@ def lead2(request):
         if "next" in request.POST:
             return redirect('/cardiac2/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesno_ques1': yesno_ques1,
@@ -2845,7 +2914,7 @@ def cardiac_enzymes2(request):
         if "next" in request.POST:
             return redirect('/platelet/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         "date_ques": date_ques,
@@ -2904,7 +2973,7 @@ def platelet_therapy(request):
         if "next" in request.POST:
             return redirect('/conco2/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'question1': question1,
@@ -2950,7 +3019,7 @@ def concomitant2(request):
         if "next" in request.POST:
             return redirect('/adverse2/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -3007,7 +3076,7 @@ def adverse2(request):
         if "next" in request.POST:
             return redirect('/onemonth/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -3096,7 +3165,7 @@ def onemonth(request):
         if "next" in request.POST:
             return redirect('/assessment/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesnoform': yesno_form,
@@ -3149,7 +3218,7 @@ def assessment(request):
         if "next" in request.POST:
             return redirect('/lead3/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'textform': textform,
@@ -3234,7 +3303,7 @@ def lead3(request):
         if "next" in request.POST:
             return redirect('/platelet2/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesno_ques1': yesno_ques1,
@@ -3295,7 +3364,7 @@ def platelet_therapy2(request):
         if "next" in request.POST:
             return redirect('/conco3/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'question1': question1,
@@ -3341,7 +3410,7 @@ def concomitant3(request):
         if "next" in request.POST:
             return redirect('/adverse3/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -3398,7 +3467,7 @@ def adverse3(request):
         if "next" in request.POST:
             return redirect('/adverse3/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -3485,7 +3554,7 @@ def sixmonth_followup(request):
         if "next" in request.POST:
             return redirect('/6month/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesnoform': yesno_form,
@@ -3538,7 +3607,7 @@ def assessment2(request):
         if "next" in request.POST:
             return redirect('/lead4/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'textform': textform,
@@ -3622,7 +3691,7 @@ def lead4(request):
         if "next" in request.POST:
             return redirect('/labtest2/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesno_ques1': yesno_ques1,
@@ -3683,7 +3752,7 @@ def lab_test2(request):
         if "next" in request.POST:
             return redirect('/platelet3/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'labpara_ques': labpara_ques,
@@ -3740,7 +3809,7 @@ def platelet_therapy3(request):
         if "next" in request.POST:
             return redirect('/conco4/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'question1': question1,
@@ -3786,7 +3855,7 @@ def concomitant4(request):
         if "next" in request.POST:
             return redirect('/adverse4/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -3843,7 +3912,7 @@ def adverse4(request):
         if "next" in request.POST:
             return redirect('/12month/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -3930,7 +3999,7 @@ def twelvemonth_followup(request):
         if "next" in request.POST:
             return redirect('/assessment3/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesnoform': yesno_form,
@@ -3983,7 +4052,7 @@ def assessment3(request):
         if "next" in request.POST:
             return redirect('/lvef_details/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'textform': textform,
@@ -4026,7 +4095,7 @@ def lvef_details(request):
         if "next" in request.POST:
             return redirect('/lead5/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     return render(request, "enroll/lvef_details.html",)
 
@@ -4103,7 +4172,7 @@ def lead5(request):
         if "next" in request.POST:
             return redirect('/labtest3/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesno_ques1': yesno_ques1,
@@ -4164,7 +4233,7 @@ def lab_test3(request):
         if "next" in request.POST:
             return redirect('/platelet4/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'labpara_ques': labpara_ques,
@@ -4221,7 +4290,7 @@ def platelet_therapy4(request):
         if "next" in request.POST:
             return redirect('/conco5/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'question1': question1,
@@ -4267,7 +4336,7 @@ def concomitant5(request):
         if "next" in request.POST:
             return redirect('/adverse5/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -4324,7 +4393,7 @@ def adverse5(request):
         if "next" in request.POST:
             return redirect('/24month/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -4380,7 +4449,7 @@ def twentyfourmonth_followup(request):
         if "next" in request.POST:
             return redirect('/assessment4/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesnoform': yesno_form,
@@ -4427,7 +4496,7 @@ def assessment4(request):
         if "next" in request.POST:
             return redirect('/lead6/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'textform': textform,
@@ -4511,7 +4580,7 @@ def lead6(request):
         if "next" in request.POST:
             return redirect('/platelet5/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesno_ques1': yesno_ques1,
@@ -4572,7 +4641,7 @@ def platelet_therapy5(request):
         if "next" in request.POST:
             return redirect('/conco6/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'question1': question1,
@@ -4618,7 +4687,7 @@ def concomitant6(request):
         if "next" in request.POST:
             return redirect('/adverse6/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -4675,7 +4744,7 @@ def adverse6(request):
         if "next" in request.POST:
             return redirect('/36month/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -4725,7 +4794,7 @@ def thirtysixmonth_followup(request):
         if "next" in request.POST:
             return redirect('/assessment5/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesnoform': yesno_form,
@@ -4772,7 +4841,7 @@ def assessment5(request):
         if "next" in request.POST:
             return redirect('/adverse7/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'textform': textform,
@@ -4830,7 +4899,7 @@ def adverse7(request):
         if "next" in request.POST:
             return redirect('/48month/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -4880,7 +4949,7 @@ def fourtyeight_followup(request):
         if "next" in request.POST:
             return redirect('/assesment6/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesnoform': yesno_form,
@@ -4927,7 +4996,7 @@ def assessment6(request):
         if "next" in request.POST:
             return redirect('/adverse8/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'textform': textform,
@@ -4985,7 +5054,7 @@ def adverse8(request):
         if "next" in request.POST:
             return redirect('/60month/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
@@ -5035,7 +5104,7 @@ def sixty_followup(request):
         if "next" in request.POST:
             return redirect('/assessment7/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'yesnoform': yesno_form,
@@ -5082,7 +5151,7 @@ def assessment7(request):
         if "next" in request.POST:
             return redirect('/adverse9/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'textform': textform,
@@ -5140,7 +5209,7 @@ def adverse9(request):
         if "next" in request.POST:
             return redirect('/endstudy/')
         elif "home" in request.POST:
-            return redirect('/create/')
+            return redirect('/submitted/')
 
     context = {
         'questions1': questions1,
