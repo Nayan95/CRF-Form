@@ -1,6 +1,57 @@
 {% extends 'enroll/question.html' %}
 
 {% block content %}
+
+<script>
+  function showDate(){
+    a = document.getElementById('perf').value
+    if (a == 'Yes'){
+      document.getElementById('date').style.display='block'
+      document.getElementById('date').required=true
+    }else{
+      document.getElementById('date').style.display='none'
+      document.getElementById('date').required=false
+    }
+  }
+
+  function showHide1(){
+    a = document.getElementById('id_ans_text').value
+    if (a == 'Abnormal'){
+      document.getElementById('st_ques').style.display=''
+      document.getElementById('st_ans').style.display=''
+      document.getElementById('ab_con').style.display=''
+      document.getElementById('con_ans').style.display=''
+      document.getElementById('qrs').style.display=''
+
+    }else{
+      document.getElementById('st_ques').style.display='none'
+      document.getElementById('st_ans').style.display='none'
+      document.getElementById('ab_con').style.display='none'
+      document.getElementById('con_ans').style.display='none'
+      document.getElementById('qrs').style.display='none'
+    }
+  }
+
+  function showHide2(){
+    a = document.getElementById('st_opt').value
+    if (a == 'Yes'){
+      document.getElementById('st1').style.display='block'
+      document.getElementById('st2').style.display='block'
+      document.getElementById('inp1').style.display='block'
+      document.getElementById('inp2').style.display='block'
+      document.getElementById('inp1').required = true
+      document.getElementById('inp2').required = true
+    }else{
+      document.getElementById('st1').style.display='none'
+      document.getElementById('st2').style.display='none'
+      document.getElementById('inp1').style.display='none'
+      document.getElementById('inp2').style.display='none'
+      document.getElementById('inp1').required = false
+      document.getElementById('inp2').required = false
+    }
+  }
+</script>
+
 <div class="row">
   <div class="container mt-3">
     <h1 class="text-center alert alert-primary">LEAD ECG*( PRE PROCEDURE)<br></h1>
@@ -13,12 +64,12 @@
           {% for ques in yesno_ques %}
           <tr>
             <td width="70%">{{ ques.q_text }}</td>
-            <td width="30%">
-              <select name="dt[]" onchange="if (this.value=='Yes'){this.form['date'].style.visibility='visible'}else {this.form['date'].style.visibility='hidden'};">
+            <td class="form-inline">
+              <select name="dt[]" id="perf" class="form-control" onchange="showDate()">
                 <option value="No" name="dt[]">No</option>
                 <option value="Yes" name= "dt[]">Yes</option>
               </select>
-              <input type="date" id="date" name="dt[]" style="visibility:hidden;">
+              <input type="date" class="form-control" id="date" name="dt[]" style="display:none;">
             </td>
           </tr>
           {% endfor %}
@@ -26,49 +77,50 @@
           {% for ques in no_ab_ques %}
            <tr>
             <td>{{ ques.q_text }}</td>
-            <td>
+            <td onchange="showHide1()">
               {{ no_abform.ans_text }}
             </td>
            </tr>
           {% endfor %}
 
-          {% for ques in ifabnoraml %}
-           <tr>
-            <td>{{ ques.q_text }}</td>
-          </tr>
-          {% endfor %}
           {% for ques in st_ques %}
            <tr>
-            <td>{{ ques.q_text }}</td>
-            <td>
-              <select name="ST[]" onchange="if (this.value=='Yes'){this.form['st1'].style.visibility='visible', this.form['inp1'].style.visibility='visible',this.form['st2'].style.visibility='visible', this.form['inp2'].style.visibility='visible'}else {this.form['st1'].style.visibility='hidden', this.form['inp1'].style.visibility='hidden',this.form['st2'].style.visibility='hidden', this.form['inp2'].style.visibility='hidden'};">
+            <td id="st_ques" style="display: none;">
+              {{ ques.q_text }}
+            </td>
+            <td id="st_ans" class="form-inline" style="display: none;">
+              <select name="ST[]" id="st_opt" class="form-control" onchange="showHide2()">
                 <option value="No" name="ST[]">No</option>
                 <option value="Yes" name= "ST[]">Yes</option>
-              </select><br>
-              <select id="st1" name="ST[]" style="visibility:hidden;">
+              </select>
+              <div class="form-group">
+              <select id="st1" class="form-control w-50" name="ST[]" style="display:none;">
                 <option name="ST[]" value=" ST elevation"> ST elevation</option>
               </select>
-              <input type="number" id="inp1" name="ST[]" placeholder="mm" class="w-25" style="visibility:hidden;">
-              <select id="st2" name="ST[]" style="visibility:hidden;">
+              <input type="number" class="form-control w-25" id="inp1" name="ST[]" placeholder="mm" style="display:none;">
+            </div>
+            <div class="form-group">
+              <select id="st2" class="form-control w-50" name="ST[]" style="display:none;">
                 <option name="ST[]" value=" ST depression"> ST depression</option>
               </select>
-              <input type="number" id="inp2" name="ST[]" placeholder="mm" class="w-25" style="visibility:hidden;">
+              <input type="number" class="form-control w-25" id="inp2" name="ST[]" placeholder="mm" style="display:none;">
+            </div>
             </td>
            </tr>
           {% endfor %}
 
           {% for ques in cond_ques %}
-           <tr>
+           <tr id="ab_con" style="display: none;">
             <td>
               {{ ques.q_text }}
               <p style="font-size: 12px;"><i>*If Yes,<strong>Hold Ctrl/Shift</strong> and select all valid</i></p>
             </td>
-            <td>
-              <select name="Conduction[]" onchange="if (this.value=='Yes'){this.form['Con'].style.visibility='visible'}else {this.form['Con'].style.visibility='hidden'};">
+            <td id="con_ans" class="form-inline" style="display: none;">
+              <select id="con_opt" name="Conduction[]" class="form-control" onchange="if (this.value=='Yes'){this.form['Con'].style.display='block'}else {this.form['Con'].style.display='none'};">
                 <option value="No" name="Conduction[]">No</option>
                 <option value="Yes" name= "Conduction[]">Yes</option>
               </select>
-              <select id="Con" name="Conduction[]" style="visibility:hidden;" multiple="multiple">
+              <select id="Con" class="form-control" name="Conduction[]" style="display: none;" multiple="multiple">
               <option name="Conduction[]" value="Left Bundle Branch Block"> Left Bundle Branch Block</option>
               <option name="Conduction[]" value="Right Bundle Branch Block"> Right Bundle Branch Block</option>
               <option name="Conduction[]" value="Intraventricular Conduction Delay"> Intraventricular Conduction Delay</option>
@@ -81,7 +133,7 @@
           {% endfor %}
 
           {% for ques in qrs_ques %}
-           <tr>
+           <tr id="qrs" style="display: none;">
             <td>{{ ques.q_text }}</td>
             <td>
               {{ numberform.ans_text }}

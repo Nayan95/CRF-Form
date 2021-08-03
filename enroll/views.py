@@ -141,26 +141,15 @@ def form_list(request,p_id):
 def update_patient(request,p_id):
     global i
     i = p_id
-    #patient = Patient.objects.get(p_id = i)
-    #form = PatientForm(request.POST or None,instance=patient)
-    res = []
-    for val in range(1, 6):
-        res.append(Result.objects.get(p_id=i, q_id = val))
-    print('Rws', res)
-    form1 = DateTime(instance=res[0])
-    form2 = DateTime(instance=res[1])
-    form3 = DateTime(instance=res[2])
-    form4 = TextInput(instance=res[3])
-    form5 = TextInput(instance=res[4])
-    #if request.method == "POST":
-        #form = MasterForm(request.POST, instance=res)
-        #form = TextInput(request.POST or None, instance=res)
-        #if form.is_valid():
-        #    edt = form.save(commit=False)
-        #    form.save()
-        #    return redirect('/patient_list/')
+    patient = Patient.objects.get(p_id = i)
+    form = PatientForm(request.POST or None,instance=patient)
+    if request.method == "POST":
+        form = PatientForm(request.POST or None, instance=patient)
+        if form.is_valid():
+            form.save()
+            return redirect('/patient_list/')
     
-    return render(request,'enroll/update_patient.html',{'patient':res,'form1':form1,'form2':form2,'form3':form3,'form4':form4,'form5':form5})
+    return render(request,'enroll/update_patient.html',{'patient':form})
 
 def delete_patient(request,pk):
     patient = Patient.objects.get(p_id = pk)
@@ -410,12 +399,19 @@ def diabetes_history(request):
             quesform.save()
 
         diab = request.POST.getlist('diab[]')
-        dia = '/'.join(diab)
-        quesform = TextInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': dia})
-        quesform.save()
+        if(diab[0] == 'None'):
+            quesform = TextInput({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': diab[0]})
+            quesform.save()
+        else:
+            dia = '/'.join(diab)
+            quesform = TextInput({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': dia})
+            quesform.save()
 
         # CAD and Medical history
         for val in ans_text[0:15]:
@@ -1647,8 +1643,6 @@ def stent1(request):
                 'ans_text': complication[1:]})
             quesform.save()
 
-        get_ques()
-
         quesform = YesNo({
             'p_id': Patient.objects.get(p_id=i),
             'q_id': Question.objects.get(q_id=get_ques()),
@@ -2710,6 +2704,8 @@ def vital_sign(request):
     weight_ques = Question.objects.filter(q_id=393)
 
     if request.method == 'POST':
+
+        Exists(390, 393)
 
         dateform = DateTime(request.POST)
         heartrateform = NumberInput(request.POST)
@@ -4069,6 +4065,8 @@ def lvef_details(request):
 
     if request.method == 'POST':
 
+        Exists(601, 603)
+
         yn1 = request.POST.getlist('yn1[]')
         print(yn1)
         quesform = TextInput({
@@ -5306,15 +5304,12 @@ def give_pid():
     print(i)
     return(i)
 
-
 ques_id = 0
-
 
 def get_ques():
     global ques_id
     ques_id = ques_id+1
     return(ques_id)
-
 
 def Exists(a, b):
     global i

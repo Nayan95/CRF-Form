@@ -4,11 +4,13 @@
 
 <script>
   function showHide1(){
-    a = document.getElementById('anti').value 
+    a = document.getElementById('anti').value
     if (a == 'Yes'){
       document.getElementById('1month').style.visibility = 'visible'
+      document.getElementById('validate').required = true
     }else{
       document.getElementById('1month').style.visibility = 'hidden'
+      document.getElementById('validate').required = false
     }
   }
 </script>
@@ -35,17 +37,17 @@
         </tr>
        <tr id="1month" style="visibility: hidden;">
          <td>Specify type of Follow-up</td>
-         <td>
-            <select name="yn1[]">
+         <td class="form-inline">
+            <select name="yn1[]" class="form-control">
             <option name="yn1[]" value="Telephone call"> Telephone call</option>
             <option name="yn1[]" value="Office visit"> Office visit</option>
             </select>
-            <input type="date" name="yn1[]">
+            <input id="validate" class="form-control" type="date" name="yn1[]">
          </td>
         </tr>
       </table>
 
-      <table class="table table-hover">
+      <table class="table table-hover">`
         <tbody>
 
           <h5 class="alert alert-info">VITAL SIGNS</h5>
@@ -60,8 +62,8 @@
           {% for ques in bpques %}
           <tr>
             <td>{{ ques.q_text }}</td>
-            <td>
-              <p><input type="number" name="bp[]" class="w-25" value = '0' required="Yes">/<input type="number" name="bp[]" class="w-25" value = '0' required="Yes"></p>
+            <td class="form-inline">
+              <input type="number" name="bp[]" class="w-25 form-control" value = '0' required="Yes">/<input type="number" name="bp[]" class="w-25 form-control" value = '0' required="Yes">
             </td>
           </tr>
           {% endfor %}

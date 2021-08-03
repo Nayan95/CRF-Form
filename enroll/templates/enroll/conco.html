@@ -1,6 +1,21 @@
 {% extends 'enroll/question.html' %}
 
 {% block content %}
+
+<script>
+  function showHide1() {
+    a = document.getElementById('id_ans_text').value;
+    if(a == 'Yes'){
+      document.getElementById('check_q').style.display=''
+      document.getElementById('check_a').style.display=''
+    }
+    else{
+      document.getElementById('check_q').style.display='none'
+      document.getElementById('check_a').style.display='none'
+    }
+  }
+</script>
+
 <div class="row">
   <div class="container mt-3">
     <h1 class="text-center alert alert-primary">CONCOMITANT MEDICATION ASSESSMENT
@@ -15,35 +30,35 @@
             {% for ques in questions1 %}
             <tr>
               <td width="52%">{{ ques.q_text }}</td>
-              <td width="48%">{{ yesnoform.ans_text }}</td>
+              <td width="48%" onchange="showHide1()">{{ yesnoform.ans_text }}</td>
             </tr>
             {% endfor %}
             {% for ques in questions2 %}
             <tr>
-              <td>{{ ques.q_text }}</td>
-              <td>
+              <td id="check_q" style="display: none;">{{ ques.q_text }}</td>
+              <td id="check_a" style="display: none;">
               <input type="checkbox" name="pre[]" value="ACE inhibitor" />  ACE inhibitor<br>
-              <input type="checkbox" name="pre[]" value="AT-II antagonist" /> AT-II antagonist<br>
-              <input type="checkbox" name="pre[]" value="Beta blocker" /> Beta blocker<br>
-              <input type="checkbox" name="pre[]" value="Calcium Channel blockers" />Calcium Channel blockers<br>
-              <input type="checkbox" name="pre[]" value="Antiarrhythmic" /> Antiarrhythmic<br>
-              <input type="checkbox" name="pre[]" value="Nitrates" /> Nitrates<br>
-              <input type="checkbox" name="pre[]" value="GLP-1 receptor agonist (liraglutide, dulaglutide)" /> GLP-1 receptor agonist (liraglutide, dulaglutide)<br>
-              <input type="checkbox" name="pre[]" value="SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)" />SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)<br>
-              <input type="checkbox" name="pre[]" value="DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)" /> DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)<br>
-              <input type="checkbox" name="pre[]" value="Metformin" />Metformin<br>
-              <input type="checkbox" name="pre[]" value="Sulfonylureas" />Sulfonylureas<br>
+              <input type="checkbox" name="pre[]" value="AT-II antagonist" />  AT-II antagonist<br>
+              <input type="checkbox" name="pre[]" value="Beta blocker" />  Beta blocker<br>
+              <input type="checkbox" name="pre[]" value="Calcium Channel blockers" />  Calcium Channel blockers<br>
+              <input type="checkbox" name="pre[]" value="Antiarrhythmic" />  Antiarrhythmic<br>
+              <input type="checkbox" name="pre[]" value="Nitrates" />  Nitrates<br>
+              <input type="checkbox" name="pre[]" value="GLP-1 receptor agonist (liraglutide, dulaglutide)" />  GLP-1 receptor agonist (liraglutide, dulaglutide)<br>
+              <input type="checkbox" name="pre[]" value="SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)" />  SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)<br>
+              <input type="checkbox" name="pre[]" value="DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)" />  DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)<br>
+              <input type="checkbox" name="pre[]" value="Metformin" />  Metformin<br>
+              <input type="checkbox" name="pre[]" value="Sulfonylureas" />  Sulfonylureas<br>
 
-              <input type="checkbox" name="pre[]" value="Statins" onchange="if(this.checked){this.form['drop'].style.visibility='visible', this.form['val'].style.visibility='visible'} else {this.form['drop'].style.visibility='hidden', this.form['val'].style.visibility='hidden'};"/>Statins
+              <input type="checkbox" name="pre[]" value="Statins" onchange="if(this.checked){this.form['drop'].style.display='', this.form['val'].style.display='block'} else {this.form['drop'].style.display='none', this.form['val'].style.display='none'};"/>  Statins
 
-              <select name="pre[]" id='drop' style="visibility:hidden">
+              <select name="pre[]" id='drop' class="form-control w-35" style="display: none;">
                 <option value=" Atorvastatin" name="pre[]"> Atorvastatin</option>
                 <option value=" Rosuvastatin" name= "pre[]"> Rosuvastatin</option>
                 <option value=" Pitavastatin" name="pre[]"> Pitavastatin</option>
                 <option value=" Simvastatin" name="pre[]"> Simvastatin</option>
               </select>
 
-              <input type="number" id='val' name="pre[]" class="w-25" placeholder="2-80mg" style="visibility:hidden"><br>
+              <input type="number" id='val' name="pre[]" class="form-control w-35" placeholder="2-80mg" style="display:none"><br>
               
               <input type="checkbox" name="pre[]" value="Ezetimibe" />Ezetimibe<br>
               <input type="checkbox" name="pre[]" value="Omega-3 fatty acids" /> Omega-3 fatty acids<br>

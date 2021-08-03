@@ -59,8 +59,8 @@
           {% for ques in bpques %}
           <tr>
             <td>{{ ques.q_text }}</td>
-            <td>
-              <p><input type="number" name="bp[]" class="w-25">/<input type="number" name="bp[]" class="w-25"></p>
+            <td class="form-inline">
+              <input type="number" name="bp[]" class="w-25 form-control" required>/<input type="number" name="bp[]" class="w-25 form-control" required>
             </td>
           </tr>
           {% endfor %}

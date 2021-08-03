@@ -6,59 +6,110 @@
   function showHide0(){
     var a = document.getElementById('opt1').value;
     if (a=="0"){
-      document.getElementById('stentinfo').style.visibility='hidden';
-      document.getElementById('stent1').style.visibility='hidden';
-      document.getElementById('stent2').style.visibility='hidden';
-      document.getElementById('stent3').style.visibility='hidden';
+      document.getElementById('stentinfo').style.display='none';
+      document.getElementById('stent1').style.display='none';
+      document.getElementById('stent2').style.display='none';
+      document.getElementById('stent3').style.display='none';
+      document.getElementById('st_name1').required = false;
+      document.getElementById('st_name2').required = false;
+      document.getElementById('st_name3').required = false;
+      document.getElementById('len1').required = false;
+      document.getElementById('len2').required = false;
+      document.getElementById('len3').required = false;
+      document.getElementById('pre1').required = false;
+      document.getElementById('pre2').required = false;
+      document.getElementById('pre3').required = false;
     }else if (a == "1"){
-      document.getElementById('stentinfo').style.visibility='visible';
-      document.getElementById('stent1').style.visibility='visible';
-      document.getElementById('stent2').style.visibility='hidden';
-      document.getElementById('stent3').style.visibility='hidden';
+      document.getElementById('stentinfo').style.display='block';
+      document.getElementById('stent1').style.display='block';
+      document.getElementById('stent2').style.display='none';
+      document.getElementById('stent3').style.display='none';
+      document.getElementById('st_name1').required = true;
+      document.getElementById('st_name2').required = false;
+      document.getElementById('st_name3').required = false;
+      document.getElementById('len1').required = true;
+      document.getElementById('len2').required = false;
+      document.getElementById('len3').required = false;
+      document.getElementById('pre1').required = true;
+      document.getElementById('pre2').required = false;
+      document.getElementById('pre3').required = false;
     }else if (a== "2"){
-      document.getElementById('stentinfo').style.visibility='visible';
-      document.getElementById('stent1').style.visibility='visible';
-      document.getElementById('stent2').style.visibility='visible';
-      document.getElementById('stent3').style.visibility='hidden';
+      document.getElementById('stentinfo').style.display='block';
+      document.getElementById('stent1').style.display='block';
+      document.getElementById('stent2').style.display='block';
+      document.getElementById('stent3').style.display='none';
+      document.getElementById('st_name1').required = true;
+      document.getElementById('st_name2').required = true;
+      document.getElementById('st_name3').required = false;
+      document.getElementById('len1').required = true;
+      document.getElementById('len2').required = true;
+      document.getElementById('len3').required = false;
+      document.getElementById('pre1').required = true;
+      document.getElementById('pre2').required = true;
+      document.getElementById('pre3').required = false;
     }else{
-      document.getElementById('stentinfo').style.visibility='visible';
-      document.getElementById('stent1').style.visibility='visible';
-      document.getElementById('stent2').style.visibility='visible';
-      document.getElementById('stent3').style.visibility='visible';
+      document.getElementById('stentinfo').style.display='block';
+      document.getElementById('stent1').style.display='block';
+      document.getElementById('stent2').style.display='block';
+      document.getElementById('stent3').style.display='block';
+      document.getElementById('st_name1').required = true;
+      document.getElementById('st_name2').required = true;
+      document.getElementById('st_name3').required = true;
+      document.getElementById('len1').required = true;
+      document.getElementById('len2').required = true;
+      document.getElementById('len3').required = true;
+      document.getElementById('pre1').required = true;
+      document.getElementById('pre2').required = true;
+      document.getElementById('pre3').required = true;
     }
   }
   function showHide1(){
     var a = document.getElementById('opt2').value
     if (a=="Unknown" || a == 3){
-      document.getElementById('timi').style.visibility='hidden';
+      document.getElementById('timi').style.display='none';
     }else{
-      document.getElementById('timi').style.visibility='visible';
+      document.getElementById('timi').style.display='';
     }
   }
   function showHide2(){
     var a = document.getElementById('opt3').value;
     if (a=='No'){
-      document.getElementById('check').style.visibility='hidden';
+      document.getElementById('check').style.display='none';
     }else{
-      document.getElementById('check').style.visibility='visible';
+      document.getElementById('check').style.display='block';
     }
   }
 
   function showHide3(){
     var a = document.getElementById('opt4').value;
     if (a=='No'){
-      document.getElementById('findings').style.visibility='hidden';
+      document.getElementById('finding').style.display='none';
+      document.getElementById('finding').required=false
     }else{
-      document.getElementById('findings').style.visibility='visible';
+      document.getElementById('finding').style.display='block';
+      document.getElementById('finding').required=true
     }
   }
 
   function showHide4(){
     var a = document.getElementById('opt5').value;
     if (a=='No'){
-      document.getElementById('value').style.visibility='hidden';
+      document.getElementById('value').style.display='none';
+       document.getElementById('value').required=false
     }else{
-      document.getElementById('value').style.visibility='visible';
+      document.getElementById('value').style.display='block';
+       document.getElementById('value').required=true
+    }
+  }
+
+  function chk_other(){
+    if(document.getElementById('f').checked){
+      document.getElementById('chk_bx').style.display='block'
+      document.getElementById('chk_bx').required=true
+    }
+    else{
+      document.getElementById('chk_bx').style.display='none'
+      document.getElementById('chk_bx').required=false
     }
   }
 
@@ -79,7 +130,7 @@
             <tr>
               <td width="70%">{{ ques.q_text }}</td>
               <td width="30%">
-                <select name="stent[]" id="opt1" onclick="showHide0()">
+                <select name="stent[]" class="form-control w-35" id="opt1" onclick="showHide0()">
                   <option name="stent[]" value="0">0</option>
                   <option name="stent[]" value="1">1</option>
                   <option name="stent[]" value="2">2</option>
@@ -93,19 +144,19 @@
 
         <table class="table table-hover" >
           <tbody>
-            <tr id="stentinfo" style="visibility: hidden;" class="alert alert-info">
+            <tr id="stentinfo" style="display: none; padding: 0px;" class="alert alert-info">
               <td><strong> Stent Information </strong></td>
               <td></td>
               <td></td>
               <td></td>
             </tr>
-            <tr id="stent1" style="visibility: hidden;">
+            <tr id="stent1" class="form-inline" style="display: none;">
               <td>
-                <input type="text" name="stent[]" placeholder="Stent Name" >
+                <input type="text" id="st_name1" class="form-control" name="stent[]" placeholder="Stent Name" >
               </td>
               <td>
-                <label for="diameter">Diameter: </label> 
-                <select name="stent[]" id="diameter" >
+                Diameter : 
+                <select name="stent[]" class="form-control" id="diameter" >
                   <option name="stent[]" value="2">2</option>
                   <option name="stent[]" value="2.25">2.25</option>
                   <option name="stent[]" value="2.5">2.5</option>
@@ -118,20 +169,20 @@
                 </select>
               </td>
               <td>
-                Length:<input type="number" name="stent[]">
+                Length : <input type="number" id="len1" class="form-control w-35" name="stent[]">
               </td>
               <td>
-                Max Deploy Pressure:<input type="number" name="stent[]">
+                Max Deploy Pressure : <input type="number" id="pre1" class="form-control w-35" name="stent[]">
               </td>
             </tr>
 
-            <tr id="stent2" style="visibility: hidden;">
+            <tr id="stent2" class="form-inline" style="display: none;">
               <td>
-                <input type="text" name="stent[]" placeholder="Stent Name">
+                <input type="text" id="st_name2" class="form-control" name="stent[]" placeholder="Stent Name">
               </td>
               <td>
-                <label for="diameter">Diameter: </label>
-                <select name="stent[]" id="diameter">
+                Diameter : 
+                <select name="stent[]" class="form-control" id="diameter">
                   <option name="stent[]" value="2">2</option>
                   <option name="stent[]" value="2.25">2.25</option>
                   <option name="stent[]" value="2.5">2.5</option>
@@ -144,20 +195,20 @@
                 </select>
               </td>
               <td>
-                Length:<input type="number" name="stent[]" >
+                Length : <input type="number" id="len2" class="form-control w-35" name="stent[]" >
               </td>
               <td>
-                Max Deploy Pressure:<input type="number" name="stent[]">
+                Max Deploy Pressure : <input type="number" id="pre2" class="form-control w-35" name="stent[]">
               </td>
             </tr>
 
-            <tr id="stent3" style="visibility: hidden;">
+            <tr id="stent3" class="form-inline" style="display: none;">
               <td>
-                <input type="text" name="stent[]" placeholder="Stent Name">
+                <input type="text" id="st_name3" class="form-control" name="stent[]" placeholder="Stent Name">
               </td>
               <td>
-                <label for="diameter">Diameter: </label>
-                <select name="stent[]" id="diameter">
+                Diameter : 
+                <select name="stent[]" class="form-control" id="diameter">
                   <option name="stent[]" value="2">2</option>
                   <option name="stent[]" value="2.25">2.25</option>
                   <option name="stent[]" value="2.5">2.5</option>
@@ -170,10 +221,10 @@
                 </select>
               </td>
               <td>
-                Length:<input type="number" name="stent[]">
+                Length : <input type="number" id="len3" class="form-control w-35" name="stent[]">
               </td>
               <td>
-                Max Deploy Pressure:<input type="number" name="stent[]">
+                Max Deploy Pressure : <input type="number" id="pre3" class="form-control w-35" name="stent[]">
               </td>
             </tr>
           
@@ -183,14 +234,14 @@
         <table class="table table-hover">
           <tbody>
             <tr>
-              <th class="alert alert-info">POST PROCEDURAL RESULTS</th>
-              <th class="alert alert-info"></th>
+              <th class="alert alert-info" width="70%">POST PROCEDURAL RESULTS</th>
+              <th class="alert alert-info" width="30%"></th>
             </tr>
             {% for ques in question2 %}
             <tr>
               <td>{{ ques.q_text }}</td>
               <td>
-                <select name="timi[]" id="opt2" onchange="showHide1()" >
+                <select name="timi[]" class="form-control w-35" id="opt2" onchange="showHide1()" >
                   <option value="Unknown">Unknown</option>
                   <option value="0">0</option>
                   <option value="1">1</option>
@@ -198,10 +249,10 @@
                   <option value="3">3</option>
                 </select>
               </td>
-                <tr id="timi"  style="visibility: hidden;">
+                <tr id="timi" style="display: none;">
                   <td><p style="font-size: 12px;"><i>*If TIMI Flow=0,1 or 2,<strong> Hold Ctrl/Shift</strong> and select all valid</i></p></td>
                   <td>
-                    <select name="timi[]" multiple="multiple">
+                    <select name="timi[]" class="form-control w-35" multiple="multiple">
                       <option value="Adenosine">Adenosine</option>
                       <option value="Nikorandil">Nikorandil</option>
                       <option value="Verapamil">Verapamil</option>
@@ -229,11 +280,11 @@
             <tr>
               <td>{{ ques.q_text }}</td>
               <td>
-                <select name="complication[]" id="opt3" onclick="showHide2()">
+                <select name="complication[]" class="form-control w-35" id="opt3" onclick="showHide2()">
                   <option value="No">No</option>
                   <option value="Yes">Yes</option>
                 </select>
-                <fieldset name="complication[]" id="check" style="visibility: hidden;">                
+                <fieldset name="complication[]" id="check" style="display: none;">                
                 <input type="checkbox" name="complication[]" id="a" value="Dissection > Type B">
                 <label for="a">Dissection > Type B</label> <br>
                 <input type="checkbox" name="complication[]" id="b" value="No re-flow">
@@ -244,8 +295,10 @@
                 <label for="d">Perforation</label> <br>
                 <input type="checkbox" name="complication[]" id="e" value="Abrupt closure">
                 <label for="e">Abrupt closure</label> <br>
+                <input type="checkbox" name="complication[]" id="f" value="Others" onchange="chk_other()">
+                <label for="f">Others</label> <br>
               
-              <input type="text" name="complication[]" id="check" placeholder="Other,specify">
+              <input type="text" class="form-control" name="complication[]" id="chk_bx" placeholder="Specify" style="display: none;">
               </fieldset>
               </td>
             </tr>
@@ -268,12 +321,12 @@
             <tr>
               <td>{{ ques.q_text }}</td>
               <td>
-                <select name="findings[]" id="opt4" onclick="showHide3()">
+                <select name="findings[]" class="form-control w-35" id="opt4" onclick="showHide3()">
                   <option value="No">No</option>
                   <option value="Yes">Yes</option>
                 </select>
 
-                <textarea name="findings[]" id="findings" placeholder="Findings" class="w-100" style="visibility: hidden;"></textarea>
+                <textarea name="findings[]" id="finding" placeholder="Findings" class="form-control w-100" style="display: none;"></textarea>
               </td>
             </tr>
             {% endfor %}
@@ -281,13 +334,13 @@
             {% for ques in question8 %}
             <tr>
               <td>{{ ques.q_text }}</td>
-              <td>
-                <select name="value[]" id="opt5" onclick="showHide4()">
+              <td class="form-inline">
+                <select name="value[]" class="form-control w-35" id="opt5" onclick="showHide4()">
                   <option value="No">No</option>
                   <option value="Yes">Yes</option>
-                </select>
+                </select>&nbsp;
 
-                <input type="number" name="value[]" id="value" placeholder="Enter Value" style="visibility: hidden;">
+                <input type="number" class="form-control w-35" name="value[]" id="value" placeholder="Enter Value" style="display: none;">
               </td>
             </tr>
             {% endfor %}

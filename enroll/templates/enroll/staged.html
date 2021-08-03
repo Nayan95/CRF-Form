@@ -1,5 +1,19 @@
 {% extends 'enroll/question.html' %}
 {% block content %}
+<script>
+
+function showHide1(){
+    if (document.getElementById('chk').checked){
+      document.getElementById('txt').style.display=''
+      document.getElementById('txt').required = true
+    }else{
+      document.getElementById('txt').style.display='none'
+      document.getElementById('txt').required = false
+    }
+  }
+
+</script>
+
 <div class="row">
   <div class="container mt-3">
     <h1 class="text-center alert alert-primary">STAGED PROCEDURE
@@ -37,8 +51,11 @@
 
           {% for ques in other_ques %}
           <tr>
-            <td>{{ ques.q_text }} <br> <strong><i>please specify</i></strong></td>
-            <td> <input value="None" type="text" name="text[]" placeholder="Other Reason" class="w-50"> </td>
+            <td style="border: none;"></td>
+            <td class="form-inline" style="margin-left: 40px; margin-top: 0px; padding-top: 0px ; border: none;">
+              <input type="checkbox" id="chk" onchange="showHide1()">&nbsp;  {{ ques.q_text }}
+              <input type="text" id="txt" name="text[]" placeholder="Other Reason" class="form-control w-50" style="display: none;">
+            </td>
            </tr>
           {% endfor %}
         </tbody>

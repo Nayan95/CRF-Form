@@ -5,7 +5,7 @@
   <h1>Update Patient</h1>
   <form action="" method="post">
     {% csrf_token %}  
- <!--     <table class="table table-hover table-inverse ">
+      <table class="table table-hover table-inverse ">
       <thead class="thead-inverse">
         <tr>
           <th>Patient ID</th>
@@ -19,40 +19,12 @@
           <th>{{patient.l_name}}</th>
           <th>{{patient.age}}</th>
         </tr>
-        {% for x in patient %}
-        <tr>
-        <td>{{x.q_id}}</td>
-        <td>{{x.ans_text}}</td>
-        <td></td>
-        <td></td>
-        </tr>
         {% endfor %}
       </thead>
-    </table>-->
-    <br><br>
-    <table class="table table-hover table-inverse ">
-      <tr>
-        <td>{{form1.q_id}}</td>
-        <td>{{form1.ans_text}}</td>
-      </tr>
-      <tr>
-        <td>{{form2.q_id}}</td>
-        <td>{{form2.ans_text}}</td>
-      </tr>
-      <tr>
-        <td>{{form3.q_id}}</td>
-        <td>{{form3.ans_text}}</td>
-      </tr>
-      <tr>
-        <td>{{form4.q_id}}</td>
-        <td>{{form4.ans_text}}</td>
-      </tr>
-      <tr>
-        <td>{{form5.q_id}}</td>
-        <td>{{form5.ans_text}}</td>
-      </tr>
     </table>
-    <br/>
+
+    {{}}
+    
     <input type="submit" name="update" value="Update" class="btn btn-secondary">
   </form>
 {% endblock %}

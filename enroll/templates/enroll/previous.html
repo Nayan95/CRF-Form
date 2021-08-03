@@ -1,6 +1,19 @@
 {% extends 'enroll/question.html' %}
 
 {% block content %}
+
+<script>
+  function val(){
+    if (document.getElementById('other').checked){
+      document.getElementById('Tick').style.display='block'
+      document.getElementById('Tick').required = true
+    }else{
+      document.getElementById('Tick').style.display='none'
+      document.getElementById('Tick').required = false
+    }
+  }
+</script>
+
 <div class="row">
   <div class="container mt-3">
     <h1 class="text-center alert alert-primary">PREVIOUS PCI <span><h3>(Percutaneous Coronary Intervention)</h3></span></h1>
@@ -48,8 +61,8 @@
               <input type="checkbox" name="procedure[]" value="Thrombectomy" /> Thrombectomy<br>
               <input type="checkbox" name="procedure[]" value="Rotablator™" /> Rotablator™<br>
               <input type="checkbox" name="procedure[]" value="Cutting balloon" /> Cutting balloon<br>
-              <input type="checkbox" name="procedure[]" value="Other" onchange="if (this.value=='Other'){this.form['Tick'].style.visibility='visible'} else {this.form['Tick'].style.visibility='hidden'};" /> Other<br>
-              <input type="text" placeholder="Specify" id="Tick" name="procedure[]" style="visibility:hidden;"/>
+              <input type="checkbox" id="other" name="procedure[]" value="Other" onchange="val()" /> Other<br>
+              <input type="text" class="form-control" placeholder="Specify" id="Tick" name="procedure[]" style="display:none;"/>
 
             </td>
           </tr>

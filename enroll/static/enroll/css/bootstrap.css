@@ -7395,6 +7395,7 @@ a.bg-info:focus,
 button.bg-info:hover,
 button.bg-info:focus {
   background-color: #117a8b !important;
+  color: black;
 }
 
 .bg-warning {
@@ -9080,8 +9081,20 @@ button.bg-dark:focus {
   width: 25% !important;
 }
 
+.w-30 {
+  width: 30% !important;
+}
+
+.w-35 {
+  width: auto !important;
+}
+
 .w-50 {
   width: 50% !important;
+}
+
+.w-60 {
+  width: auto !important;
 }
 
 .w-75 {

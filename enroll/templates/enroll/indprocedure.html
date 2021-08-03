@@ -1,6 +1,65 @@
 {% extends 'enroll/question.html' %}
 
 {% block content %}
+
+<script>
+  function funAsprin(){
+    if (document.getElementById('asp_ques').checked){
+      document.getElementById('asp_load').style.display=''
+      document.getElementById('asp_main').style.display=''
+      document.getElementById('asp_inp1').required = true
+      document.getElementById('asp_inp2').required = true
+    }else{
+      document.getElementById('asp_load').style.display='none'
+      document.getElementById('asp_main').style.display='none'
+      document.getElementById('asp_inp1').required = false
+      document.getElementById('asp_inp2').required = false
+    }
+  }
+
+  function funChlop(){
+    if (document.getElementById('clop_ques').checked){
+      document.getElementById('clop_load').style.display=''
+      document.getElementById('clop_main').style.display=''
+      document.getElementById('clop_inp1').required = true
+      document.getElementById('clop_inp2').required = true
+    }else{
+      document.getElementById('clop_load').style.display='none'
+      document.getElementById('clop_main').style.display='none'
+      document.getElementById('clop_inp1').required = false
+      document.getElementById('clop_inp2').required = false
+    }
+  }
+
+  function funTica(){
+    if (document.getElementById('tica_ques').checked){
+      document.getElementById('tica_load').style.display=''
+      document.getElementById('tica_main').style.display=''
+      document.getElementById('tica_inp1').required = true
+      document.getElementById('tica_inp2').required = true
+    }else{
+      document.getElementById('tica_load').style.display='none'
+      document.getElementById('tica_main').style.display='none'
+      document.getElementById('tica_inp1').required = false
+      document.getElementById('tica_inp2').required = false
+    }
+  }
+
+  function funPrasu(){
+    if (document.getElementById('pra_ques').checked){
+      document.getElementById('pra_load').style.display=''
+      document.getElementById('pra_main').style.display=''
+      document.getElementById('pra_inp1').required = true
+      document.getElementById('pra_inp2').required = true
+    }else{
+      document.getElementById('pra_load').style.display='none'
+      document.getElementById('pra_main').style.display='none'
+      document.getElementById('pra_inp1').required = false
+      document.getElementById('pra_inp2').required = false
+    }
+  }
+</script>
+
 <div class="row">
   <div class="container mt-3">
     <h1 class="text-center alert alert-primary">INDEX PROCEDURE DETAILS</h1>
@@ -13,8 +72,8 @@
 
           {% for ques in fund_ques %}
           <tr>
-            <td width="80%">{{ ques.q_text }}</td>
-            <td width="20%">{{ fundform.ans_text }}</td>
+            <td width="70%">{{ ques.q_text }}</td>
+            <td width="30%">{{ fundform.ans_text }}</td>
           </tr>
           {% endfor %}
 
@@ -27,7 +86,7 @@
            </tr>
           {% endfor %}
 
-            {% for ques in time_ques %}
+          {% for ques in time_ques %}
            <tr>
             <td>{{ ques.q_text }}</td>
             <td>
@@ -65,12 +124,12 @@
           {% for ques in LMCA_ques %}
           <tr>
             <td>{{ ques.q_text }}</td>
-            <td>
-              <select name="lmca[]" onchange="if (this.value=='Yes'){this.form['y/n'].style.visibility='visible'}else {this.form['y/n'].style.visibility='hidden'};">
+            <td class="form-inline">
+              <select name="lmca[]" class="form-control" onchange="if (this.value == 'Yes'){this.form['y/n'].style.display='block', this.form['y/n'].required=true}else {this.form['y/n'].style.display='none', this.form['y/n'].required=false};">
                 <option value="No" name="lmca[]">No</option>
                 <option value="Yes" name= "lmca[]">Yes</option>
               </select>
-              <input type="number" id="y/n" name="lmca[]" placeholder="% Stenosis" style="visibility:hidden;">
+              <input type="number" class="form-control" id="y/n" name="lmca[]" placeholder="% Stenosis" style="display: none;">
             </td>
           </tr>
           {% endfor %}
@@ -125,46 +184,46 @@
           <tbody>
           <tr>
             <td>
-              <input type="checkbox" name="therapy[]" value=" Aspirin" /> Aspirin
+            <input type="checkbox" id="asp_ques" name="therapy[]" value="Aspirin" onchange="funAsprin()" /> Aspirin
             </td>
-            <td>
-              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            <td id="asp_load" style="display: none;">
+              <input type="number" id="asp_inp1" name="therapy[]" placeholder="0 mg" class="form-control w-50">
             </td>
-            <td>
-              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="checkbox" name="therapy[]" value=" Clopidogrel" /> Clopidogrel
-            </td>
-            <td>
-              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
-            </td>
-            <td>
-              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            <td id="asp_main" style="display: none;">
+              <input type="number" id="asp_inp2" name="therapy[]" placeholder="0 mg" class="form-control w-50">
             </td>
           </tr>
           <tr>
             <td>
-              <input type="checkbox" name="therapy[]" value=" Ticagrelor" /> Ticagrelor
+              <input type="checkbox" id="clop_ques" name="therapy[]" value="Clopidogrel" onchange="funChlop()"/> Clopidogrel
             </td>
-            <td>
-              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            <td id="clop_load" style="display: none;">
+              <input type="number" id="clop_inp1" name="therapy[]" placeholder="0 mg" class="form-control w-50">
             </td>
-            <td>
-              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            <td id="clop_main" style="display: none;">
+              <input type="number" id="clop_inp2" name="therapy[]" placeholder="0 mg" class="form-control w-50">
             </td>
           </tr>
           <tr>
             <td>
-              <input type="checkbox" name="therapy[]" value=" Prasugrel" /> Prasugrel
+              <input type="checkbox" id="tica_ques" name="therapy[]" value="Ticagrelor" onchange="funTica()"/> Ticagrelor
             </td>
-            <td>
-              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+            <td id="tica_load" style="display: none;">
+              <input type="number" id="tica_inp1" name="therapy[]" placeholder="0 mg" class="form-control w-50">
             </td>
+            <td id="tica_main" style="display: none;">
+              <input type="number" id="tica_inp2" name="therapy[]" placeholder="0 mg" class="form-control w-50">
+            </td>
+          </tr>
+          <tr>
             <td>
-              <input type="number" id="mg" name="therapy[]" class="w-25"><span>mg</span><br>
+              <input type="checkbox" id="pra_ques" name="therapy[]" value="Prasugrel" onchange="funPrasu()"/> Prasugrel
+            </td>
+            <td id="pra_load" style="display: none;">
+              <input type="number" id="pra_inp1" name="therapy[]" placeholder="0 mg" class="form-control w-50">
+            </td>
+            <td id="pra_main" style="display: none;">
+              <input type="number" id="pra_inp2" name="therapy[]" placeholder="0 mg" class="form-control w-50">
             </td>
           </tr>
 

@@ -13,12 +13,12 @@
           {% for ques in yesno_ques1 %}
           <tr>
             <td width="70%">{{ ques.q_text }}</td>
-            <td width="30%">
-              <select name="dt[]" onchange="if (this.value=='Yes'){this.form['date'].style.visibility='visible'}else {this.form['date'].style.visibility='hidden'};">
+            <td class="form-inline">
+              <select name="dt[]" class="form-control" onchange="if (this.value=='Yes'){this.form['date'].style.display='block'}else {this.form['date'].style.display='none'};">
                 <option value="No" name="dt[]">No</option>
                 <option value="Yes" name= "dt[]">Yes</option>
               </select>
-              <input type="date" id="date" name="dt[]" style="visibility:hidden;">
+              <input type="date" class="form-control" id="date" name="dt[]" style="display:none;">
             </td>
           </tr>
           {% endfor %}

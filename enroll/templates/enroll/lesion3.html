@@ -1,6 +1,20 @@
 {% extends 'enroll/question.html' %}
 
 {% block content %}
+
+<script>
+  function showHide1(){
+    a = document.getElementById('throm_yn').value
+
+    if(a == 'Yes'){
+      document.getElementById('throm_ans').style.display= ''
+    }
+    else{
+     document.getElementById('throm_ans').style.display= 'none' 
+    }
+  }
+</script>
+
 <div class="row">
   <div class="container mt-3">
     <h1 class="text-center alert alert-primary">TARGET LESION 3</h1>
@@ -14,8 +28,8 @@
           <div style="float: right;"><strong>*Not Applicable: </strong><input type="checkbox" name="NA[]" value="NA"><br></div>
           {% for ques in questions1 %}
           <tr>
-            <td width="80%">{{ ques.q_text }}</td>
-            <td width="20%">
+            <td width="70%">{{ ques.q_text }}</td>
+            <td width="30%">
               {{ date_form.ans_text }}
             </td>
           </tr>
@@ -31,7 +45,7 @@
           {% endfor %}
 
           <tr>
-            <th>If lesion covers more than one CASS site, please specify CASS site 2, 3</th>
+            <th style="border: none;">If lesion covers more than one CASS site, please specify CASS site 2, 3</th>
           </tr>
 
           {% for ques in questions2b %}
@@ -56,7 +70,7 @@
            <tr>
             <td>{{ ques.q_text }}</td>
             <td>
-              <select name="thrombus[]"  onchange="if (this.value=='Yes') {this.form['thrombus'].style.visibility='visible'} else {this.form['thrombus'].style.visibility='hidden';} ">
+              <select name="thrombus[]" id="throm_yn" class="form-control w-35" onchange="showHide1()">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
               
@@ -65,10 +79,10 @@
            </tr>
           {% endfor %}
           {% for ques in questions5 %}
-           <tr>
+           <tr id="throm_ans" style="display: none;">
             <td>{{ ques.q_text }}</td>
             <td>
-              <select name="thrombus[]" id="thrombus" style="visibility: hidden;">
+              <select name="thrombus[]" class="form-control w-35">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -110,12 +124,12 @@
            {% for ques in questions9 %}
            <tr>
             <td>{{ ques.q_text }}</td>
-            <td>
-               <select name="med[]" onchange="if (this.value=='Yes'){this.form['Yes'].style.visibility='visible'}else {this.form['Yes'].style.visibility='hidden'};">
+            <td class="form-inline">
+               <select name="med[]" class="form-control" onchange="if (this.value=='Yes'){this.form['Yes'].style.display='block'}else {this.form['Yes'].style.display='none'};">
                 <option value="No" name="med[]">No</option>
                 <option value="Yes" name= "med[]">Yes</option>
-              </select>
-                <select  id="Yes" name="med[]" style="visibility:hidden;">
+              </select>&nbsp;
+                <select  id="Yes" class="form-control" name="med[]" style="display:none;">
                 <option value="0.0.1 " name="med[]">0.0.1 </option>
                 <option value="0.1.0" name= "med[]">0.1.0</option>
                 <option value="1.0.0" name="med[]">1.0.0 </option>
@@ -154,13 +168,12 @@
           {% for ques in questions13 %}
            <tr>
             <td>{{ ques.q_text }}</td>
-            <td>
-              <select name="yesno1[]"  onchange="if (this.value=='Yes') {this.form['device'].style.visibility='visible'} else {this.form['device'].style.visibility='hidden';} ">
+            <td class="form-inline">
+              <select name="yesno1[]" class="form-control" onchange="if (this.value=='Yes') {this.form['device'].style.display='block', this.form['device'].required=true} else {this.form['device'].style.display='none', this.form['device'].required=false;} ">
                 <option value="No">No</option>
                 <option value="Yes">Yes</option>
-              </select>
-              <br><br>
-                <input type="text" id="device" name="yesno1[]" placeholder="Name of the device"  style="visibility:hidden;">
+              </select>&nbsp;
+                <input type="text" id="device" class="form-control" name="yesno1[]" placeholder="Name of the device"  style="display: none;">
               </select>
             </td>
            </tr>
@@ -169,13 +182,12 @@
           {% for ques in question15 %}
            <tr>
             <td>{{ ques.q_text }}</td>
-            <td>
-              <select name="yesno2[]"  onchange="if (this.value=='Yes') {this.form['technique'].style.visibility='visible'} else {this.form['device'].style.visibility='hidden';} ">
+            <td class="form-inline">
+              <select name="yesno2[]" class="form-control"  onchange="if (this.value=='Yes') {this.form['technique'].style.display='block', this.form['technique'].required=true} else {this.form['technique'].style.display='none', this.form['technique'].required=false;} ">
                 <option value="No">No</option>
                 <option value="Yes">Yes</option>
-              </select>
-              <br><br>
-                <input type="text" id="technique" name="yesno2[]" placeholder="Name of the technique"  style="visibility:hidden;">
+              </select>&nbsp;
+                <input type="text" id="technique" class="form-control" name="yesno2[]" placeholder="Name of the technique"  style="display: none;">
               </select>
             </td>
            </tr>
