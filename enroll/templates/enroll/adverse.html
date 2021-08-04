@@ -1,6 +1,23 @@
 {% extends 'enroll/question.html' %}
 
 {% block content %}
+
+<script>
+  function showHide1(){
+    a = document.getElementById('id_ans_text').value;
+    document.write(a)
+    if(a == 'Yes'){
+      document.getElementById('check_q').style.display= ''
+      document.getElementById('check_a').style.display= ''
+    }
+    else{
+      document.getElementById('check_q').style.display= 'none'
+      document.getElementById('check_a').style.display= 'none' 
+    }
+  }
+</script>
+
+
 <div class="row">
   <div class="container mt-3">
     <h1 class="text-center alert alert-primary">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS
@@ -24,15 +41,17 @@
             {% for ques in questions2 %}
            <tr>
             <td>{{ ques.q_text }}</td>
-            <td>
+            <td onchange="showHide1()">
               {{yesnoform.ans_text}}
             </td>
           </tr>
           {% endfor %}
           {% for ques in questions3 %}
           <tr>
-            <td>{{ ques.q_text }}<br><i>(Tick all that apply)</i></td>
-            <td>
+            <td id="check_q" style="display: none;">
+              {{ ques.q_text }}<br><i>(Tick all that apply)</i>
+            </td>
+            <td id="check_a" style="display: none;">
               <input type="checkbox" value="Death " name="ser[]"> Death <br>
               <input type="checkbox" value="MI" name= "ser[]"> MI <br>
               <input type="checkbox" value="Stent Thrombosis" name="ser[]"> Stent Thrombosis <br>
@@ -40,8 +59,8 @@
               <input type="checkbox" value="HF Hospitalization " name="ser[]"> HF Hospitalization <br>
               <input type="checkbox" value="Bleeding " name="ser[]"> Bleeding <br>
               <input type="checkbox" value="Stroke " name="ser[]"> Stroke <br>
-              <input type="checkbox" value="Others" name="ser[]" onchange="if(this.checked){this.form['detail'].style.visibility='visible'} else {this.form['detail'].style.visibility='hidden'};"> Others
-              <input type="text" name="ser[]" id="detail" placeholder="Specify..." style="visibility:hidden">
+              <input type="checkbox" value="Others" name="ser[]" onchange="if(this.checked){this.form['detail'].style.display='block', this.form['detail'].required=true} else {this.form['detail'].style.display='none', this.form['detail'].required=false};"> Others
+              <input type="text" name="ser[]" class="form-control" id="detail" placeholder="Specify..." style="display: none;">
             </td>
            </tr>
           {% endfor %}

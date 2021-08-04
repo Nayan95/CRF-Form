@@ -30,7 +30,7 @@
    <div class="col-sm-12">
        <table class="table table-hover">
          <thead>
-           <tr class=" alert alert-warning">
+           <tr class=" alert alert-warning text-center">
                <th scope="col">ID</th>
                <th scope="col">First Name</th>
                <th scope="col">Last Name</th>
@@ -39,7 +39,7 @@
          </thead>
          <tbody>
            {% for patient in patients %}
-           <tr>
+           <tr class="text-center">
                <td>{{ patient.p_id }}</td>
                <td>{{ patient.f_name }}</td>
                <td>{{ patient.l_name }}</td>

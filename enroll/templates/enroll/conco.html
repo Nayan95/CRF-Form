@@ -49,9 +49,11 @@
               <input type="checkbox" name="pre[]" value="Metformin" />  Metformin<br>
               <input type="checkbox" name="pre[]" value="Sulfonylureas" />  Sulfonylureas<br>
 
-              <input type="checkbox" name="pre[]" value="Statins" onchange="if(this.checked){this.form['drop'].style.display='', this.form['val'].style.display='block'} else {this.form['drop'].style.display='none', this.form['val'].style.display='none'};"/>  Statins
+              <fieldset class="form-inline">
+              <input type="checkbox" name="pre[]" value="Statins" onchange="if(this.checked){this.form['drop'].style.display='block', this.form['val'].style.display='', this.form['val'].required=true} else {this.form['drop'].style.display='none', this.form['val'].style.display='none', this.form['val'].required=false};"/>  Statins
 
               <select name="pre[]" id='drop' class="form-control w-35" style="display: none;">
+                <option selected="true" disabled="disabled" value=""> ---Select--- </option>
                 <option value=" Atorvastatin" name="pre[]"> Atorvastatin</option>
                 <option value=" Rosuvastatin" name= "pre[]"> Rosuvastatin</option>
                 <option value=" Pitavastatin" name="pre[]"> Pitavastatin</option>
@@ -59,6 +61,7 @@
               </select>
 
               <input type="number" id='val' name="pre[]" class="form-control w-35" placeholder="2-80mg" style="display:none"><br>
+              </fieldset>
               
               <input type="checkbox" name="pre[]" value="Ezetimibe" />Ezetimibe<br>
               <input type="checkbox" name="pre[]" value="Omega-3 fatty acids" /> Omega-3 fatty acids<br>

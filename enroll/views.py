@@ -143,13 +143,12 @@ def update_patient(request,p_id):
     i = p_id
     patient = Patient.objects.get(p_id = i)
     form = PatientForm(request.POST or None,instance=patient)
-    if request.method == "POST":
-        form = PatientForm(request.POST or None, instance=patient)
-        if form.is_valid():
-            form.save()
-            return redirect('/patient_list/')
+
+    if form.is_valid():
+         form.save()
+         return redirect('/patient_list/')
     
-    return render(request,'enroll/update_patient.html',{'patient':form})
+    return render(request,'enroll/update_patient.html',{'patient':patient,'form':form})
 
 def delete_patient(request,pk):
     patient = Patient.objects.get(p_id = pk)
@@ -1611,7 +1610,7 @@ def stent1(request):
             'ans_text': timi[0]})
         quesform.save()
 
-        if (timi[0] == 'Unknown' or timi[0] == 3):
+        if (timi[0] == 'Unknown' or timi[0] == '3'):
             get_ques()
         else:
             drugs = ','.join(timi[1:])
