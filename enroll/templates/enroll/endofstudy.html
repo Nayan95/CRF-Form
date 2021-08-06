@@ -6,11 +6,20 @@
   function showHide1(){
     a = document.getElementById('yesno').value 
     if (a == 'Yes'){
-      document.getElementById('date1').style.visibility = 'visible'
-      document.getElementById('date2').style.visibility = 'hidden'
+      document.getElementById('date1').style.display = ''
+      document.getElementById('date2').style.display = 'none'
     }else{
-      document.getElementById('date1').style.visibility = 'hidden'
-      document.getElementById('date2').style.visibility = 'visible'
+      document.getElementById('date1').style.display = 'none'
+      document.getElementById('date2').style.display = ''
+    }
+  }
+
+  function showHide2(){
+    a = document.getElementById('dis_cont').value 
+    if (a == 'Lost to follow-up' || a == 'Withdrawal of consent'){
+      document.getElementById('dis_date').style.display = ''
+    }else{
+      document.getElementById('dis_date').style.display = 'none'
     }
   }
 </script>
@@ -25,9 +34,9 @@
       <table class="table table-hover">
         {% for ques in protocol_question %}
         <tr>
-          <td>{{ ques.q_text }}</td>
-          <td>
-            <select name="yn1[]" id="yesno" onchange="showHide1()">
+          <td width="70%">{{ ques.q_text }}</td>
+          <td width="30%">
+            <select name="yn1[]" id="yesno" class="form-control w-35" onchange="showHide1()">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
@@ -36,16 +45,16 @@
         {% endfor %}
 
         {% for ques in date_question1 %}
-       <tr id="date1" style="visibility: hidden;">
-         <td width = '80%'>{{ ques.q_text }}</td>
-         <td width = '20%'>
+       <tr id="date1" style="display: none;">
+         <td>{{ ques.q_text }}</td>
+         <td>
             {{date_form.ans_text}}
          </td>
         </tr>
         {% endfor %}
 
         {% for ques in date_question2 %}
-        <tr id="date2" style="visibility: visible;">
+        <tr id="date2" style="display: ;">
           <td>{{ ques.q_text }}</td>
           <td>
             {{date_form.ans_text}}
@@ -58,10 +67,10 @@
 
           {% for ques in premature_question %}
           <tr>
-            <td>{{ ques.q_text }}</td>
-            <td>
-              <select name = 'opt2[]'>
-                <option name = 'opt2[]' value=" Lost to follow-up*"> Lost to follow-up*</option>
+            <td width="70%">{{ ques.q_text }}</td>
+            <td width="30%">
+              <select class="form-control w-35" id="dis_cont" name = 'opt2[]' onchange="showHide2()">
+                <option name = 'opt2[]' value="Lost to follow-up"> Lost to follow-up</option>
                 <option name = 'opt2[]' value="Lack of Efficacy">Lack of Efficacy</option>
                 <option name = 'opt2[]' value="Adverse Event">Adverse Event</option>
                 <option name = 'opt2[]' value="Non-compliance">Non-compliance</option>
@@ -76,7 +85,7 @@
           {% endfor %}
 
           {% for ques in concent_question %}
-          <tr>
+          <tr id="dis_date" style="display: ">
             <td>{{ ques.q_text }}</td>
             <td>{{date_form.ans_text}}</td>
           </tr>

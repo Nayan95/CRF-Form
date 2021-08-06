@@ -1,6 +1,46 @@
 {% extends 'enroll/question.html' %}
 
 {% block content %}
+
+<script>
+
+  function showHide1(){
+    a = document.getElementById('ecg_p').value
+    if (a == 'Yes'){
+      document.getElementById('date').style.display='block'
+      document.getElementById('date').required=true;
+      document.getElementById('st_ans1').style.display='';
+      document.getElementById('st_ans2').style.display='';
+      document.getElementById('st_ans3').style.display='';
+    }
+    else{
+     document.getElementById('date').style.display='none';
+     document.getElementById('date').required=false;
+     document.getElementById('st_ans1').style.display='none';
+     document.getElementById('st_ans2').style.display='none';
+     document.getElementById('st_ans3').style.display='none';
+    }
+  }
+
+  function showHide2(){
+    a = document.getElementById('st_opt').value
+    if (a == 'Yes'){
+      document.getElementById('st1').style.display='block'
+      document.getElementById('st2').style.display='block'
+      document.getElementById('inp1').style.display='block'
+      document.getElementById('inp2').style.display='block'
+      document.getElementById('inp1').required = true
+      document.getElementById('inp2').required = true
+    }else{
+      document.getElementById('st1').style.display='none'
+      document.getElementById('st2').style.display='none'
+      document.getElementById('inp1').style.display='none'
+      document.getElementById('inp2').style.display='none'
+      document.getElementById('inp1').required = false
+      document.getElementById('inp2').required = false
+    }
+  }
+</script>
 <div class="row">
   <div class="container mt-3">
     <h1 class="text-center alert alert-primary">LEAD ECG<br></h1>
@@ -12,39 +52,43 @@
           <tbody>
           {% for ques in yesno_ques1 %}
           <tr>
-            <td width="70%">{{ ques.q_text }}</td>
-            <td class="form-inline">
-              <select name="dt[]" class="form-control" onchange="if (this.value=='Yes'){this.form['date'].style.display='block'}else {this.form['date'].style.display='none'};">
+            <td width="70%" style="border:none;">{{ ques.q_text }}</td>
+            <td class="form-inline" style="border:none;">
+              <select name="dt[]" id="ecg_p" class="form-control" onchange="showHide1()">
                 <option value="No" name="dt[]">No</option>
                 <option value="Yes" name= "dt[]">Yes</option>
-              </select>
-              <input type="date" class="form-control" id="date" name="dt[]" style="display:none;">
+              </select>&nbsp;
+              <input type="date" class="form-control w-35" id="date" name="dt[]" style="display:none;">
             </td>
           </tr>
           {% endfor %}
 
           {% for ques in yesno_ques2 %}
-           <tr>
+           <tr id="st_ans1" style="display: none;">
             <td>{{ ques.q_text }}</td>
-            <td>
-              <select name="ST[]" onchange="if (this.value=='Yes'){this.form['st1'].style.visibility='visible', this.form['inp1'].style.visibility='visible',this.form['st2'].style.visibility='visible', this.form['inp2'].style.visibility='visible'}else {this.form['st1'].style.visibility='hidden', this.form['inp1'].style.visibility='hidden',this.form['st2'].style.visibility='hidden', this.form['inp2'].style.visibility='hidden'};">
+            <td class="form-inline">
+              <select name="ST[]" id="st_opt" class="form-control w-35" onchange="showHide2()">
                 <option value="No" name="ST[]">No</option>
                 <option value="Yes" name= "ST[]">Yes</option>
-              </select><br>
-              <select id="st1" name="ST[]" style="visibility:hidden;">
+              </select>
+              <div class="form-group">
+              <select id="st1" class="form-control w-35" name="ST[]" style="display:none;">
                 <option name="ST[]" value=" ST elevation"> ST elevation</option>
               </select>
-              <input type="number" id="inp1" name="ST[]" placeholder="mm" class="w-25" style="visibility:hidden;">
-              <select id="st2" name="ST[]" style="visibility:hidden;">
+              <input type="number" class="form-control w-25" id="inp1" name="ST[]" placeholder="mm" style="display:none;">
+            </div>
+            <div class="form-group">
+              <select id="st2" class="form-control w-35" name="ST[]" style="display:none;">
                 <option name="ST[]" value=" ST depression"> ST depression</option>
               </select>
-              <input type="number" id="inp2" name="ST[]" placeholder="mm" class="w-25" style="visibility:hidden;">
+              <input type="number" class="form-control w-25" id="inp2" name="ST[]" placeholder="mm" style="display:none;">
+            </div>
             </td>
            </tr>
           {% endfor %}
 
           {% for ques in arrhythmia_ques %}
-           <tr>
+           <tr id="st_ans2" style="display: none;">
             <td>{{ ques.q_text }}</td>
             <td>
               {{ arrhythmiaform.ans_text }}
@@ -53,7 +97,7 @@
           {% endfor %}
 
           {% for ques in atrioventricular_ques %}
-           <tr>
+           <tr id="st_ans3" style="display: none;">
             <td>{{ ques.q_text }}</td>
             <td>
               {{ atrioventricularblockform.ans_text }}

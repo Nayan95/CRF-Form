@@ -6,18 +6,20 @@
   function showHide1(){
     var a = document.getElementById('yesno1').value;
     if (a == 'No'){
-      document.getElementById('pci').style.visibility = 'hidden';
+      document.getElementById('pci').style.display = 'none';
+      document.getElementById('pci_inp').required = false;
     }else{
-      document.getElementById('pci').style.visibility = 'visible';
+      document.getElementById('pci').style.display = '';
+      document.getElementById('pci_inp').required = true;
     }
   }
 
   function showHide2(){
     var a = document.getElementById('yesno2').value;
     if (a == 'No'){
-      document.getElementById('digit').style.visibility = 'hidden';
+      document.getElementById('digit').style.display = 'none';
     }else{
-      document.getElementById('digit').style.visibility = 'visible';
+      document.getElementById('digit').style.display = '';
     }
   }
 </script>
@@ -34,15 +36,15 @@
             <tr>   
               <td>Done Yes/No</td>
               <td>
-                <select name="yn1[]" id="yesno1" onchange="showHide1()">
+                <select name="yn1[]" class="form-control w-35" id="yesno1" onchange="showHide1()">
                   <option name="yn1[]" value="No">No</option>
                   <option name="yn1[]" value="Yes">Yes</option>
                 </select>
               </td>
             </tr>
-            <tr id="pci" style="visibility:hidden;">
+            <tr id="pci" style="display: none;">
               <td> Done on Day after PCI</td>
-              <td><input type="number" name="yn1[]" placeholder="0-10"></td>
+              <td><input type="number" class="form-control w-35" id="pci_inp" name="yn1[]" placeholder="0-10"></td>
             </tr>
 
             {% for ques in question1 %}
@@ -60,16 +62,16 @@
             <tr>
               <td>LV Diastolic Dysfunction</td>
               <td>
-                <select name="yn2[]" id="yesno2" onchange="showHide2()">
+                <select name="yn2[]" class="form-control w-35" id="yesno2" onchange="showHide2()">
                   <option value="No">No</option>
                   <option value="Yes">Yes</option>
                 </select>
               </td>
           </tr>
-            <tr id="digit" style="visibility: hidden;">
+            <tr id="digit" style="display: none;">
               <td>Grade</td>
               <td>
-                <select name="yn2[]" >
+                <select class="form-control w-35" name="yn2[]" >
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>

@@ -7,11 +7,15 @@
      
     a = document.getElementById('yesno').value
     if (a == 'No'){
-      document.getElementById('measure').style.visibility = 'hidden'
-      document.getElementById('date').style.visibility = 'hidden'
+      document.getElementById('measure').style.display = 'none'
+      document.getElementById('date').style.display = 'none'
+      document.getElementById('lvef_msr').required = false;
+      document.getElementById('lvef_date').required = false;
     }else{
-      document.getElementById('measure').style.visibility = 'visible'
-      document.getElementById('date').style.visibility = 'visible'
+      document.getElementById('measure').style.display = ''
+      document.getElementById('date').style.display = ''
+      document.getElementById('lvef_msr').required = true;
+      document.getElementById('lvef_date').required = true;
     }
   }
 </script>
@@ -29,30 +33,28 @@
           
           
           <tr id="opt1">
-            <td>Left Ventricular Ejection Fraction (LVEF) measured</td>
-            <td>
-             <select name="yn1[]" id="yesno" onclick="showHide1()">
+            <td width="60%">Left Ventricular Ejection Fraction (LVEF) measured</td>
+            <td width="40%">
+             <select name="yn1[]" class="form-control w-35" id="yesno" onclick="showHide1()">
                <option value="No">No</option>
                <option value="Yes">Yes</option>
              </select>
             </td>
           </tr>
           
-
-          
-          <tr id="measure" style="visibility: hidden;">
+          <tr id="measure" style="display: none;">
             <td>If Yes, LVEF measurement</td>
             <td>
-              <input type="number" name="yn1[]"> %
+              <input type="number" class="form-control w-35" id="lvef_msr" placeholder=" %" name="yn1[]">
             </td>
           </tr>
       
 
           
-          <tr id="date" style="visibility: hidden;">
+          <tr id="date" style="display: none;">
             <td>Date of LVEF measurement</td>
             <td>
-              <input type="date" name="yn1[]">
+              <input type="date" class="form-control w-35" id="lvef_date" name="yn1[]">
             </td>
           </tr>
       

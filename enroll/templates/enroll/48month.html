@@ -6,12 +6,15 @@
   function showHide1(){
     a = document.getElementById('anti').value 
     if (a == 'Yes'){
-      document.getElementById('1month').style.visibility = 'visible'
+      document.getElementById('1month').style.display = ''
+      document.getElementById('validate').required = true
     }else{
-      document.getElementById('1month').style.visibility = 'hidden'
+      document.getElementById('1month').style.display = 'none'
+      document.getElementById('validate').required = false
     }
   }
 </script>
+
 
 <div class="row">
   <div class="container mt-3">
@@ -26,19 +29,19 @@
         
         {% for ques in question1 %}
         <tr>
-          <td>{{ ques.q_text }}</td>
-          <td>
-            <select name="yn1[]" id="anti" onchange="showHide1()">
+          <td width="60%">{{ ques.q_text }}</td>
+          <td width="40%">
+            <select name="yn1[]" id="anti" class="form-control w-35" onchange="showHide1()">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
           </td>
         </tr>
         {% endfor %}
-       <tr id="1month" style="visibility: hidden;">
+       <tr id="1month" style="display: none;">
          <td>Assessment Date</td>
          <td>
-            <input type="date" name="yn1[]">
+            <input type="date" id="validate" name="yn1[]" class="form-control w-35">
          </td>
         </tr>
       </table>

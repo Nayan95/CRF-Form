@@ -6,20 +6,38 @@
   function showHide1(){
     a = document.getElementById('anti').value 
     if (a == 'Yes'){
-      document.getElementById('platelet').style.visibility = 'visible'
+      document.getElementById('platelet').style.display = ''
     }else{
-      document.getElementById('platelet').style.visibility = 'hidden'
+      document.getElementById('platelet').style.display = 'none'
     }
   }
 
   function showHide2(){
     a = document.getElementById('yesno').value 
     if (a == 'Yes'){
-      document.getElementById('dose').style.visibility = 'visible'
+      document.getElementById('dose').style.display = ''
+      document.getElementById('dose_inp').required=true;
+
     }else{
-      document.getElementById('dose').style.visibility = 'hidden'
+      document.getElementById('dose').style.display = 'none'
+      document.getElementById('dose_inp').required=false;
     }
   }
+
+  function showHide3(){
+    a = document.getElementById('anti').value
+    if (a == 'Yes'){
+      if( (document.getElementById('one').checked) || (document.getElementById('two').checked) || (document.getElementById('three').checked) ){
+        document.getElementById('one').setCustomValidity('');
+      }
+      else{
+          document.getElementById('one').setCustomValidity('At least one checkbox must be selected.');
+        }
+    }
+    else
+      document.getElementById('one').setCustomValidity('');
+  }
+
 </script>
 
 <div class="row">
@@ -32,39 +50,41 @@
       <table class="table table-hover">
         {% for ques in question1 %}
         <tr>
-          <td>{{ ques.q_text }}</td>
-          <td>
-            <select name="yn1[]" id="anti" onchange="showHide1()">
+          <td width="75%">{{ ques.q_text }}</td>
+          <td width="25%">
+            <select name="yn1[]" class="form-control w-35" id="anti" onchange="showHide1()">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
           </td>
         </tr>
         {% endfor %}
-       <tr id="platelet" style="visibility: hidden;">
+       <tr id="platelet" style="display: none;">
          <td>Tick all that apply:</td>
          <td>
-            <input type="checkbox" name="yn1[]" id="one" value="Ticagrelor"><label for="one">Ticagrelor</label>
-            <input type="checkbox" name="yn1[]" id="one" value="Prasugrel"><label for="two">Prasugrel</label>
-            <input type="checkbox" name="yn1[]" id="three" value="Clopidogrel"><label for="three">Clopidogrel</label>
+          <div>
+            <input type="checkbox" name="yn1[]" id="one" value="Ticagrelor"><label for="one"> Ticagrelor</label><br>
+            <input type="checkbox" name="yn1[]" id="two" value="Prasugrel"><label for="two"> Prasugrel</label><br>
+            <input type="checkbox" name="yn1[]" id="three" value="Clopidogrel"><label for="three"> Clopidogrel</label>
+          </div>
          </td>
        </tr>
 
        <tr>
          <td>Was there any change in dose?</td>
-         <td><select name="yn2[]" id="yesno" onchange="showHide2()">
+         <td><select name="yn2[]" class="form-control w-35" id="yesno" onchange="showHide2()">
            <option value="No">No</option>
            <option value="Yes">Yes</option>
          </select></td>
        </tr>
-       <tr id="dose" style="visibility: hidden;">
+       <tr id="dose" style="display: none;">
          <td>If yes, dose</td>
-         <td><input type="text" name="yn2[]" placeholder="Dose"></td>
+         <td><input type="text" class="form-control w-35" id="dose_inp" name="yn2[]" placeholder="Dose"></td>
        </tr>
       </table>
      
-      <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;">
-      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" >
+      <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;" onclick="showHide3()">
+      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" onclick="showHide3()">
     </form>
   </div>
 </div>

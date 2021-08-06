@@ -1,10 +1,11 @@
-{% extends 'enroll/patient_success.html' %}
+{% extends 'enroll/patient_reg.html' %}
 
 {% block content %}
 
 <div class="row">
     <div class="col-sm-3"></div>
         <div class="col-sm-6">
+            <br><br><br>
             <h4 class="text-center alert alert-info">Form Filled Successfully</h4>
             <p class="text-center alert-info">Please note <strong>Patient ID</strong> for future reference</p>
             <div>
@@ -14,7 +15,7 @@
             </div>
             <form method="POST">
                 {% csrf_token %}
-                <button class="btn btn-success" style="float: right" type="submit">Home</button>
+                <button class="btn btn-outline-success" style="float: right" type="submit">Home</button>
             </form>
         </div>
         <div class="col-sm-3"></div>

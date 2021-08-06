@@ -1,6 +1,46 @@
 {% extends 'enroll/question.html' %}
 
 {% block content %}
+
+<script>
+
+  function showHide1(){
+    a = document.getElementById('ecg_p').value
+    if (a == 'Yes'){
+      document.getElementById('date_inp').style.display='block'
+      document.getElementById('date_inp').required=true;
+      document.getElementById('cng_ecg1').style.display=''
+      document.getElementById('cng_ecg2').style.display=''
+      document.getElementById('cng_ecg3').style.display=''
+    }
+    else{
+     document.getElementById('date_inp').style.display='none';
+     document.getElementById('date_inp').required=false;
+     document.getElementById('cng_ecg1').style.display='none'
+     document.getElementById('cng_ecg2').style.display='none'
+     document.getElementById('cng_ecg3').style.display='none'
+    }
+  }
+  function showHide2(){
+    a = document.getElementById('st_opt').value
+    if (a == 'Yes'){
+      document.getElementById('st1').style.display=''
+      document.getElementById('st2').style.display=''
+      document.getElementById('inp1').style.display=''
+      document.getElementById('inp2').style.display=''
+      document.getElementById('inp1').required = true
+      document.getElementById('inp2').required = true
+    }else{
+      document.getElementById('st1').style.display='none'
+      document.getElementById('st2').style.display='none'
+      document.getElementById('inp1').style.display='none'
+      document.getElementById('inp2').style.display='none'
+      document.getElementById('inp1').required = false
+      document.getElementById('inp2').required = false
+    }
+  }
+</script>
+
 <div class="row">
   <div class="container mt-3">
     <h1 class="text-center alert alert-primary">LEAD ECG (POST PROCEDURE)<br></h1>
@@ -13,38 +53,42 @@
           {% for ques in yesno_ques1 %}
           <tr>
             <td width="70%">{{ ques.q_text }}</td>
-            <td width="30%">
-              <select name="dt[]" onchange="if (this.value=='Yes'){this.form['date'].style.visibility='visible'}else {this.form['date'].style.visibility='hidden'};">
+            <td class="form-inline">
+              <select id="ecg_p" name="dt[]" class="form-control w-35" onchange="showHide1()">
                 <option value="No" name="dt[]">No</option>
                 <option value="Yes" name= "dt[]">Yes</option>
-              </select>
-              <input type="date" id="date" name="dt[]" style="visibility:hidden;">
+              </select>&nbsp;
+              <input type="date" class="form-control w-35" id="date_inp" name="dt[]" style="display: none;">
             </td>
           </tr>
           {% endfor %}
 
           {% for ques in yesno_ques2 %}
-           <tr>
+           <tr id="cng_ecg1" style="display: none;">
             <td>{{ ques.q_text }}</td>
-            <td>
-              <select name="ST[]" onchange="if (this.value=='Yes'){this.form['st1'].style.visibility='visible', this.form['inp1'].style.visibility='visible',this.form['st2'].style.visibility='visible', this.form['inp2'].style.visibility='visible'}else {this.form['st1'].style.visibility='hidden', this.form['inp1'].style.visibility='hidden',this.form['st2'].style.visibility='hidden', this.form['inp2'].style.visibility='hidden'};">
+            <td class="form-inline">
+              <select name="ST[]" id="st_opt" class="form-control w-35" onchange="showHide2()">
                 <option value="No" name="ST[]">No</option>
                 <option value="Yes" name= "ST[]">Yes</option>
-              </select><br>
-              <select id="st1" name="ST[]" style="visibility:hidden;">
-                <option name="ST[]" value=" ST elevation"> ST elevation</option>
               </select>
-              <input type="number" id="inp1" name="ST[]" placeholder="mm" class="w-25" style="visibility:hidden;">
-              <select id="st2" name="ST[]" style="visibility:hidden;">
-                <option name="ST[]" value=" ST depression"> ST depression</option>
-              </select>
-              <input type="number" id="inp2" name="ST[]" placeholder="mm" class="w-25" style="visibility:hidden;">
+              <div class="form-group">
+                <select id="st1" class="form-control w-35" name="ST[]" style="display:none;">
+                  <option name="ST[]" value=" ST elevation"> ST elevation</option>
+                </select>&nbsp;
+                <input type="number" class="form-control w-35" id="inp1" name="ST[]" placeholder="mm" style="display:none;">
+              </div>
+              <div class="form-group">
+                <select id="st2" class="form-control w-35" name="ST[]" style="display:none;">
+                  <option name="ST[]" value=" ST depression"> ST depression</option>
+                </select>&nbsp;
+                <input type="number" class="form-control w-35" id="inp2" name="ST[]" placeholder="mm" style="display:none;">
+              </div>
             </td>
            </tr>
           {% endfor %}
 
           {% for ques in arrhythmia_ques %}
-           <tr>
+           <tr id="cng_ecg2" style="display: none;">
             <td>{{ ques.q_text }}</td>
             <td>
               {{ arrhythmiaform.ans_text }}
@@ -53,7 +97,7 @@
           {% endfor %}
 
           {% for ques in atrioventricular_ques %}
-           <tr>
+           <tr id="cng_ecg3" style="display: none;">
             <td>{{ ques.q_text }}</td>
             <td>
               {{ atrioventricularblockform.ans_text }}

@@ -3,9 +3,21 @@
 {% block content %}
 
 <script>
+
   function showHide1(){
-    a = document.getElementById('id_ans_text').value;
-    document.write(a)
+    f = document.forms['form'];
+    a = f.elements[1].value;
+    if(a == 'Yes'){
+      document.getElementById('end_pt').style.display= ''
+    }
+    else{
+      document.getElementById('end_pt').style.display= 'none'
+    }
+  }
+
+  function showHide2(){
+    f = document.forms['form'];
+    a = f.elements[2].value;
     if(a == 'Yes'){
       document.getElementById('check_q').style.display= ''
       document.getElementById('check_a').style.display= ''
@@ -15,33 +27,48 @@
       document.getElementById('check_a').style.display= 'none' 
     }
   }
+
+  function showHide3(){
+    f = document.forms['form'];
+    a = f.elements[2].value;
+    if(a == 'Yes'){
+      if( (document.getElementById('chk1').checked) || (document.getElementById('chk2').checked) || (document.getElementById('chk3').checked) || (document.getElementById('chk4').checked) || (document.getElementById('chk5').checked) || (document.getElementById('chk6').checked) || (document.getElementById('chk7').checked) || (document.getElementById('chk8').checked) )
+      {
+        document.getElementById('chk1').setCustomValidity('');
+      }
+      else{
+          document.getElementById('chk1').setCustomValidity('At least one checkbox must be selected.');
+        }
+    }
+    else
+      document.getElementById('chk1').setCustomValidity('');
+  }
 </script>
 
 
 <div class="row">
   <div class="container mt-3">
-    <h1 class="text-center alert alert-primary">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS
-
-<br></h1>
+    <h1 class="text-center alert alert-primary">SERIOUS ADVERSE EVENTS AND STUDY ENDPOINTS<br></h1>
   </div>
+
 	<div class="col-sm-12">
-    <form method="POST">
+    <form name="form" method="POST">
       {% csrf_token %}
 			<table class="table table-hover">
           <tbody>
 
             {% for ques in questions1 %}
            <tr>
-            <td>{{ ques.q_text }}<br><i style="font-size: 12px">If yes, fill the Adverse Event Log</i></td>
-            <td>
+            <td width="75%">{{ ques.q_text }}<br><i style="font-size: 12px">If yes, fill the Adverse Event Log</i></td>
+            <td width="25%" onchange="showHide1()">
            {{ yesnoform.ans_text }}
             </td>
            </tr>
           {% endfor %}
             {% for ques in questions2 %}
-           <tr>
+           <tr id="end_pt" style="display: none;">
             <td>{{ ques.q_text }}</td>
-            <td onchange="showHide1()">
+            <td onchange="showHide2()">
               {{yesnoform.ans_text}}
             </td>
           </tr>
@@ -52,14 +79,14 @@
               {{ ques.q_text }}<br><i>(Tick all that apply)</i>
             </td>
             <td id="check_a" style="display: none;">
-              <input type="checkbox" value="Death " name="ser[]"> Death <br>
-              <input type="checkbox" value="MI" name= "ser[]"> MI <br>
-              <input type="checkbox" value="Stent Thrombosis" name="ser[]"> Stent Thrombosis <br>
-              <input type="checkbox" value="Revascularization (PCI or CABG)" name= "ser[]">Revascularization (PCI or CABG)<br>
-              <input type="checkbox" value="HF Hospitalization " name="ser[]"> HF Hospitalization <br>
-              <input type="checkbox" value="Bleeding " name="ser[]"> Bleeding <br>
-              <input type="checkbox" value="Stroke " name="ser[]"> Stroke <br>
-              <input type="checkbox" value="Others" name="ser[]" onchange="if(this.checked){this.form['detail'].style.display='block', this.form['detail'].required=true} else {this.form['detail'].style.display='none', this.form['detail'].required=false};"> Others
+              <input type="checkbox" id="chk1" value="Death " name="ser[]"> Death <br>
+              <input type="checkbox" id="chk2" value="MI" name= "ser[]"> MI <br>
+              <input type="checkbox" id="chk3" value="Stent Thrombosis" name="ser[]"> Stent Thrombosis <br>
+              <input type="checkbox" id="chk4" value="Revascularization (PCI or CABG)" name= "ser[]">Revascularization (PCI or CABG)<br>
+              <input type="checkbox" id="chk5" value="HF Hospitalization " name="ser[]"> HF Hospitalization <br>
+              <input type="checkbox" id="chk6" value="Bleeding " name="ser[]"> Bleeding <br>
+              <input type="checkbox" id="chk7" value="Stroke " name="ser[]"> Stroke <br>
+              <input type="checkbox" id="chk8" value="Others" name="ser[]" onchange="if(this.checked){this.form['detail'].style.display='block', this.form['detail'].required=true} else {this.form['detail'].style.display='none', this.form['detail'].required=false};"> Others
               <input type="text" name="ser[]" class="form-control" id="detail" placeholder="Specify..." style="display: none;">
             </td>
            </tr>
@@ -67,8 +94,8 @@
 
           </tbody>
       </table>
-      <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;">
-      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" >
+      <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;" onclick="showHide3()">
+      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" onclick="showHide3()">
     </form>
 	</div>
 </div>

@@ -5,7 +5,6 @@ from .models import Result, Patient
 import datetime
 
 
-
 class PatientForm(forms.ModelForm):
     class Meta:
         model = Patient
@@ -38,7 +37,7 @@ class FloatInput(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.NumberInput(attrs={'step': 0.1, 'class': 'form-control'})
+            'ans_text': forms.NumberInput(attrs={'step': 0.1, 'class': 'form-control w-35'})
         }
 
 
@@ -68,23 +67,6 @@ class SexInput(forms.ModelForm):
         }
 
 
-"""class GetDetails(forms.Form):
-    truefalse = (
-        ('q1', '≤14 Days to ≤24 Days To PCI'),
-        ('q2', 'PCI-Index Procedure'),
-        ('q3', 'DISCHARGE'),
-        ('q4', '01Month (± 7 days)'),
-        ('6 Months (± 30 days)', '6 Months (± 30 days)'),
-        ('12 Months (± 30 days)', '12 Months (± 30 days)'),
-        ('24 Months (± 30 days)', '24 Months (± 30 days)'),
-        ('36 Months (± 30 days)', '36 Months (± 30 days)'),
-        ('48 Months (± 30 days)', '48 Months (± 30 days)'),
-        ('60 Months (± 30 days)', '60 Months (± 30 days)'),
-    )
-    p_id = forms.IntegerField(label='Patient ID')
-    query = forms.TypedChoiceField(choices=truefalse)"""
-
-
 class YesNoUNK(forms.ModelForm):
     class Meta:
         truefalse = (
@@ -104,7 +86,7 @@ class NumberInput(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.NumberInput(attrs={'class': 'form-control'})
+            'ans_text': forms.NumberInput(attrs={'class': 'form-control w-35'})
         }
 
 
@@ -129,7 +111,7 @@ class TextInput(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.TextInput(attrs={'class': 'form-control'})
+            'ans_text': forms.TextInput(attrs={'class': 'form-control w-35'})
         }
 
 
@@ -138,7 +120,7 @@ class DateTime(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.DateInput(attrs={'type': 'date', 'class': 'form-control w-60'})
+            'ans_text': forms.DateInput(attrs={'type': 'date', 'class': 'form-control w-35'})
         }
 
 
@@ -152,7 +134,7 @@ class LabCodes(forms.ModelForm):
         )
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=codes, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=codes, attrs={'class': 'form-control w-35'})
         }
 
 
@@ -193,7 +175,6 @@ class CardiacUnit(forms.ModelForm):
     class Meta:
         model = Result
         codes = (
-                ('-', 'Select'),
                 ('U/ L', 'U/ L'),
                 ('Ng/ml', 'Ng/ml'),
                 ('mcg/ l', 'mcg/ l')
@@ -227,7 +208,7 @@ class NormalAbnormal(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }
 
 
@@ -243,22 +224,8 @@ class FundChoice(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }
-
-
-"""class RandChoice2(forms.ModelForm):
-    class Meta:
-        types = (
-                ('TVD ', 'TVD '),
-                ('DVD', ' DVD'),
-
-        )
-        model = Result
-        fields = ('p_id', 'q_id', 'ans_text')
-        widgets = {
-            'ans_text': forms.Select(choices=types)
-        }"""
 
 
 class Time(forms.ModelForm):
@@ -266,7 +233,7 @@ class Time(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'})
+            'ans_text': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control w-35'})
         }
 
 
@@ -280,7 +247,7 @@ class Vessel(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }
 
 
@@ -296,7 +263,7 @@ class Vascular(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }
 
 
@@ -328,20 +295,6 @@ class ReasonForStaging(forms.ModelForm):
         fields = ('p_id', 'q_id', 'ans_text')
 
 
-class FFRChoice1(forms.ModelForm):
-    class Meta:
-        types = (
-                ('FFR', 'FFR'),
-                ('IFR', ' IFR'),
-                ('RFR', 'RFR'),
-        )
-        model = Result
-        fields = ('p_id', 'q_id', 'ans_text')
-        widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
-        }
-
-
 class FFRChoice2(forms.ModelForm):
     class Meta:
         types = (
@@ -354,7 +307,7 @@ class FFRChoice2(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }
 
 
@@ -367,7 +320,7 @@ class PresentAbsent(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }
 
 
@@ -392,7 +345,7 @@ class PrePciForm(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }
 
 
@@ -411,7 +364,7 @@ class LessionChoice1(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }
 
 
@@ -426,138 +379,9 @@ class MR_Grade(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }
 
-
-class SupraflexDiameter(forms.ModelForm):
-    class Meta:
-        types = (
-                ('2.00mm ', ' 2.00mm'),
-                ('2.25mm', '2.25mm'),
-                ('2.50mm', '2.50mm'),
-                ('2.75mm', ' 2.75mm'),
-                ('3.00mm', '3.00mm'),
-                ('3.50mm', '3.50mm'),
-                ('4.00mm', '4.00mm'),
-                ('4.50mm', '4.50mm'),
-
-        )
-        model = Result
-        fields = ('p_id', 'q_id', 'ans_text')
-        widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
-        }
-
-
-class SupraflexLength(forms.ModelForm):
-    class Meta:
-        types = (
-                ('8 mm', ' 8 mm'),
-                ('12 mm', '12 mm'),
-                ('16 mm ', '16 mm'),
-                ('20 mm', ' 20 mm'),
-                ('24 mm', '24 mm'),
-                ('28 mm', '28 mm'),
-                ('32 mm', '32 mm'),
-                ('36 mm', '36 mm'),
-                ('40 mm', '40 mm'),
-                ('44 mm', '44 mm'),
-                ('48 mm', '48 mm'),
-
-        )
-        model = Result
-        fields = ('p_id', 'q_id', 'ans_text')
-        widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
-        }
-
-
-class XienceDiameter(forms.ModelForm):
-    class Meta:
-        types = (
-                ('2.25mm', '2.25mm'),
-                ('2.50mm', '2.50mm'),
-                ('2.75mm', ' 2.75mm'),
-                ('3.00mm', '3.00mm'),
-                ('3.25mm', '3.25mm'),
-                ('3.50mm', '3.50mm'),
-                ('4.00mm', '4.00mm'),
-
-
-        )
-        model = Result
-        fields = ('p_id', 'q_id', 'ans_text')
-        widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
-        }
-
-
-class XienceLength(forms.ModelForm):
-    class Meta:
-        types = (
-                ('8 mm', ' 8 mm'),
-                ('12 mm', '12 mm'),
-                ('15 mm ', '15 mm'),
-                ('18 mm', ' 18 mm'),
-                ('23 mm', '23 mm'),
-                ('28 mm', '28 mm'),
-                ('33 mm', '33 mm'),
-                ('38 mm', '38 mm'),
-
-        )
-        model = Result
-        fields = ('p_id', 'q_id', 'ans_text')
-        widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
-        }
-
-
-class StentType(forms.ModelForm):
-    class Meta:
-        types = (
-                ('SUPRAFLEX', 'SUPRAFLEX'),
-                ('XIENCE', 'XIENCE'),
-                (' Other,Specify', ' Other,Specify'),
-
-        )
-        model = Result
-        fields = ('p_id', 'q_id', 'ans_text')
-        widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
-        }
-
-
-class TimiFlow(forms.ModelForm):
-    class Meta:
-        truefalse = (
-            ('Unknown', 'Unknown'),
-            ('0', '0'),
-            ('1', '1'),
-            ('2', '2'),
-            ('3', '3'),
-        )
-        model = Result
-        fields = ('p_id', 'q_id', 'ans_text')
-        widgets = {
-            'ans_text': forms.Select(choices=truefalse, attrs={'class': 'form-control'})
-        }
-
-
-class Complication(forms.ModelForm):
-    class Meta:
-        truefalse = (
-            ('Dissection > Type B', 'Dissection > Type B'),
-            ('No re-flow1', 'No re-flow1'),
-            ('Distal embolization', 'Distal embolization2'),
-            ('Perforation', 'Perforation'),
-            ('Abrupt closure', 'Abrupt closure')
-        )
-        model = Result
-        fields = ('p_id', 'q_id', 'ans_text')
-        widgets = {
-            'ans_text': forms.Select(choices=truefalse, attrs={'class': 'form-control'})
-        }
 
 class ArrhythmiaForm(forms.ModelForm):
     class Meta:
@@ -570,7 +394,7 @@ class ArrhythmiaForm(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices = opt, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices = opt, attrs={'class': 'form-control w-35'})
         }
 
 class AtrioventricularBlockForm(forms.ModelForm):
@@ -582,5 +406,5 @@ class AtrioventricularBlockForm(forms.ModelForm):
         model = Result
         fields = ('p_id', 'q_id', 'ans_text')
         widgets = {
-            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control'})
+            'ans_text': forms.Select(choices=types, attrs={'class': 'form-control w-35'})
         }

@@ -6,9 +6,11 @@
   function showHide1(){
     a = document.getElementById('anti').value 
     if (a == 'Yes'){
-      document.getElementById('1month').style.visibility = 'visible'
+      document.getElementById('1month').style.display = ''
+      document.getElementById('validate').required = true
     }else{
-      document.getElementById('1month').style.visibility = 'hidden'
+      document.getElementById('1month').style.display = 'none'
+      document.getElementById('validate').required = false
     }
   }
 </script>
@@ -25,22 +27,22 @@
         <h5 class="alert alert-info">Follow Up</h5>
         
         <tr>
-          <td>Was follow-up performed?</td>
-          <td>
-            <select name="yn1[]" id="anti" onchange="showHide1()">
+          <td width="60%">Was follow-up performed?</td>
+          <td width="40%">
+            <select name="yn1[]" id="anti" class="form-control w-35" onchange="showHide1()">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
           </td>
         </tr>
-       <tr id="1month" style="visibility: hidden;">
+       <tr id="1month" style="display: none;">
          <td>Specify type of Follow-up</td>
-         <td>
-            <select name="yn1[]">
+         <td class="form-inline">
+            <select name="yn1[]" class="form-control w-35">
             <option name="yn1[]" value="Telephone call"> Telephone call</option>
             <option name="yn1[]" value="Office visit"> Office visit</option>
             </select>
-            <input type="date" name="yn1[]">
+            <input type="date" id="validate" name="yn1[]" class="form-control w-35">
          </td>
         </tr>
       </table>

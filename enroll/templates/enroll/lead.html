@@ -6,11 +6,13 @@
   function showDate(){
     a = document.getElementById('perf').value
     if (a == 'Yes'){
-      document.getElementById('date').style.display='block'
+      document.getElementById('date').style.display=''
       document.getElementById('date').required=true
+      document.getElementById('prf_ques').style.display=''
     }else{
       document.getElementById('date').style.display='none'
       document.getElementById('date').required=false
+      document.getElementById('prf_ques').style.display='none'
     }
   }
 
@@ -75,7 +77,7 @@
           {% endfor %}
 
           {% for ques in no_ab_ques %}
-           <tr>
+           <tr id="prf_ques" style="display: none;">
             <td>{{ ques.q_text }}</td>
             <td onchange="showHide1()">
               {{ no_abform.ans_text }}
@@ -116,7 +118,7 @@
               <p style="font-size: 12px;"><i>*If Yes,<strong>Hold Ctrl/Shift</strong> and select all valid</i></p>
             </td>
             <td id="con_ans" class="form-inline" style="display: none;">
-              <select id="con_opt" name="Conduction[]" class="form-control" onchange="if (this.value=='Yes'){this.form['Con'].style.display='block'}else {this.form['Con'].style.display='none'};">
+              <select id="con_opt" name="Conduction[]" class="form-control" onchange="if (this.value=='Yes'){this.form['Con'].style.display='block', this.form['Con'].required=true}else {this.form['Con'].style.display='none', this.form['Con'].required=false};">
                 <option value="No" name="Conduction[]">No</option>
                 <option value="Yes" name= "Conduction[]">Yes</option>
               </select>

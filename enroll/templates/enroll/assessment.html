@@ -6,18 +6,19 @@
   function showHide1(){
      
     if (document.getElementById('asses').checked){
-      document.getElementById('status').style.visibility = 'hidden'
+      document.getElementById('status').style.display = 'none'
+      document.getElementById('opt').style.display = 'none'
     }else{
-      document.getElementById('status').style.visibility = 'visible'
+      document.getElementById('status').style.display = ''
     }
   }
 
   function showHide2(){
     a = document.getElementById('angina').value 
     if (a == 'Stable Angina'){
-      document.getElementById('opt').style.visibility = 'visible'
+      document.getElementById('opt').style.display = ''
     }else{
-      document.getElementById('opt').style.visibility = 'hidden'
+      document.getElementById('opt').style.display = 'none'
     }
   }
 </script>
@@ -34,18 +35,18 @@
           
           {% for ques in question1 %}
           <tr>
-            <td>{{ ques.q_text }}</td>
-            <td>
-              <input type="checkbox" name="ang[]" id="asses" value="NA" onchange="showHide1()"> NA
+            <td width="60%">{{ ques.q_text }}</td>
+            <td width="4`0%">
+              <input type="checkbox" name="ang[]" id="asses" value="NA" onchange="showHide1()"> Not Applicable
             </td>
           </tr>
           {% endfor %}
 
           {% for ques in question2 %}
-          <tr id="status" style="visibility: visible;">
+          <tr id="status" style="display:;">
             <td>{{ ques.q_text }}</td>
             <td>
-              <select name="ang[]" id="angina" onchange="showHide2()">
+              <select name="ang[]" class="form-control w-35" id="angina" onchange="showHide2()">
                 <option name="ang[]" value="Unknown" /> Unknown</option>
                 <option name="ang[]" value="Stable Angina" /> Stable Angina</option>
                 <option name="ang[]" value="Unstable Angina" /> Unstable Angina</option>
@@ -56,10 +57,10 @@
           {% endfor %}
 
           {% for ques in question3 %}
-          <tr id="opt" style="visibility: hidden;">
+          <tr id="opt" style="display: none;">
             <td>{{ ques.q_text }}</td>
             <td>
-              <select name="ang[]">
+              <select name="ang[]" class="form-control w-35">
                 <option name="ang[]" value="Grade I" /> Grade I</option>
                 <option name="ang[]" value="Grade II" /> Grade II</option>
                 <option name="ang[]" value="Grade III" /> Grade III</option>

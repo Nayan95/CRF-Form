@@ -6,15 +6,26 @@
   function showHide1(){
     a = document.getElementById('id_ans_text').value
     if (a == 'Yes'){
-      document.getElementById('chk1').style.display='block'
-      document.getElementById('chk2').style.display='block'
-      document.getElementById('chk3').style.display='block'
-      document.getElementById('chk4').style.display='block'
+      document.getElementById('id1').style.display='block'
+      document.getElementById('id2').style.display='block'
+      document.getElementById('id3').style.display='block'
+      document.getElementById('id4').style.display='block'
     }else{
-      document.getElementById('chk1').style.display='none'
-      document.getElementById('chk2').style.display='none'
-      document.getElementById('chk3').style.display='none'
-      document.getElementById('chk4').style.display='none'
+      document.getElementById('id1').style.display='none'
+      document.getElementById('id2').style.display='none'
+      document.getElementById('id3').style.display='none'
+      document.getElementById('id4').style.display='none'
+    }
+  }
+
+  function showHide3() {
+    f = document.forms['form'];
+    a = f.elements[10].value;
+    if(a == 'Yes'){
+      document.getElementById('check_q').style.display=''
+    }
+    else{
+      document.getElementById('check_q').style.display='none'
     }
   }
 
@@ -58,6 +69,36 @@
       document.getElementById('inp4').required=false
     }
   }
+
+  function showHide2(){
+    f = document.forms['form'];
+    a = f.elements[1].value;
+    if (a == 'Yes'){
+      if( (document.getElementById('asp_q').checked) || (document.getElementById('clo_q').checked) || (document.getElementById('tic_q').checked) || (document.getElementById('pra_q').checked) )
+      {
+        document.getElementById('asp_q').setCustomValidity('');
+      }
+      else{
+          document.getElementById('asp_q').setCustomValidity('At least one checkbox must be selected.');
+        }
+    }
+    else
+      document.getElementById('asp_q').setCustomValidity('');
+
+    a = f.elements[10].value;
+    if (a == 'Yes'){
+      if( (document.getElementById('chk1').checked) || (document.getElementById('chk2').checked) || (document.getElementById('chk3').checked) || (document.getElementById('chk4').checked) || (document.getElementById('chk5').checked) || (document.getElementById('chk6').checked) || (document.getElementById('chk7').checked) || (document.getElementById('chk8').checked) || (document.getElementById('chk9').checked) || (document.getElementById('chk10').checked) || (document.getElementById('chk11').checked) || (document.getElementById('chk12').checked) || (document.getElementById('chk13').checked) || (document.getElementById('chk14').checked) || (document.getElementById('chk15').checked) || (document.getElementById('chk16').checked) || (document.getElementById('chk17').checked) || (document.getElementById('chk18').checked) || (document.getElementById('chk19').checked) )
+      {
+        document.getElementById('chk1').setCustomValidity('');
+      }
+      else{
+          document.getElementById('chk1').setCustomValidity('At least one checkbox must be selected.');
+        }
+    }
+    else
+      document.getElementById('chk1').setCustomValidity('');
+  }
+
 </script>
 
 <div class="row">
@@ -66,7 +107,7 @@
 <br></h1>
   </div>
 	<div class="col-sm-12">
-    <form method="POST">
+    <form id="form" method="POST">
       {% csrf_token %}
 			<table class="table table-hover">
         <tbody>
@@ -84,7 +125,7 @@
             <td>{{ ques.q_text }}</td>
           </tr>-->
     
-          <tr class="form-inline" id="chk1" style="display:none;">
+          <tr class="form-inline" id="id1" style="display:none;">
             <td>
               <input type="checkbox" id="asp_q" name="asprin[]" value="Aspirin" onchange="tickAsp()"/> Aspirin
             </td>
@@ -92,7 +133,7 @@
               <input type="number" class="form-control w-50" id="inp1" name="asprin[]"> mg
             </td>
           </tr>
-          <tr class="form-inline"  id="chk2" style="display:none;">
+          <tr class="form-inline"  id="id2" style="display:none;">
             <td>
               <input type="checkbox" id="clo_q" name="asprin[]" value=" Clopidogrel" onchange="tickClo()"/> Clopidogrel
             </td>
@@ -100,7 +141,7 @@
               <input type="number" class="form-control w-50" id="inp2" name="asprin[]"> mg
             </td>
           </tr>
-          <tr class="form-inline"  id="chk3" style="display:none;">
+          <tr class="form-inline"  id="id3" style="display:none;">
             <td>
               <input type="checkbox" id="tic_q" name="asprin[]" value=" Ticagrelor" onchange="tickTic()"/> Ticagrelor
             </td>
@@ -108,7 +149,7 @@
               <input type="number" class="form-control w-50" id="inp3" name="asprin[]" class="w-25"> mg
             </td>
           </tr>
-          <tr class="form-inline"  id="chk4" style="display:none;">
+          <tr class="form-inline"  id="id4" style="display:none;">
             <td>
               <input type="checkbox" id="pra_q" name="asprin[]" value=" Prasugrel" onchange="tickPra()"/> Prasugrel
             </td>
@@ -121,59 +162,73 @@
           {% for ques in dia_ques %}
             <tr>
               <td>{{ ques.q_text }}</td>
-              <td>
+              <td onchange="showHide3()">
                 {{ yesnoform.ans_text }}
               </td>
             </tr>
           {% endfor %}
           {% for ques in tick_ques2 %}
-            <tr>
+            <tr id="check_q" style="display: none;">
+              <td>{{ ques.q_text }}</td>
               <td>
-                {{ ques.q_text }}
-              </td>
-              <td>
-                <input type="checkbox" name="pre2[]" value="ACE inhibitor" />  ACE inhibitor<br>
-                <input type="checkbox" name="pre2[]" value="AT-II antagonist" />  AT-II antagonist<br>
-                <input type="checkbox" name="pre2[]" value="Beta blocker" />  Beta blocker<br>
-                <input type="checkbox" name="pre2[]" value="Calcium Channel blockers" />  Calcium Channel blockers<br>
-                <input type="checkbox" name="pre2[]" value="Antiarrhythmic" />  Antiarrhythmic<br>
-                <input type="checkbox" name="pre2[]" value="Nitrates" />  Nitrates<br>
-                <input type="checkbox" name="pre2[]" value="GLP-1 receptor agonist (liraglutide, dulaglutide)" />  GLP-1 receptor agonist (liraglutide, dulaglutide)<br>
-                <input type="checkbox" name="pre2[]" value="SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)" />  SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)<br>
-                <input type="checkbox" name="pre2[]" value="DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)" />  DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)<br>
-                <input type="checkbox" name="pre2[]" value="Metformin" />  Metformin<br>
-                <input type="checkbox" name="pre2[]" value="Sulfonylureas" />  Sulfonylureas<br>
-                
-                <fieldset class="form-inline">
-                <input type="checkbox" name="pre2[]" value="Statins" onchange="if(this.checked){this.form['drop'].style.display='', this.form['val'].style.display='', this.form['val'].required=true} else {this.form['drop'].style.display='none', this.form['val'].style.display='none', this.form['val'].required=false};"/>  Statins
+              <input type="checkbox" name="pre[]" id="chk1" value="ACE inhibitor" />  ACE inhibitor<br>
 
-                <select name="pre2[]" class="form-control" id='drop' style="display:none;">
-                  <option value=" Atorvastatin" name="pre2[]"> Atorvastatin</option>
-                  <option value=" Rosuvastatin" name= "pre2[]"> Rosuvastatin</option>
-                  <option value=" Pitavastatin" name="pre2[]"> Pitavastatin</option>
-                  <option value=" Simvastatin" name="pre2[]"> Simvastatin</option>
-                </select>
+              <input type="checkbox" name="pre[]" id="chk2" value="AT-II antagonist" />  AT-II antagonist<br>
+              
+              <input type="checkbox" name="pre[]" id="chk3" value="Beta blocker" />  Beta blocker<br>
+              
+              <input type="checkbox" name="pre[]" id="chk4" value="Calcium Channel blockers" />  Calcium Channel blockers<br>
+              
+              <input type="checkbox" name="pre[]" id="chk5" value="Antiarrhythmic" />  Antiarrhythmic<br>
+              
+              <input type="checkbox" name="pre[]" id="chk6" value="Nitrates" />  Nitrates<br>
+              
+              <input type="checkbox" name="pre[]" id="chk7" value="GLP-1 receptor agonist (liraglutide, dulaglutide)" />  GLP-1 receptor agonist (liraglutide, dulaglutide)<br>
+              
+              <input type="checkbox" name="pre[]" id="chk8" value="SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)" />  SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)<br>
+              
+              <input type="checkbox" name="pre[]" id="chk9" value="DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)" />  DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)<br>
 
-                <input type="number" id='val' class="form-control" name="pre2[]" class="w-25" placeholder="2-80mg" style="display: none;"><br>
-                </fieldset>
-                
-                <input type="checkbox" name="pre2[]" value="Ezetimibe" />  Ezetimibe<br>
-                <input type="checkbox" name="pre2[]" value="Omega-3 fatty acids" />  Omega-3 fatty acids<br>
-                <input type="checkbox" name="pre2[]" value="PCSK-9 monoclonal antibody (mab)* (Evolocumab)" />  PCSK-9 monoclonal antibody (mab)* (Evolocumab)<br>
-                <input type="checkbox" name="pre2[]" value="Fibrate" />  Fibrate<br>
-                <input type="checkbox" name="pre2[]" value="Other lipid lowering drugs" />  Other lipid lowering drugs<br>
-                <input type="checkbox" name="pre2[]" value="Warfarin/Coumadin" />  Warfarin/Coumadin<br>
-                <input type="checkbox" name="pre2[]" value="Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)" />  Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)<br>
-              </td>
-            </fieldset>
-            </tr>
+              <input type="checkbox" name="pre[]" id="chk10" value="Metformin" />  Metformin<br>
+
+              <input type="checkbox" name="pre[]" id="chk11" value="Sulfonylureas" />  Sulfonylureas<br>
+
+              <fieldset class="form-inline">
+              <input type="checkbox" name="pre[]" id="chk12" value="Statins" onchange="if(this.checked){this.form['drop'].style.display='block', this.form['val'].style.display='', this.form['val'].required=true} else {this.form['drop'].style.display='none', this.form['val'].style.display='none', this.form['val'].required=false};"/>  Statins
+
+              <select name="pre[]" id='drop' class="form-control w-35" style="display: none;">
+                <option selected="true" disabled="disabled" value=""> ---Select--- </option>
+                <option value=" Atorvastatin" name="pre[]"> Atorvastatin</option>
+                <option value=" Rosuvastatin" name= "pre[]"> Rosuvastatin</option>
+                <option value=" Pitavastatin" name="pre[]"> Pitavastatin</option>
+                <option value=" Simvastatin" name="pre[]"> Simvastatin</option>
+              </select>
+
+              <input type="number" id='val' name="pre[]" class="form-control w-35" placeholder="2-80mg" style="display:none"><br>
+              </fieldset>
+              
+              <input type="checkbox" name="pre[]" id="chk13" value="Ezetimibe" />  Ezetimibe<br>
+
+              <input type="checkbox" name="pre[]" id="chk14" value="Omega-3 fatty acids" />  Omega-3 fatty acids<br>
+              
+              <input type="checkbox" name="pre[]" id="chk15" value="PCSK-9 monoclonal antibody (mab)* (Evolocumab)" />  PCSK-9 monoclonal antibody (mab)* (Evolocumab)<br>
+
+              <input type="checkbox" name="pre[]" id="chk16" value="Fibrate" />  Fibrate<br>
+              
+              <input type="checkbox" name="pre[]" id="chk17" value="Other lipid lowering drugs" />  Other lipid lowering drugs<br>
+              
+              <input type="checkbox" name="pre[]" id="chk18" value="Warfarin/Coumadin" />  Warfarin/Coumadin<br>
+              
+              <input type="checkbox" name="pre[]" id="chk19" value="Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)" />  Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)<br>
+            </td>
+           </tr>
           {% endfor %}
 
 
           </tbody>
       </table>
-      <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;">
-      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" >
+      <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;" onclick="showHide2()">
+      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" onclick ="showHide2()">
     </form>
 	</div>
 </div>

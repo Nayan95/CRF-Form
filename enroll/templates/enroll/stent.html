@@ -113,6 +113,21 @@
     }
   }
 
+  function showCheck(){
+    a = document.getElementById('opt3').value
+    if (a == 'Yes'){
+      if( (document.getElementById('a').checked) || (document.getElementById('b').checked) || (document.getElementById('c').checked) || (document.getElementById('d').checked) || (document.getElementById('e').checked) || (document.getElementById('f').checked) )
+      {
+        document.getElementById('a').setCustomValidity('');
+      }
+      else{
+          document.getElementById('a').setCustomValidity('At least one checkbox must be selected.');
+        }
+    }
+    else
+      document.getElementById('a').setCustomValidity('');
+  }
+
 
 </script>
 
@@ -346,8 +361,8 @@
             {% endfor %}
             </tbody>
           </table>
-        <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;">
-      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" >
+        <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;" onclick="showCheck()">
+      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" onclick="showCheck()">
     </form>
 	</div>
 </div>

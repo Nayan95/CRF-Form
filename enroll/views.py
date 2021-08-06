@@ -44,7 +44,10 @@ def details_csv(request,pk):
 
 def successful(request):
     global i
-    patients = Patient.objects.get(p_id=i)
+    try:
+        patients = Patient.objects.get(p_id=i)
+    except:
+        pass    
     if request.method == "POST":
         return redirect('/create/')
     context = {
@@ -644,26 +647,15 @@ def lab_test(request):
         skip = 0
         while (skip != (len(ans_text)-1)):
             get_ques()
-            skip = skip+1
-            quesform = LabCodes({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            
+            ans = ans_text[skip+1] + " " + ans_text[skip+2] + ", " + ans_text[skip+3]
 
-            skip = skip+1
-            quesform = FloatInput({
+            quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
+                'ans_text': ans})
             quesform.save()
-
-            skip = skip+1
-            quesform = LabUnit({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            skip = skip+3
 
         if "next" in request.POST:
             return redirect('/lipidprof/')
@@ -713,26 +705,15 @@ def lipid_profile(request):
         skip = 0
         while (skip != len(ans_text)-1):
             get_ques()
-            skip = skip+1
-            quesform = LabCodes({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            
+            ans = ans_text[skip+1] + " " + ans_text[skip+2] + ", " + ans_text[skip+3]
 
-            skip = skip+1
-            quesform = NumberInput({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
-
-            skip = skip+1
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
+                'ans_text': ans})
             quesform.save()
+            skip = skip+3
 
         if "next" in request.POST:
             return redirect('/cardiac/')
@@ -786,33 +767,15 @@ def cardiac_enzymes(request):
         skip = 0
         while skip != len(ans_text)-1:
             get_ques()
-            skip = skip+1
-            quesform = CardiacDone({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
 
-            skip = skip+1
-            quesform = NumberInput({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            ans = ans_text[skip+1] + ", " + ans_text[skip+2] + " " + ans_text[skip+3] + ", " + ans_text[skip+4]
 
-            skip = skip+1
-            quesform = CardiacUnit({
+            quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
+                'ans_text': ans})
             quesform.save()
-
-            skip = skip + 1
-            quesform = CardiacCodes({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            skip = skip+4
 
         if "next" in request.POST:
             return redirect('/lead1/')
@@ -870,7 +833,10 @@ def lead1(request):
             'ans_text': dt[0]})
         quesform.save()
         if(dt[0] == 'No'):
-            get_ques()
+            if "next" in request.POST:
+                return redirect('/preprocedure/')
+            elif "home" in request.POST:
+                return redirect('/submitted/')
         else:
             quesform = DateTime({
                 'p_id': Patient.objects.get(p_id=i),
@@ -878,57 +844,57 @@ def lead1(request):
                 'ans_text': dt[1]})
             quesform.save()
 
-        quesform = NormalAbnormal({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[0]})
-        quesform.save()
-
-        if(ans_text[0] == 'Normal'):
-            if "next" in request.POST:
-                return redirect('/preprocedure/')
-            elif "home" in request.POST:
-                return redirect('/submitted/')
-        else:
-            get_ques()
-
-            # ST Deviation
-            if(st[0] == 'No'):
-                quesform = TextInput({
-                    'p_id': Patient.objects.get(p_id=i),
-                    'q_id': Question.objects.get(q_id=get_ques()),
-                    'ans_text': st[0]})
-                quesform.save()
-            else:
-                st_new = ','.join(st[1:])
-                print(st_new)
-                quesform = TextInput({
-                    'p_id': Patient.objects.get(p_id=i),
-                    'q_id': Question.objects.get(q_id=get_ques()),
-                    'ans_text': st_new})
-                quesform.save()
-
-            # Conduction abnormality
-            if(cond[0] == 'No'):
-                quesform = TextInput({
-                    'p_id': Patient.objects.get(p_id=i),
-                    'q_id': Question.objects.get(q_id=get_ques()),
-                    'ans_text': cond[0]})
-                quesform.save()
-            else:
-                cond_new = ','.join(cond[1:])
-                quesform = TextInput({
-                    'p_id': Patient.objects.get(p_id=i),
-                    'q_id': Question.objects.get(q_id=get_ques()),
-                    'ans_text': cond_new})
-                quesform.save()
-
-            # QRS
-            quesform = NumberInput({
+            quesform = NormalAbnormal({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
-                'ans_text': ans_text[1]})
+                'ans_text': ans_text[0]})
             quesform.save()
+
+            if(ans_text[0] == 'Normal'):
+                if "next" in request.POST:
+                    return redirect('/preprocedure/')
+                elif "home" in request.POST:
+                    return redirect('/submitted/')
+            else:
+                get_ques()
+
+                # ST Deviation
+                if(st[0] == 'No'):
+                    quesform = TextInput({
+                        'p_id': Patient.objects.get(p_id=i),
+                        'q_id': Question.objects.get(q_id=get_ques()),
+                        'ans_text': st[0]})
+                    quesform.save()
+                else:
+                    st_new = ','.join(st[1:])
+                    print(st_new)
+                    quesform = TextInput({
+                        'p_id': Patient.objects.get(p_id=i),
+                        'q_id': Question.objects.get(q_id=get_ques()),
+                        'ans_text': st_new})
+                    quesform.save()
+
+                # Conduction abnormality
+                if(cond[0] == 'No'):
+                    quesform = TextInput({
+                        'p_id': Patient.objects.get(p_id=i),
+                        'q_id': Question.objects.get(q_id=get_ques()),
+                        'ans_text': cond[0]})
+                    quesform.save()
+                else:
+                    cond_new = ','.join(cond[1:])
+                    quesform = TextInput({
+                        'p_id': Patient.objects.get(p_id=i),
+                        'q_id': Question.objects.get(q_id=get_ques()),
+                        'ans_text': cond_new})
+                    quesform.save()
+
+                # QRS
+                quesform = NumberInput({
+                    'p_id': Patient.objects.get(p_id=i),
+                    'q_id': Question.objects.get(q_id=get_ques()),
+                    'ans_text': ans_text[1]})
+                quesform.save()
 
         if "next" in request.POST:
             return redirect('/preprocedure/')
@@ -973,7 +939,7 @@ def preprocedure(request):
 
         ans_text = request.POST.getlist('ans_text')
         asprin = request.POST.getlist('asprin[]')
-        pre = request.POST.getlist('pre2[]')
+        pre = request.POST.getlist('pre[]')
 
         quesform = YesNo({
             'p_id': Patient.objects.get(p_id=i),
@@ -983,7 +949,8 @@ def preprocedure(request):
         if(ans_text[0] == 'No'):
             get_ques()
         else:
-            asp_new = ','.join(asprin)
+            aspp = [string for string in asprin if string != ""]
+            asp_new = ','.join(aspp)
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
@@ -1214,17 +1181,20 @@ def staged(request):
         if ans[2:] == []:
             get_ques()
         else:
-            quesform = ReasonForStaging({
+            ans_new = ', '.join(ans[2:])
+            quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
-                'ans_text': ans[2:]})
+                'ans_text': ans_new})
             quesform.save()
-
-        quesform = TextInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': text[0]})
-        quesform.save()
+            
+        if( text != ['']):
+            print('txt:', text)
+            quesform = TextInput({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': text[0]})
+            quesform.save()
 
         if "next" in request.POST:
             return redirect('/ffr/')
@@ -1564,13 +1534,6 @@ def stent1(request):
         finding = request.POST.getlist('findings[]')
         values = request.POST.getlist('value[]')
 
-        print('ans', ans_text)
-        print('stent', stent)
-        print('timi', timi)
-        print('complication', complication)
-        print('finding', finding)
-        print('value', values)
-
         quesform = NumberInput({
             'p_id': Patient.objects.get(p_id=i),
             'q_id': Question.objects.get(q_id=get_ques()),
@@ -1596,7 +1559,6 @@ def stent1(request):
                     ", Length - " + stent[11] + \
                     ", Max Deployment Pressure - " + stent[12]
 
-            print(new_stent)
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
@@ -1613,7 +1575,7 @@ def stent1(request):
         if (timi[0] == 'Unknown' or timi[0] == '3'):
             get_ques()
         else:
-            drugs = ','.join(timi[1:])
+            drugs = ', '.join(timi[1:])
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
@@ -1636,10 +1598,11 @@ def stent1(request):
         if (complication[0] == 'No'):
             ques_id = 222
         else:
+            new_comp = ', '.join(complication[1:])
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
-                'ans_text': complication[1:]})
+                'ans_text': new_comp})
             quesform.save()
 
         quesform = YesNo({
@@ -2423,33 +2386,15 @@ def cardiac_enzymes1(request):
         skip = 0
         while skip != len(ans_text)-1:
             get_ques()
-            skip = skip+1
-            quesform = CardiacDone({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
 
-            skip = skip+1
-            quesform = NumberInput({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            ans = ans_text[skip+1] + ", " + ans_text[skip+2] + " " + ans_text[skip+3] + ", " + ans_text[skip+4]
 
-            skip = skip+1
-            quesform = CardiacUnit({
+            quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
+                'ans_text': ans})
             quesform.save()
-
-            skip = skip + 1
-            quesform = CardiacCodes({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            skip = skip+4
 
         if "next" in request.POST:
             return redirect('/conco1/')
@@ -2789,7 +2734,10 @@ def lead2(request):
             'ans_text': dt[0]})
         quesform.save()
         if(dt[0] == 'No'):
-            get_ques()
+            if "next" in request.POST:
+                return redirect('/cardiac2/')
+            elif "home" in request.POST:
+                return redirect('/submitted/')
         else:
             quesform = DateTime({
                 'p_id': Patient.objects.get(p_id=i),
@@ -2797,35 +2745,35 @@ def lead2(request):
                 'ans_text': dt[1]})
             quesform.save()
 
-        quesform = TextInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': st[0]})
-        quesform.save()
-
-        if(st[0] == 'No'):
-            get_ques()
-        else:
-            st_new = ','.join(st[1:])
-            print(st_new)
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
-                'ans_text': st_new})
+                'ans_text': st[0]})
             quesform.save()
 
-        quesform = ArrhythmiaForm({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[0]})
-        quesform.save()
+            if(st[0] == 'No'):
+                get_ques()
+            else:
+                st_new = ','.join(st[1:])
+                print(st_new)
+                quesform = TextInput({
+                    'p_id': Patient.objects.get(p_id=i),
+                    'q_id': Question.objects.get(q_id=get_ques()),
+                    'ans_text': st_new})
+                quesform.save()
 
-        # QRS
-        quesform = NumberInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[1]})
-        quesform.save()
+            quesform = ArrhythmiaForm({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[0]})
+            quesform.save()
+
+            # QRS
+            quesform = NumberInput({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[1]})
+            quesform.save()
 
         if "next" in request.POST:
             return redirect('/cardiac2/')
@@ -2878,33 +2826,15 @@ def cardiac_enzymes2(request):
         skip = 0
         while skip != len(ans_text)-1:
             get_ques()
-            skip = skip+1
-            quesform = CardiacDone({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            
+            ans = ans_text[skip+1] + ", " + ans_text[skip+2] + " " + ans_text[skip+3] + ", " + ans_text[skip+4]
 
-            skip = skip+1
-            quesform = NumberInput({
+            quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
+                'ans_text': ans})
             quesform.save()
-
-            skip = skip+1
-            quesform = CardiacUnit({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
-
-            skip = skip + 1
-            quesform = CardiacCodes({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            skip = skip+4
 
         if "next" in request.POST:
             return redirect('/platelet/')
@@ -3257,7 +3187,10 @@ def lead3(request):
             'ans_text': dt[0]})
         quesform.save()
         if(dt[0] == 'No'):
-            get_ques()
+            if "next" in request.POST:
+                return redirect('/platelet2/')
+            elif "home" in request.POST:
+                return redirect('/submitted/')
         else:
             quesform = DateTime({
                 'p_id': Patient.objects.get(p_id=i),
@@ -3265,35 +3198,35 @@ def lead3(request):
                 'ans_text': dt[1]})
             quesform.save()
 
-        quesform = TextInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': st[0]})
-        quesform.save()
-
-        if(st[0] == 'No'):
-            get_ques()
-        else:
-            st_new = ','.join(st[1:])
-            print(st_new)
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
-                'ans_text': st_new})
+                'ans_text': st[0]})
             quesform.save()
 
-        quesform = ArrhythmiaForm({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[0]})
-        quesform.save()
+            if(st[0] == 'No'):
+                get_ques()
+            else:
+                st_new = ','.join(st[1:])
+                print(st_new)
+                quesform = TextInput({
+                    'p_id': Patient.objects.get(p_id=i),
+                    'q_id': Question.objects.get(q_id=get_ques()),
+                    'ans_text': st_new})
+                quesform.save()
 
-        # QRS
-        quesform = NumberInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[1]})
-        quesform.save()
+            quesform = ArrhythmiaForm({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[0]})
+            quesform.save()
+
+            # QRS
+            quesform = NumberInput({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[1]})
+            quesform.save()
 
         if "next" in request.POST:
             return redirect('/platelet2/')
@@ -3460,7 +3393,7 @@ def adverse3(request):
                 quesform.save()
 
         if "next" in request.POST:
-            return redirect('/adverse3/')
+            return redirect('/6month/')
         elif "home" in request.POST:
             return redirect('/submitted/')
 
@@ -3547,7 +3480,7 @@ def sixmonth_followup(request):
         quesform.save()
 
         if "next" in request.POST:
-            return redirect('/6month/')
+            return redirect('/assessment2/')
         elif "home" in request.POST:
             return redirect('/submitted/')
 
@@ -3646,7 +3579,10 @@ def lead4(request):
             'ans_text': dt[0]})
         quesform.save()
         if(dt[0] == 'No'):
-            get_ques()
+            if "next" in request.POST:
+                return redirect('/labtest2/')
+            elif "home" in request.POST:
+                return redirect('/submitted/')
         else:
             quesform = DateTime({
                 'p_id': Patient.objects.get(p_id=i),
@@ -3654,34 +3590,34 @@ def lead4(request):
                 'ans_text': dt[1]})
             quesform.save()
 
-        quesform = TextInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': st[0]})
-        quesform.save()
-
-        if(st[0] == 'No'):
-            get_ques()
-        else:
-            st_new = ','.join(st[1:])
-            print(st_new)
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
-                'ans_text': st_new})
+                'ans_text': st[0]})
             quesform.save()
 
-        quesform = ArrhythmiaForm({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[0]})
-        quesform.save()
+            if(st[0] == 'No'):
+                get_ques()
+            else:
+                st_new = ','.join(st[1:])
+                print(st_new)
+                quesform = TextInput({
+                    'p_id': Patient.objects.get(p_id=i),
+                    'q_id': Question.objects.get(q_id=get_ques()),
+                    'ans_text': st_new})
+                quesform.save()
 
-        quesform = NumberInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[1]})
-        quesform.save()
+            quesform = ArrhythmiaForm({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[0]})
+            quesform.save()
+
+            quesform = NumberInput({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[1]})
+            quesform.save()
 
         if "next" in request.POST:
             return redirect('/labtest2/')
@@ -3723,26 +3659,15 @@ def lab_test2(request):
         skip = -1
         while (skip != (len(ans_text))-1):
             get_ques()
-            skip = skip+1
-            quesform = LabCodes({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            
+            ans = ans_text[skip+1] + " " + ans_text[skip+2] + ", " + ans_text[skip+3]
 
-            skip = skip+1
-            quesform = FloatInput({
+            quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
+                'ans_text': ans})
             quesform.save()
-
-            skip = skip+1
-            quesform = LabUnit({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            skip = skip+3
 
         if "next" in request.POST:
             return redirect('/platelet3/')
@@ -4129,7 +4054,10 @@ def lead5(request):
             'ans_text': dt[0]})
         quesform.save()
         if(dt[0] == 'No'):
-            get_ques()
+            if "next" in request.POST:
+                return redirect('/labtest3/')
+            elif "home" in request.POST:
+                return redirect('/submitted/')
         else:
             quesform = DateTime({
                 'p_id': Patient.objects.get(p_id=i),
@@ -4137,34 +4065,34 @@ def lead5(request):
                 'ans_text': dt[1]})
             quesform.save()
 
-        quesform = TextInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': st[0]})
-        quesform.save()
-
-        if(st[0] == 'No'):
-            get_ques()
-        else:
-            st_new = ','.join(st[1:])
-            print(st_new)
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
-                'ans_text': st_new})
+                'ans_text': st[0]})
             quesform.save()
 
-        quesform = ArrhythmiaForm({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[0]})
-        quesform.save()
+            if(st[0] == 'No'):
+                get_ques()
+            else:
+                st_new = ','.join(st[1:])
+                print(st_new)
+                quesform = TextInput({
+                    'p_id': Patient.objects.get(p_id=i),
+                    'q_id': Question.objects.get(q_id=get_ques()),
+                    'ans_text': st_new})
+                quesform.save()
 
-        quesform = NumberInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[1]})
-        quesform.save()
+            quesform = ArrhythmiaForm({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[0]})
+            quesform.save()
+
+            quesform = NumberInput({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[1]})
+            quesform.save()
 
         if "next" in request.POST:
             return redirect('/labtest3/')
@@ -4206,26 +4134,15 @@ def lab_test3(request):
         skip = -1
         while (skip != (len(ans_text))-1):
             get_ques()
-            skip = skip+1
-            quesform = LabCodes({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            
+            ans = ans_text[skip+1] + " " + ans_text[skip+2] + ", " + ans_text[skip+3]
 
-            skip = skip+1
-            quesform = FloatInput({
+            quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
+                'ans_text': ans})
             quesform.save()
-
-            skip = skip+1
-            quesform = LabUnit({
-                'p_id': Patient.objects.get(p_id=i),
-                'q_id': Question.objects.get(q_id=ques_id),
-                'ans_text': ans_text[skip]})
-            quesform.save()
+            skip = skip+3
 
         if "next" in request.POST:
             return redirect('/platelet4/')
@@ -4537,7 +4454,10 @@ def lead6(request):
             'ans_text': dt[0]})
         quesform.save()
         if(dt[0] == 'No'):
-            get_ques()
+            if "next" in request.POST:
+                return redirect('/platelet5/')
+            elif "home" in request.POST:
+                return redirect('/submitted/')
         else:
             quesform = DateTime({
                 'p_id': Patient.objects.get(p_id=i),
@@ -4545,34 +4465,34 @@ def lead6(request):
                 'ans_text': dt[1]})
             quesform.save()
 
-        quesform = TextInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': st[0]})
-        quesform.save()
-
-        if(st[0] == 'No'):
-            get_ques()
-        else:
-            st_new = ','.join(st[1:])
-            print(st_new)
             quesform = TextInput({
                 'p_id': Patient.objects.get(p_id=i),
                 'q_id': Question.objects.get(q_id=get_ques()),
-                'ans_text': st_new})
+                'ans_text': st[0]})
             quesform.save()
 
-        quesform = ArrhythmiaForm({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[0]})
-        quesform.save()
+            if(st[0] == 'No'):
+                get_ques()
+            else:
+                st_new = ','.join(st[1:])
+                print(st_new)
+                quesform = TextInput({
+                    'p_id': Patient.objects.get(p_id=i),
+                    'q_id': Question.objects.get(q_id=get_ques()),
+                    'ans_text': st_new})
+                quesform.save()
 
-        quesform = NumberInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans_text[1]})
-        quesform.save()
+            quesform = ArrhythmiaForm({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[0]})
+            quesform.save()
+
+            quesform = NumberInput({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans_text[1]})
+            quesform.save()
 
         if "next" in request.POST:
             return redirect('/platelet5/')
@@ -5270,12 +5190,12 @@ def endofstudy(request):
             'q_id': Question.objects.get(q_id=get_ques()),
             'ans_text': premature[0]})
         quesform.save()
-
-        quesform = TextInput({
-            'p_id': Patient.objects.get(p_id=i),
-            'q_id': Question.objects.get(q_id=get_ques()),
-            'ans_text': ans[2]})
-        quesform.save()
+        if( (premature[0] == 'Lost to follow-up') or (premature[0] == 'Withdrawal of consent') ):
+            quesform = TextInput({
+                'p_id': Patient.objects.get(p_id=i),
+                'q_id': Question.objects.get(q_id=get_ques()),
+                'ans_text': ans[2]})
+            quesform.save()
 
         return redirect('/submitted/')
 

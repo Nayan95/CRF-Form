@@ -14,6 +14,21 @@
       document.getElementById('check_a').style.display='none'
     }
   }
+
+  function showHide2(){
+    a = document.getElementById('id_ans_text').value
+    if (a == 'Yes'){
+      if( (document.getElementById('chk1').checked) || (document.getElementById('chk2').checked) || (document.getElementById('chk3').checked) || (document.getElementById('chk4').checked) || (document.getElementById('chk5').checked) || (document.getElementById('chk6').checked) || (document.getElementById('chk7').checked) || (document.getElementById('chk8').checked) || (document.getElementById('chk9').checked) || (document.getElementById('chk10').checked) || (document.getElementById('chk11').checked) || (document.getElementById('chk12').checked) || (document.getElementById('chk13').checked) || (document.getElementById('chk14').checked) || (document.getElementById('chk15').checked) || (document.getElementById('chk16').checked) || (document.getElementById('chk17').checked) || (document.getElementById('chk18').checked) || (document.getElementById('chk19').checked) )
+      {
+        document.getElementById('chk1').setCustomValidity('');
+      }
+      else{
+          document.getElementById('chk1').setCustomValidity('At least one checkbox must be selected.');
+        }
+    }
+    else
+      document.getElementById('chk1').setCustomValidity('');
+  }
 </script>
 
 <div class="row">
@@ -37,20 +52,30 @@
             <tr>
               <td id="check_q" style="display: none;">{{ ques.q_text }}</td>
               <td id="check_a" style="display: none;">
-              <input type="checkbox" name="pre[]" value="ACE inhibitor" />  ACE inhibitor<br>
-              <input type="checkbox" name="pre[]" value="AT-II antagonist" />  AT-II antagonist<br>
-              <input type="checkbox" name="pre[]" value="Beta blocker" />  Beta blocker<br>
-              <input type="checkbox" name="pre[]" value="Calcium Channel blockers" />  Calcium Channel blockers<br>
-              <input type="checkbox" name="pre[]" value="Antiarrhythmic" />  Antiarrhythmic<br>
-              <input type="checkbox" name="pre[]" value="Nitrates" />  Nitrates<br>
-              <input type="checkbox" name="pre[]" value="GLP-1 receptor agonist (liraglutide, dulaglutide)" />  GLP-1 receptor agonist (liraglutide, dulaglutide)<br>
-              <input type="checkbox" name="pre[]" value="SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)" />  SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)<br>
-              <input type="checkbox" name="pre[]" value="DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)" />  DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)<br>
-              <input type="checkbox" name="pre[]" value="Metformin" />  Metformin<br>
-              <input type="checkbox" name="pre[]" value="Sulfonylureas" />  Sulfonylureas<br>
+              <input type="checkbox" name="pre[]" id="chk1" value="ACE inhibitor" />  ACE inhibitor<br>
+
+              <input type="checkbox" name="pre[]" id="chk2" value="AT-II antagonist" />  AT-II antagonist<br>
+              
+              <input type="checkbox" name="pre[]" id="chk3" value="Beta blocker" />  Beta blocker<br>
+              
+              <input type="checkbox" name="pre[]" id="chk4" value="Calcium Channel blockers" />  Calcium Channel blockers<br>
+              
+              <input type="checkbox" name="pre[]" id="chk5" value="Antiarrhythmic" />  Antiarrhythmic<br>
+              
+              <input type="checkbox" name="pre[]" id="chk6" value="Nitrates" />  Nitrates<br>
+              
+              <input type="checkbox" name="pre[]" id="chk7" value="GLP-1 receptor agonist (liraglutide, dulaglutide)" />  GLP-1 receptor agonist (liraglutide, dulaglutide)<br>
+              
+              <input type="checkbox" name="pre[]" id="chk8" value="SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)" />  SGLT-2 (Canagliflozin, Dapagliflozin, Empagliflozin)<br>
+              
+              <input type="checkbox" name="pre[]" id="chk9" value="DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)" />  DPP- 4 inhibitor (Sitagliptin, Vildagliptin, Saxagliptin, Linagliptin,Teneligliptin)<br>
+
+              <input type="checkbox" name="pre[]" id="chk10" value="Metformin" />  Metformin<br>
+
+              <input type="checkbox" name="pre[]" id="chk11" value="Sulfonylureas" />  Sulfonylureas<br>
 
               <fieldset class="form-inline">
-              <input type="checkbox" name="pre[]" value="Statins" onchange="if(this.checked){this.form['drop'].style.display='block', this.form['val'].style.display='', this.form['val'].required=true} else {this.form['drop'].style.display='none', this.form['val'].style.display='none', this.form['val'].required=false};"/>  Statins
+              <input type="checkbox" name="pre[]" id="chk12" value="Statins" onchange="if(this.checked){this.form['drop'].style.display='block', this.form['val'].style.display='', this.form['val'].required=true} else {this.form['drop'].style.display='none', this.form['val'].style.display='none', this.form['val'].required=false};"/>  Statins
 
               <select name="pre[]" id='drop' class="form-control w-35" style="display: none;">
                 <option selected="true" disabled="disabled" value=""> ---Select--- </option>
@@ -63,13 +88,19 @@
               <input type="number" id='val' name="pre[]" class="form-control w-35" placeholder="2-80mg" style="display:none"><br>
               </fieldset>
               
-              <input type="checkbox" name="pre[]" value="Ezetimibe" />Ezetimibe<br>
-              <input type="checkbox" name="pre[]" value="Omega-3 fatty acids" /> Omega-3 fatty acids<br>
-              <input type="checkbox" name="pre[]" value="PCSK-9 monoclonal antibody (mab)* (Evolocumab)" />PCSK-9 monoclonal antibody (mab)* (Evolocumab)<br>
-              <input type="checkbox" name="pre[]" value="Fibrate" /> Fibrate<br>
-              <input type="checkbox" name="pre[]" value="Other lipid lowering drugs" />Other lipid lowering drugs<br>
-              <input type="checkbox" name="pre[]" value="Warfarin/Coumadin" />Warfarin/Coumadin<br>
-              <input type="checkbox" name="pre[]" value="Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)" />Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)<br>
+              <input type="checkbox" name="pre[]" id="chk13" value="Ezetimibe" />  Ezetimibe<br>
+
+              <input type="checkbox" name="pre[]" id="chk14" value="Omega-3 fatty acids" />  Omega-3 fatty acids<br>
+              
+              <input type="checkbox" name="pre[]" id="chk15" value="PCSK-9 monoclonal antibody (mab)* (Evolocumab)" />  PCSK-9 monoclonal antibody (mab)* (Evolocumab)<br>
+
+              <input type="checkbox" name="pre[]" id="chk16" value="Fibrate" />  Fibrate<br>
+              
+              <input type="checkbox" name="pre[]" id="chk17" value="Other lipid lowering drugs" />  Other lipid lowering drugs<br>
+              
+              <input type="checkbox" name="pre[]" id="chk18" value="Warfarin/Coumadin" />  Warfarin/Coumadin<br>
+              
+              <input type="checkbox" name="pre[]" id="chk19" value="Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)" />  Novel oral anticoagulant drugs (NOAC) (dabigatran, rivaroxaban, apixaban)<br>
             </td>
            </tr>
           {% endfor %}
@@ -77,8 +108,8 @@
 
           </tbody>
       </table>
-      <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;">
-      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" >
+      <input type="submit" class="btn btn-outline-success" name="next" value="Next" style="float: right;" onclick="showHide2()">
+      <input type="submit" class="btn btn-outline-danger" name="home" value="Save and Exit" onclick="showHide2()">
     </form>
 	</div>
 </div>
